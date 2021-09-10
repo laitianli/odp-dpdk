@@ -1,0 +1,24 @@
+<map id="comp.h" name="comp.h">
+<area shape="rect" id="node2" href="$visibility__begin_8h_source.html" title="odp/visibility_begin.h" alt="" coords="409,885,570,912"/>
+<area shape="rect" id="node3" href="$support_8h.html" title="ODP support API &#45; platform specific header. " alt="" coords="1221,736,1355,763"/>
+<area shape="rect" id="node5" href="$visibility__end_8h_source.html" title="odp/visibility_end.h" alt="" coords="1268,885,1417,912"/>
+<area shape="rect" id="node6" href="$api_2packet_8h.html" title="ODP packet descriptor. " alt="" coords="912,80,1043,107"/>
+<area shape="rect" id="node4" href="$spec_2support_8h.html" title="ODP support API. " alt="" coords="1085,811,1254,837"/>
+<area shape="rect" id="node7" href="$api_2std__types_8h.html" title="Standard C language types and definitions for ODP. " alt="" coords="119,572,268,599"/>
+<area shape="rect" id="node20" href="$api_2spec_2packet_8h.html" title="ODP packet descriptor. " alt="" coords="463,155,627,181"/>
+<area shape="rect" id="node9" href="$api_2spec_2std__types_8h.html" title="Standard C language types and definitions for ODP. " alt="" coords="94,654,277,681"/>
+<area shape="rect" id="node11" href="$api_2align_8h.html" title="ODP alignments. " alt="" coords="294,736,413,763"/>
+<area shape="rect" id="node13" href="$api_2spec_2align_8h.html" title="ODP alignments. " alt="" coords="413,811,565,837"/>
+<area shape="rect" id="node21" href="$api_2proto__stats__types_8h.html" title="ODP proto stats types. " alt="" coords="476,393,623,435"/>
+<area shape="rect" id="node24" href="$api_2time_8h.html" title="ODP time. " alt="" coords="145,490,261,517"/>
+<area shape="rect" id="node27" href="$api_2packet__types_8h.html" title="ODP packet. " alt="" coords="595,229,768,256"/>
+<area shape="rect" id="node23" href="$api_2spec_2proto__stats__types_8h.html" title="ODP proto stats types. " alt="" coords="481,483,623,524"/>
+<area shape="rect" id="node26" href="$api_2spec_2time_8h.html" title="ODP time. " alt="" coords="590,811,741,837"/>
+<area shape="rect" id="node28" href="$api_2spec_2packet__types_8h.html" title="ODP packet types. " alt="" coords="605,304,757,345"/>
+<area shape="rect" id="node29" href="$api_2queue__types_8h.html" title="ODP queue. " alt="" coords="826,401,995,427"/>
+<area shape="rect" id="node31" href="$api_2spec_2queue__types_8h.html" title="ODP queue types. " alt="" coords="837,483,985,524"/>
+<area shape="rect" id="node32" href="$api_2schedule__types_8h.html" title="ODP schedule. " alt="" coords="1015,572,1201,599"/>
+<area shape="rect" id="node35" href="$deprecated_8h.html" title="Control deprecated API definitions. " alt="" coords="831,572,990,599"/>
+<area shape="rect" id="node34" href="$api_2spec_2schedule__types_8h.html" title="ODP schedule types. " alt="" coords="1009,647,1175,688"/>
+<area shape="rect" id="node36" href="$spec_2deprecated_8h.html" title="Macro for deprecated API definitions. " alt="" coords="867,811,1061,837"/>
+</map>
