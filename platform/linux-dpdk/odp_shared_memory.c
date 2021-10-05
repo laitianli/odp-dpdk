@@ -70,7 +70,7 @@ typedef struct {
 	odp_spinlock_t  lock;
 	shm_block_t block[ODP_CONFIG_SHM_BLOCKS];
 } shm_table_t;
-
+/* 所有线程都能访问的共享内存 */
 static shm_table_t *shm_tbl;
 
 /**
@@ -153,7 +153,7 @@ static inline odp_bool_t handle_is_valid(odp_shm_t shm)
 	}
 	return 1;
 }
-
+/* 共享内存 */
 int _odp_shm_init_global(const odp_init_t *init ODP_UNUSED)
 {
 	void *addr;
@@ -164,7 +164,7 @@ int _odp_shm_init_global(const odp_init_t *init ODP_UNUSED)
 			"ODP process!\n.");
 		return -1;
 	}
-
+	/* 映射匿名页 */
 	/* Allocate space for the internal shared mem block table */
 	addr = mmap(NULL, sizeof(shm_table_t), PROT_READ | PROT_WRITE,
 		    MAP_SHARED | MAP_ANONYMOUS, -1, 0);
@@ -230,7 +230,7 @@ int odp_shm_capability(odp_shm_capability_t *capa)
 
 	return 0;
 }
-
+/* 分配共享内存 */
 odp_shm_t odp_shm_reserve(const char *name, uint64_t size, uint64_t align,
 			  uint32_t flags)
 {

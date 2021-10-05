@@ -77,7 +77,7 @@ int _odp_thread_term_global(void)
 
 	return ret;
 }
-
+/* 获取cpu id */
 static int alloc_id(odp_thread_type_t type)
 {
 	int thr;
@@ -92,10 +92,10 @@ static int alloc_id(odp_thread_type_t type)
 
 			if (type == ODP_THREAD_WORKER) {
 				odp_thrmask_set(&thread_globals->worker, thr);
-				thread_globals->num_worker++;
+				thread_globals->num_worker++;	/* 工作线程个数 */
 			} else {
 				odp_thrmask_set(&thread_globals->control, thr);
-				thread_globals->num_control++;
+				thread_globals->num_control++;	/* 控制线程个数 */
 			}
 
 			thread_globals->num++;

@@ -22,8 +22,8 @@ typedef odp_time_t (*time_cur_fn)(void);
 typedef uint64_t (*time_res_fn)(void);
 
 typedef struct time_handler_ {
-	time_cur_fn     time_cur;
-	time_res_fn     time_res;
+	time_cur_fn     time_cur;	/* 程序运行到此刻的时间戳 */
+	time_res_fn     time_res;	/* 一秒钟频率 */
 
 } time_handler_t;
 

@@ -1483,7 +1483,7 @@ static int stats_reset_pkt_dpdk(pktio_entry_t *pktio_entry)
 	rte_eth_stats_reset(pkt_priv(pktio_entry)->port_id);
 	return 0;
 }
-
+/* pktio操作接口 */
 const pktio_if_ops_t dpdk_pktio_ops = {
 	.name = "odp-dpdk",
 	.print = NULL,

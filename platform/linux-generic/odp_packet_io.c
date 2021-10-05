@@ -121,7 +121,7 @@ int _odp_pktio_init_global(void)
 	}
 
 	for (pktio_if = 0; pktio_if_ops[pktio_if]; ++pktio_if) {
-		if (pktio_if_ops[pktio_if]->init_global)
+		if (pktio_if_ops[pktio_if]->init_global) /* dpdk_pktio_ops */
 			if (pktio_if_ops[pktio_if]->init_global()) {
 				ODP_ERR("failed to initialized pktio type %d",
 					pktio_if);
@@ -392,7 +392,7 @@ odp_pktio_t odp_pktio_open(const char *name, odp_pool_t pool,
 	}
 
 	odp_spinlock_lock(&pktio_global->lock);
-	hdl = setup_pktio_entry(name, pool, param);
+	hdl = setup_pktio_entry(name, pool, param);/* 将网卡名称与pktio_entry对象关联 */
 	odp_spinlock_unlock(&pktio_global->lock);
 
 	ODP_DBG("interface: %s, driver: %s\n", name, driver_name(hdl));

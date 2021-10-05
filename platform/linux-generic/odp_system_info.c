@@ -330,7 +330,7 @@ static int system_hp(hugepage_info_t *hugeinfo)
 
 	return 0;
 }
-
+/* cpu cache line大小，常规内存页大小，cpu个数和大页信息 */
 /*
  * System info initialisation
  */

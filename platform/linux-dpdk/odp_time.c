@@ -283,7 +283,7 @@ static inline odp_bool_t is_dpdk_timer_cycles_support(void)
 #endif
 	return false;
 }
-
+/* odp时间戳初始化 */
 int _odp_time_init_global(void)
 {
 	struct timespec *timespec;
@@ -291,13 +291,13 @@ int _odp_time_init_global(void)
 	_odp_time_global_t *global = &_odp_time_glob;
 
 	memset(global, 0, sizeof(_odp_time_global_t));
-
+	/* 硬件支持TSC */
 	if (is_dpdk_timer_cycles_support()) {
 		_odp_time_glob.handler.time_cur = time_cur_dpdk;
 		_odp_time_glob.handler.time_res = time_res_dpdk;
-		_odp_time_glob.hw_freq_hz = time_res_dpdk();
-		_odp_time_glob.use_hw = 1;
-		_odp_time_glob.hw_start = rte_get_timer_cycles();
+		_odp_time_glob.hw_freq_hz = time_res_dpdk();	/* cpu时钟频率 */
+		_odp_time_glob.use_hw = 1;							/* 使用硬件时间戳 */
+		_odp_time_glob.hw_start = rte_get_timer_cycles();	/* 程序运行时刻的时间戳 */
 		if (_odp_time_glob.hw_start == 0)
 			return -1;
 		else
@@ -324,7 +324,7 @@ int _odp_time_init_global(void)
 	timespec = (struct timespec *)(uintptr_t)global->timespec;
 	timespec->tv_sec  = 0;
 	timespec->tv_nsec = 0;
-
+	/* 硬件不支持TSC情况下，使用软件时间戳 */
 	ret = clock_gettime(CLOCK_MONOTONIC_RAW, timespec);
 
 	return ret;

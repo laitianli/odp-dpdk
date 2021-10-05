@@ -79,7 +79,7 @@ static int _odp_init_dpdk(const char *cmdline)
 {
 	int dpdk_argc;
 	int i, cmdlen;
-
+	/* 从环境变量中获取dpdk参数 */
 	if (cmdline == NULL) {
 		cmdline = getenv("ODP_PLATFORM_PARAMS");
 		if (cmdline == NULL)
@@ -99,13 +99,13 @@ static int _odp_init_dpdk(const char *cmdline)
 	}
 
 	char *dpdk_argv[dpdk_argc];
-
+	/* 解析dpdk参数 */
 	dpdk_argc = rte_strsplit(full_cmdline, strlen(full_cmdline), dpdk_argv,
 				 dpdk_argc, ' ');
 	for (i = 0; i < dpdk_argc; ++i)
 		ODP_DBG("arg[%d]: %s\n", i, dpdk_argv[i]);
 	fflush(stdout);
-
+	/* 初始化dpdk模块 */
 	i = rte_eal_init(dpdk_argc, dpdk_argv);
 	if (i < 0) {
 		ODP_ERR("Cannot init the Intel DPDK EAL!\n");
@@ -330,17 +330,17 @@ static int term_global(enum init_stage stage)
 
 	return rc;
 }
-
-int odp_init_global(odp_instance_t *instance,
-		    const odp_init_t *params,
-		    const odp_platform_init_t *platform_params)
+/* odp模块初始化 */
+int odp_init_global(odp_instance_t *instance,	/* odp句柄 */
+		    const odp_init_t *params,	/* odp模块参数 */
+		    const odp_platform_init_t *platform_params) /* dpdk模块参数 */
 {
 	enum init_stage stage = NO_INIT;
-
+	/* odp全局变量初始化 */
 	memset(&odp_global_ro, 0, sizeof(odp_global_data_ro_t));
 	odp_global_ro.main_pid = getpid();
 
-	odp_global_ro.log_fn = odp_override_log;
+	odp_global_ro.log_fn = odp_override_log; /* odp_weak.c */ 
 	odp_global_ro.abort_fn = odp_override_abort;
 
 	odp_init_param_init(&odp_global_ro.init_param);
@@ -354,13 +354,13 @@ int odp_init_global(odp_instance_t *instance,
 		if (params->mem_model == ODP_MEM_MODEL_PROCESS)
 			odp_global_ro.shm_single_va = 1;
 	}
-
+	/* odp配置文件，配置文件路径：config/odp-linux-dpdk.conf  */
 	if (_odp_libconfig_init_global()) {
 		ODP_ERR("ODP runtime config init failed.\n");
 		goto init_failed;
 	}
 	stage = LIBCONFIG_INIT;
-
+	/* 禁用ipsec模块相关特性 */
 	disable_features(&odp_global_ro, params);
 
 	if (_odp_cpumask_init_global(params)) {
@@ -368,36 +368,36 @@ int odp_init_global(odp_instance_t *instance,
 		goto init_failed;
 	}
 	stage = CPUMASK_INIT;
-
+	/* 判断cpu是否支持RDTSC指令，TSC:时间戳计数器的64位的寄存器, RDTSC指令用来读取此寄存器 */
 	if (_odp_cpu_cycles_init_global()) {
 		ODP_ERR("ODP cpu cycle init failed.\n");
 		goto init_failed;
 	}
 	stage = CPU_CYCLES_INIT;
-
+	/* 初化dpdk模块，调用rte_eal_init() */
 	if (_odp_init_dpdk((const char *)platform_params)) {
 		ODP_ERR("ODP dpdk init failed.\n");
 		return -1;
 	}
-
+	/*时间戳模块初始化   */
 	if (_odp_time_init_global()) {
 		ODP_ERR("ODP time init failed.\n");
 		goto init_failed;
 	}
 	stage = TIME_INIT;
-
+	/* 系统信息 */
 	if (_odp_system_info_init()) {
 		ODP_ERR("ODP system_info init failed.\n");
 		goto init_failed;
 	}
 	stage = SYSINFO_INIT;
-
+	/* 共享内存初始化 */
 	if (_odp_shm_init_global(params)) {
 		ODP_ERR("ODP shm init failed.\n");
 		goto init_failed;
 	}
 	stage = ISHM_INIT;
-
+	/* 利用共享内存初始化全局数据 */
 	if (global_rw_data_init()) {
 		ODP_ERR("ODP global RW data init failed.\n");
 		goto init_failed;
@@ -409,37 +409,37 @@ int odp_init_global(odp_instance_t *instance,
 		goto init_failed;
 	}
 	stage = HASH_INIT;
-
+	/* odp线程初始化 */
 	if (_odp_thread_init_global()) {
 		ODP_ERR("ODP thread init failed.\n");
 		goto init_failed;
 	}
 	stage = THREAD_INIT;
-
+	/* 初化内存池 */
 	if (_odp_pool_init_global()) {
 		ODP_ERR("ODP pool init failed.\n");
 		goto init_failed;
 	}
 	stage = POOL_INIT;
-
+	/* 初始化队列？？？ */
 	if (_odp_queue_init_global()) {
 		ODP_ERR("ODP queue init failed.\n");
 		goto init_failed;
 	}
 	stage = QUEUE_INIT;
-
+	/* 初始化调度器？？？ */
 	if (_odp_schedule_init_global()) {
 		ODP_ERR("ODP schedule init failed.\n");
 		goto init_failed;
 	}
 	stage = SCHED_INIT;
-
+	/* pktio模块初始化 */
 	if (_odp_pktio_init_global()) {
 		ODP_ERR("ODP packet io init failed.\n");
 		goto init_failed;
 	}
 	stage = PKTIO_INIT;
-
+	/* 时间定时器初始化 */
 	if (_odp_timer_init_global(params)) {
 		ODP_ERR("ODP timer init failed.\n");
 		goto init_failed;
@@ -448,19 +448,19 @@ int odp_init_global(odp_instance_t *instance,
 
 	/* No init needed */
 	stage = RANDOM_INIT;
-
+	/* 加密模块    */
 	if (_odp_crypto_init_global()) {
 		ODP_ERR("ODP crypto init failed.\n");
 		goto init_failed;
 	}
 	stage = CRYPTO_INIT;
-
+	/* 压缩模块 */
 	if (_odp_comp_init_global()) {
 		ODP_ERR("ODP comp init failed.\n");
 		goto init_failed;
 	}
 	stage = COMP_INIT;
-
+	/* 分类模块 */
 	if (_odp_classification_init_global()) {
 		ODP_ERR("ODP classification init failed.\n");
 		goto init_failed;
@@ -472,7 +472,7 @@ int odp_init_global(odp_instance_t *instance,
 		goto init_failed;
 	}
 	stage = TRAFFIC_MNGR_INIT;
-
+	/* HASH表初始化 */
 	if (_odp_int_name_tbl_init_global()) {
 		ODP_ERR("ODP name table init failed\n");
 		goto init_failed;
@@ -490,7 +490,7 @@ int odp_init_global(odp_instance_t *instance,
 		goto init_failed;
 	}
 	stage = IPSEC_SAD_INIT;
-
+	/* IPSEC模块初始化 */
 	if (_odp_ipsec_init_global()) {
 		ODP_ERR("ODP IPsec init failed.\n");
 		goto init_failed;
@@ -590,11 +590,11 @@ static int term_local(enum init_stage stage)
 
 	return rc;
 }
-
+/* odp模块与线程（工作线程、控制线程）相关初始化 */
 int odp_init_local(odp_instance_t instance, odp_thread_type_t thr_type)
 {
 	enum init_stage stage = NO_INIT;
-
+	/* 判断进程pid，说明此此函数只能在主线程里调用 */
 	if (instance != (odp_instance_t)odp_global_ro.main_pid) {
 		ODP_ERR("Bad instance.\n");
 		goto init_fail;

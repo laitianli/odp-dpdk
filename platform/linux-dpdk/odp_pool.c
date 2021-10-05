@@ -93,7 +93,7 @@ static int read_config_file(pool_global_t *pool_gbl)
 
 	return 0;
 }
-
+/* 内存池初始化 */
 int _odp_pool_init_global(void)
 {
 	uint32_t i;
