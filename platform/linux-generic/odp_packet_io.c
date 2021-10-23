@@ -731,14 +731,14 @@ static inline int pktin_recv_buf(pktio_entry_t *entry, int pktin_index,
 	/* Some compilers need this dummy initialization */
 	cur_queue = ODP_QUEUE_INVALID;
 
-	pkts = entry->s.ops->recv(entry, pktin_index, packets, num);
+	pkts = entry->s.ops->recv(entry, pktin_index, packets, num);/* recv_pkt_dpdk() */
 
 	for (i = 0; i < pkts; i++) {
 		pkt = packets[i];
 		pkt_hdr = packet_hdr(pkt);
 		buf_hdr = packet_to_buf_hdr(pkt);
 
-		if (odp_unlikely(pkt_hdr->p.input_flags.dst_queue)) {
+		if (odp_unlikely(pkt_hdr->p.input_flags.dst_queue)) {/* pkt_hdr->p.input_flags.dst_queue在cls_classify_packet()中设置1 */
 			/* Sort events for enqueue multi operation(s) */
 			if (odp_unlikely(num_dst == 0)) {
 				num_dst = 1;

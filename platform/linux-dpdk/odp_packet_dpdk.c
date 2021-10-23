@@ -1032,6 +1032,7 @@ int input_pkts(pktio_entry_t *pktio_entry, odp_packet_t pkt_table[], int num)
 					continue;
 				}
 			}
+			/* 解析QOS，设置pkt->queue */
 			if (cls_classify_packet(pktio_entry, data, pkt_len,
 						pkt_len, &new_pool, &parsed_hdr,
 						pkt_dpdk->loopback)) {

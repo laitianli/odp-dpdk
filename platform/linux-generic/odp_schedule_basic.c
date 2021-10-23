@@ -1013,9 +1013,9 @@ static inline int do_schedule_grp(odp_queue_t *out_queue, odp_event_t out_ev[],
 					max_deq = burst_max;
 			}
 
-			pktin = queue_is_pktin(qi);
+			pktin = queue_is_pktin(qi);/* qi=0, pktin=0 */
 
-			num = sched_queue_deq(qi, ev_tbl, max_deq, !pktin);
+			num = sched_queue_deq(qi, ev_tbl, max_deq, !pktin);/* num== 2 */
 
 			if (odp_unlikely(num < 0)) {
 				/* Destroyed queue. Continue scheduling the same
@@ -1056,7 +1056,7 @@ static inline int do_schedule_grp(odp_queue_t *out_queue, odp_event_t out_ev[],
 				}
 			}
 
-			if (ordered) {
+			if (ordered) {/* ordered=0 */
 				uint64_t ctx;
 				odp_atomic_u64_t *next_ctx;
 
@@ -1075,18 +1075,18 @@ static inline int do_schedule_grp(odp_queue_t *out_queue, odp_event_t out_ev[],
 				sched_local.stash.qi   = qi;
 				sched_local.stash.ring = ring;
 				sched_local.sync_ctx   = sync_ctx;
-			} else {
+			} else {/* 走这个流程 */
 				/* Continue scheduling the queue */
 				ring_u32_enq(ring, ring_mask, qi);
 			}
 
 			handle = queue_from_index(qi);
 
-			if (stashed) {
+			if (stashed) { /* stashed==1 */
 				sched_local.stash.num_ev   = num;
 				sched_local.stash.ev_index = 0;
 				sched_local.stash.queue    = handle;
-				ret = copy_from_stash(out_ev, max_num);
+				ret = copy_from_stash(out_ev, max_num);/* 获取事件（如arp的timerout事件ofp_arp_entry_usetime_tmo，如tcp的ofp_tcp_timer_delack） */
 			} else {
 				sched_local.stash.num_ev = 0;
 				ret = num;

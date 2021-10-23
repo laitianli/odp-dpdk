@@ -245,8 +245,7 @@ odp_cos_t odp_cls_cos_create(const char *name, odp_cls_cos_param_t *param)
 							   param->hash_proto);
 				tbl_index = i * CLS_COS_QUEUE_MAX;
 				for (j = 0; j < param->num_queue; j++) {
-					queue = odp_queue_create(NULL, &cos->s.
-								 queue_param);
+					queue = odp_queue_create(NULL, &cos->s.queue_param);
 					if (queue == ODP_QUEUE_INVALID) {
 						/* unwind the queues */
 						_cls_queue_unwind(tbl_index, j);
@@ -1434,7 +1433,7 @@ int cls_classify_packet(pktio_entry_t *entry, const uint8_t *base,
 		return -EFAULT;
 
 	*pool = cos->s.pool;
-	pkt_hdr->p.input_flags.dst_queue = 1;
+	pkt_hdr->p.input_flags.dst_queue = 1;/* 在数据包入队时用到 */
 
 	if (!cos->s.queue_group) {
 		pkt_hdr->dst_queue = cos->s.queue;

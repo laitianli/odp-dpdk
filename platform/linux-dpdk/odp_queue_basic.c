@@ -663,7 +663,7 @@ static inline int _sched_queue_enq_multi(odp_queue_t handle,
 
 	return num_enq;
 }
-
+/* 从queue队列中取出事件 */
 int sched_queue_deq(uint32_t queue_index, odp_event_t ev[], int max_num,
 		    int update_status)
 {
