@@ -75,9 +75,24 @@ extern "C" {
 /**
  * ODP LOG macro.
  */
+#if 0
 #define ODP_LOG(level, fmt, ...) \
 	odp_global_ro.log_fn(level, "%s:%d:%s():" fmt, __FILE__, \
 	__LINE__, __func__, ##__VA_ARGS__)
+#else
+#define ODP_LOG(level, fmt, ...) \
+do { \
+	if (level==ODP_LOG_ERR || level==ODP_LOG_ABORT) { \
+		odp_global_ro.log_fn(level, "\033[31m %s:%d:%s():" fmt"\033[0m", __FILE__, \
+			__LINE__, __func__, ##__VA_ARGS__); \
+	} \
+	else {	\
+		odp_global_ro.log_fn(level, "%s:%d:%s():" fmt, __FILE__, \
+			__LINE__, __func__, ##__VA_ARGS__);  \
+	} \
+}while(0)
+
+#endif	
 
 /**
  * Log print message when the application calls one of the ODP APIs

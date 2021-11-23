@@ -500,7 +500,11 @@ static int dpdk_init_capability(pktio_entry_t *pktio_entry,
 	rte_eth_dev_info_get(pkt_dpdk->port_id, dev_info);
 	capa->max_input_queues = RTE_MIN(dev_info->max_rx_queues,
 					 PKTIO_MAX_QUEUES);
-
+	if (unlikely(!dev_info->driver_name || strlen(dev_info->driver_name)==0)) {
+		ODP_ERR("[Error] Please bind NIC interface!!!\n");
+		return -1;
+	}
+	
 	/* ixgbe devices support only 16 RX queues in RSS mode */
 	if (!strncmp(dev_info->driver_name, IXGBE_DRV_NAME,
 		     strlen(IXGBE_DRV_NAME)))
@@ -1451,12 +1455,12 @@ static void stats_convert(struct rte_eth_stats *rte_stats,
 			  odp_pktio_stats_t *stats)
 {
 	stats->in_octets = rte_stats->ibytes;
-	stats->in_ucast_pkts = 0;
+	stats->in_ucast_pkts = rte_stats->ipackets;
 	stats->in_discards = rte_stats->imissed;
 	stats->in_errors = rte_stats->ierrors;
 	stats->in_unknown_protos = 0;
 	stats->out_octets = rte_stats->obytes;
-	stats->out_ucast_pkts = 0;
+	stats->out_ucast_pkts = rte_stats->opackets;
 	stats->out_discards = 0;
 	stats->out_errors = rte_stats->oerrors;
 }
