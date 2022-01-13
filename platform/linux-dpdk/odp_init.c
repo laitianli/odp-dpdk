@@ -22,6 +22,7 @@
 #include <rte_config.h>
 #include <rte_eal.h>
 #include <rte_string_fns.h>
+#include <rte_pdump.h>
 
 enum init_stage {
 	NO_INIT = 0,    /* No init stages completed */
@@ -115,6 +116,10 @@ static int _odp_init_dpdk(const char *cmdline)
 		ODP_DBG("Passed: %d Consumed %d\n", dpdk_argc, i + 1);
 	}
 	ODP_DBG("rte_eal_init OK\n");
+#ifdef RTE_LIBRTE_PDUMP
+		/* initialize packet capture framework */
+		rte_pdump_init();
+#endif
 
 	/* Reset to 0 to force getopt() internal initialization routine */
 	optind = 0;
