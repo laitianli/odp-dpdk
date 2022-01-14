@@ -198,7 +198,8 @@ __LIB__libodp_linux_la_SOURCES = \
 			   ../linux-generic/odp_timer_wheel.c \
 			   ../linux-generic/odp_traffic_mngr.c \
 			   ../linux-generic/odp_version.c \
-			   ../linux-generic/odp_weak.c
+			   ../linux-generic/odp_weak.c \
+			   odp_dpdk_log.c
 
 if WITH_OPENSSL
 __LIB__libodp_linux_la_SOURCES += \

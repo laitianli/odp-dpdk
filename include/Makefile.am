@@ -56,7 +56,8 @@ odpapiinclude_HEADERS = \
 	odp/api/time.h \
 	odp/api/timer.h \
 	odp/api/traffic_mngr.h \
-	odp/api/version.h
+	odp/api/version.h \
+	odp/api/log.h
 
 odpapispecincludedir= $(includedir)/odp/api/spec
 odpapispecinclude_HEADERS = \
@@ -106,7 +107,8 @@ odpapispecinclude_HEADERS = \
 		  odp/api/spec/ticketlock.h \
 		  odp/api/spec/time.h \
 		  odp/api/spec/timer.h \
-		  odp/api/spec/traffic_mngr.h
+		  odp/api/spec/traffic_mngr.h \
+		  odp/api/spec/log.h
 
 nodist_odpapispecinclude_HEADERS = \
 		  odp/api/spec/deprecated.h \
