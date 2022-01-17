@@ -11,6 +11,12 @@ int odp_dpdk_set_log(const char* logtype, int logtype_len, int level);
 
 int odp_dpdk_reset_log(void);
 
+int odp_get_log(void);
+
+int odp_reset_log(void);
+
+int odp_set_log(int level);
+
 #ifdef __cplusplus
 }
 #endif

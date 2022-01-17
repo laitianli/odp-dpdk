@@ -50,12 +50,16 @@ extern "C" {
 /**
  * Log debug message if ODP_DEBUG_PRINT flag is set.
  */
+#if 0 
 #define ODP_DBG(fmt, ...) \
 	do { \
 		if (ODP_DEBUG_PRINT == 1) \
 			ODP_LOG(ODP_LOG_DBG, fmt, ##__VA_ARGS__);\
 	} while (0)
-
+#else
+#define ODP_DBG(fmt, ...) \
+    ODP_LOG(ODP_LOG_DBG, fmt, ##__VA_ARGS__)
+#endif
 /**
  * Log error message.
  */
@@ -75,13 +79,16 @@ extern "C" {
 /**
  * ODP LOG macro.
  */
-#if 0
+#if 1
 #define ODP_LOG(level, fmt, ...) \
-	odp_global_ro.log_fn(level, "%s:%d:%s():" fmt, __FILE__, \
-	__LINE__, __func__, ##__VA_ARGS__)
+    if (level <= odp_global_ro.log_level) \
+        odp_global_ro.log_fn(level, "%s:%d:%s():" fmt, __FILE__, \
+            __LINE__, __func__, ##__VA_ARGS__)
 #else
 #define ODP_LOG(level, fmt, ...) \
 do { \
+    if (level > odp_global_ro.log_level)    \
+        break;  \
 	if (level==ODP_LOG_ERR || level==ODP_LOG_ABORT) { \
 		odp_global_ro.log_fn(level, "\033[31m %s:%d:%s():" fmt"\033[0m", __FILE__, \
 			__LINE__, __func__, ##__VA_ARGS__); \
@@ -99,7 +106,7 @@ do { \
  * specifically for dumping internal data.
  */
 #define ODP_PRINT(fmt, ...) \
-	odp_global_ro.log_fn(ODP_LOG_PRINT, fmt, ##__VA_ARGS__)
+    ODP_LOG(ODP_LOG_PRINT, fmt, ##__VA_ARGS__)
 
 #ifdef __cplusplus
 }

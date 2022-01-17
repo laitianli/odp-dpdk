@@ -7,6 +7,8 @@
 #include <odp/visibility_begin.h>
 #include <odp/api/log.h>
 #include <rte_log.h>
+#include <odp_debug_internal.h>
+static int g_log_level_org = 0;
 
 static const char *
 loglevel_to_string(uint32_t level)
@@ -104,6 +106,28 @@ int odp_dpdk_reset_log(void)
         log->dynamic_types[i].loglevel = log_org->dynamic_types[i].loglevel;
         log->dynamic_types[i].name = log_org->dynamic_types[i].name;
     }
+    return 1;
+}
+
+int odp_get_log(void)
+{
+    return odp_global_ro.log_level;
+}
+
+int odp_reset_log(void)
+{
+    odp_global_ro.log_level = g_log_level_org;
+    return 1;
+}
+
+int odp_set_log(int level)
+{
+    static int first_tag = 1;
+    if (first_tag == 1) {
+        first_tag = 0;
+        g_log_level_org = odp_global_ro.log_level;
+    }
+    odp_global_ro.log_level = level;
     return 1;
 }
 

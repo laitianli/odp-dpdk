@@ -37,11 +37,12 @@ extern "C" {
  * ODP log level.
  */
 typedef enum {
-	ODP_LOG_DBG,
-	ODP_LOG_ERR,
-	ODP_LOG_UNIMPLEMENTED,
-	ODP_LOG_ABORT,
-	ODP_LOG_PRINT
+    ODP_LOG_ERR,
+    ODP_LOG_UNIMPLEMENTED,
+    ODP_LOG_ABORT,
+    ODP_LOG_DBG,
+    ODP_LOG_PRINT,
+    ODP_LOG_LEVEL_MAX
 } odp_log_level_t;
 
 /**
