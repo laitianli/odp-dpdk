@@ -1446,7 +1446,7 @@ int odp_pktio_stats(odp_pktio_t pktio,
 
 	entry = get_pktio_entry(pktio);
 	if (entry == NULL) {
-		ODP_DBG("pktio entry %d does not exist\n", pktio);
+		//ODP_DBG("pktio entry %d does not exist\n", pktio);
 		return -1;
 	}
 
