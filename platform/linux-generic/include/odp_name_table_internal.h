@@ -17,19 +17,19 @@ extern "C" {
 #include <odp_api.h>
 
 typedef enum {
-	ODP_COS_HANDLE,
-	ODP_PKTIO_HANDLE,
-	ODP_POOL_HANDLE,
-	ODP_QUEUE_HANDLE,
-	ODP_RING_HANDLE,
-	ODP_SHM_HANDLE,
-	ODP_TIMER_POOL_HANDLE,
-	ODP_TM_HANDLE,
-	ODP_TM_SHAPER_PROFILE_HANDLE,
-	ODP_TM_SCHED_PROFILE_HANDLE,
-	ODP_TM_THRESHOLD_PROFILE_HANDLE,
-	ODP_TM_WRED_PROFILE_HANDLE,
-	ODP_TM_NODE_HANDLE
+    ODP_COS_HANDLE,
+    ODP_PKTIO_HANDLE,
+    ODP_POOL_HANDLE,
+    ODP_QUEUE_HANDLE,
+    ODP_RING_HANDLE,
+    ODP_SHM_HANDLE,
+    ODP_TIMER_POOL_HANDLE,
+    ODP_TM_HANDLE,
+    ODP_TM_SHAPER_PROFILE_HANDLE,
+    ODP_TM_SCHED_PROFILE_HANDLE,
+    ODP_TM_THRESHOLD_PROFILE_HANDLE,
+    ODP_TM_WRED_PROFILE_HANDLE,
+    ODP_TM_NODE_HANDLE
 } _odp_int_name_kind_t;
 
 typedef uint32_t _odp_int_name_t;
@@ -38,11 +38,11 @@ typedef uint32_t _odp_int_name_t;
 #define _ODP_INT_NAME_LEN 32
 
 _odp_int_name_t _odp_int_name_tbl_add(const char *name,
-				      uint8_t     name_kind,
-				      uint64_t    user_data);
+                      uint8_t     name_kind,
+                      uint64_t    user_data);
 
 _odp_int_name_t _odp_int_name_tbl_lookup(const char *name,
-					 uint8_t     name_kind);
+                     uint8_t     name_kind);
 
 int _odp_int_name_tbl_delete(_odp_int_name_t odp_name);
 

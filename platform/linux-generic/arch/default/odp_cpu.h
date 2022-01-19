@@ -14,7 +14,7 @@
  *****************************************************************************/
 
 #define atomic_store_release(loc, val, ro) \
-	__atomic_store_n(loc, val, __ATOMIC_RELEASE)
+    __atomic_store_n(loc, val, __ATOMIC_RELEASE)
 
 #include "odp_cpu_idling.h"
 

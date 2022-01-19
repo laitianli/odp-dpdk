@@ -69,10 +69,10 @@ extern "C" {
  * @retval NULL Create failed
  */
 odph_table_t odph_cuckoo_table_create(
-		const char *name,
-		uint32_t capacity,
-		uint32_t key_size,
-		uint32_t value_size);
+        const char *name,
+        uint32_t capacity,
+        uint32_t key_size,
+        uint32_t value_size);
 
 /**
  * Lookup a cuckoo table by name
@@ -119,8 +119,8 @@ int odph_cuckoo_table_put_value(odph_table_t table, void *key, void *value);
  * @retval < 0 Failure
  */
 int odph_cuckoo_table_get_value(odph_table_t table,
-				void *key, void *buffer,
-				uint32_t buffer_size);
+                void *key, void *buffer,
+                uint32_t buffer_size);
 
 /**
  * Remove a value from a cuckoo table

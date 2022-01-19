@@ -33,7 +33,7 @@
  *   <li>Key: The pair of (Output interface, Next Hop IP address)
  *   <li>Associated Data: MAC address of the next hop station
  *   <li>Algorithm: Hash
- *	 </ol>
+ *     </ol>
  *
  * <H3>Use Case: Routing Table</H3>
  *   When each router receives a packet, it searches its routing table
@@ -115,9 +115,9 @@ typedef ODPH_HANDLE_T(odph_table_t);
 * @note
 */
 typedef odph_table_t (*odph_table_create)(const char *name,
-						uint32_t capacity,
-						uint32_t key_size,
-						uint32_t value_size);
+                        uint32_t capacity,
+                        uint32_t key_size,
+                        uint32_t value_size);
 
 /**
  * Find a table by name
@@ -168,7 +168,7 @@ typedef int (*odph_table_destroy)(odph_table_t table);
  *        be covered.
  */
 typedef int (*odph_table_put_value)(odph_table_t table, void *key,
-							void *value);
+                            void *value);
 
 /**
  * Lookup the associated data via specific key.
@@ -197,8 +197,8 @@ typedef int (*odph_table_put_value)(odph_table_t table, void *key,
  * @note
  */
 typedef int (*odph_table_get_value)(odph_table_t table, void *key,
-						void *buffer,
-						uint32_t buffer_size);
+                        void *buffer,
+                        uint32_t buffer_size);
 /**
  * Delete the association specified by key
  * When no data is currently associated with key, this operation
@@ -222,15 +222,15 @@ typedef int (*odph_table_remove_value)(odph_table_t table, void *key);
  * Table interface set. Defining the table operations.
  */
 typedef struct odph_table_ops_t {
-	odph_table_create        f_create;       /**< Table Create */
-	odph_table_lookup        f_lookup;       /**< Table Lookup */
-	odph_table_destroy       f_des;          /**< Table Destroy */
-	/** add (key,associated data) pair into the specific table */
-	odph_table_put_value     f_put;
-	/** lookup the associated data via specific key */
-	odph_table_get_value     f_get;
-	/** delete the association specified by key */
-	odph_table_remove_value  f_remove;
+    odph_table_create        f_create;       /**< Table Create */
+    odph_table_lookup        f_lookup;       /**< Table Lookup */
+    odph_table_destroy       f_des;          /**< Table Destroy */
+    /** add (key,associated data) pair into the specific table */
+    odph_table_put_value     f_put;
+    /** lookup the associated data via specific key */
+    odph_table_get_value     f_get;
+    /** delete the association specified by key */
+    odph_table_remove_value  f_remove;
 } odph_table_ops_t;
 
 /**

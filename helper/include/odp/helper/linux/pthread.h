@@ -41,8 +41,8 @@ extern "C" {
  * @return Number of threads created
  */
 int odph_linux_pthread_create(odph_linux_pthread_t *pthread_tbl,
-			      const odp_cpumask_t *mask,
-			      const odph_linux_thr_params_t *thr_params);
+                  const odp_cpumask_t *mask,
+                  const odph_linux_thr_params_t *thr_params);
 
 /**
  * Waits pthreads to exit

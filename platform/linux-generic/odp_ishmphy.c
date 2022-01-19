@@ -47,24 +47,24 @@ static uint64_t common_va_len;
  */
 void *_odp_ishmphy_reserve_single_va(uint64_t len, int fd)
 {
-	void *addr;
+    void *addr;
 
-	addr = mmap(NULL, len, PROT_READ | PROT_WRITE,
-		    MAP_SHARED | MAP_POPULATE, fd, 0);
-	if (addr == MAP_FAILED) {
-		ODP_ERR("mmap failed: %s\n", strerror(errno));
-		return NULL;
-	}
+    addr = mmap(NULL, len, PROT_READ | PROT_WRITE,
+            MAP_SHARED | MAP_POPULATE, fd, 0);
+    if (addr == MAP_FAILED) {
+        ODP_ERR("mmap failed: %s\n", strerror(errno));
+        return NULL;
+    }
 
-	if (mprotect(addr, len, PROT_READ | PROT_WRITE))
-		ODP_ERR("mprotect failed: %s\n", strerror(errno));
+    if (mprotect(addr, len, PROT_READ | PROT_WRITE))
+        ODP_ERR("mprotect failed: %s\n", strerror(errno));
 
-	ODP_DBG("VA Reserved: %p, len=%" PRIu64 "\n", addr, len);
+    ODP_DBG("VA Reserved: %p, len=%" PRIu64 "\n", addr, len);
 
-	common_va_address = addr;
-	common_va_len	  = len;
+    common_va_address = addr;
+    common_va_len      = len;
 
-	return addr;
+    return addr;
 }
 
 /* Free single VA memory
@@ -73,15 +73,15 @@ void *_odp_ishmphy_reserve_single_va(uint64_t len, int fd)
  */
 int _odp_ishmphy_free_single_va(void)
 {
-	int ret;
+    int ret;
 
-	if (!common_va_address)
-		return 0;
+    if (!common_va_address)
+        return 0;
 
-	ret = munmap(common_va_address, common_va_len);
-	if (ret)
-		ODP_ERR("munmap failed: %s\n", strerror(errno));
-	return ret;
+    ret = munmap(common_va_address, common_va_len);
+    if (ret)
+        ODP_ERR("munmap failed: %s\n", strerror(errno));
+    return ret;
 }
 
 /*
@@ -92,33 +92,33 @@ int _odp_ishmphy_free_single_va(void)
  */
 void *_odp_ishmphy_map(int fd, uint64_t size, uint64_t offset, int flags)
 {
-	void *mapped_addr;
-	int mmap_flags = MAP_POPULATE;
+    void *mapped_addr;
+    int mmap_flags = MAP_POPULATE;
 
-	ODP_ASSERT(!(flags & _ODP_ISHM_SINGLE_VA));
+    ODP_ASSERT(!(flags & _ODP_ISHM_SINGLE_VA));
 
-	/* do a new mapping in the VA space: */
-	mapped_addr = mmap(NULL, size, PROT_READ | PROT_WRITE,
-			   MAP_SHARED | mmap_flags, fd, offset);
-	if ((mapped_addr >= common_va_address) &&
-	    ((char *)mapped_addr <
-		(char *)common_va_address + common_va_len)) {
-		ODP_ERR("VA SPACE OVERLAP!\n");
-	}
+    /* do a new mapping in the VA space: */
+    mapped_addr = mmap(NULL, size, PROT_READ | PROT_WRITE,
+               MAP_SHARED | mmap_flags, fd, offset);
+    if ((mapped_addr >= common_va_address) &&
+        ((char *)mapped_addr <
+        (char *)common_va_address + common_va_len)) {
+        ODP_ERR("VA SPACE OVERLAP!\n");
+    }
 
-	if (mapped_addr == MAP_FAILED)
-		return NULL;
+    if (mapped_addr == MAP_FAILED)
+        return NULL;
 
-	/* if locking is requested, lock it...*/
-	if (flags & _ODP_ISHM_LOCK) {
-		if (mlock(mapped_addr, size)) {
-			ODP_ERR("mlock failed: %s\n", strerror(errno));
-			if (munmap(mapped_addr, size))
-				ODP_ERR("munmap failed: %s\n", strerror(errno));
-			return NULL;
-		}
-	}
-	return mapped_addr;
+    /* if locking is requested, lock it...*/
+    if (flags & _ODP_ISHM_LOCK) {
+        if (mlock(mapped_addr, size)) {
+            ODP_ERR("mlock failed: %s\n", strerror(errno));
+            if (munmap(mapped_addr, size))
+                ODP_ERR("munmap failed: %s\n", strerror(errno));
+            return NULL;
+        }
+    }
+    return mapped_addr;
 }
 
 /* free a mapping:
@@ -129,18 +129,18 @@ void *_odp_ishmphy_map(int fd, uint64_t size, uint64_t offset, int flags)
  */
 int _odp_ishmphy_unmap(void *start, uint64_t len, int flags)
 {
-	int ret;
+    int ret;
 
-	/* if locking was requested, unlock...*/
-	if (flags & _ODP_ISHM_LOCK)
-		munlock(start, len);
+    /* if locking was requested, unlock...*/
+    if (flags & _ODP_ISHM_LOCK)
+        munlock(start, len);
 
-	if (flags & _ODP_ISHM_SINGLE_VA)
-		return 0;
+    if (flags & _ODP_ISHM_SINGLE_VA)
+        return 0;
 
-	/* just release the mapping */
-	ret = munmap(start, len);
-	if (ret)
-		ODP_ERR("munmap failed: %s\n", strerror(errno));
-	return ret;
+    /* just release the mapping */
+    ret = munmap(start, len);
+    if (ret)
+        ODP_ERR("munmap failed: %s\n", strerror(errno));
+    return ret;
 }

@@ -45,12 +45,12 @@ extern "C" {
 /**
  * Application SW only, no HW access
  */
-#define ODP_SHM_SW_ONLY		0x1
+#define ODP_SHM_SW_ONLY        0x1
 
 /**
  * Share with external processes
  */
-#define ODP_SHM_PROC		0x2
+#define ODP_SHM_PROC        0x2
 
 /**
  * Single virtual address
@@ -59,7 +59,7 @@ extern "C" {
  * memory block will see the block at the same address - regardless
  * of ODP thread type (e.g. pthread vs. process (or fork process time)).
  */
-#define ODP_SHM_SINGLE_VA	0x4
+#define ODP_SHM_SINGLE_VA    0x4
 
 /**
  * Export memory
@@ -67,7 +67,7 @@ extern "C" {
  * When set, the memory block becomes visible to other ODP instances
  * through odp_shm_import().
  */
-#define ODP_SHM_EXPORT		0x08
+#define ODP_SHM_EXPORT        0x08
 
 /**
  * Use huge pages
@@ -76,49 +76,49 @@ extern "C" {
  * is allocated from huge pages. The reserve call will return failure if enough
  * huge page memory is not available.
  */
-#define ODP_SHM_HP		0x10
+#define ODP_SHM_HP        0x10
 
 /**
  * Shared memory block info
  */
 typedef struct odp_shm_info_t {
-	/** Block name */
-	const char *name;
+    /** Block name */
+    const char *name;
 
-	/** Block address */
-	void       *addr;
+    /** Block address */
+    void       *addr;
 
-	/** Block size in bytes */
-	uint64_t    size;
+    /** Block size in bytes */
+    uint64_t    size;
 
-	/** Memory page size */
-	uint64_t    page_size;
+    /** Memory page size */
+    uint64_t    page_size;
 
-	/** ODP_SHM_* flags */
-	uint32_t    flags;
+    /** ODP_SHM_* flags */
+    uint32_t    flags;
 } odp_shm_info_t;
 
 /**
  * Shared memory capabilities
  */
 typedef struct odp_shm_capability_t {
-	/** Maximum number of shared memory blocks
-	 *
-	 * This number of separate shared memory blocks can be
-	 * reserved concurrently. */
-	unsigned int max_blocks;
+    /** Maximum number of shared memory blocks
+     *
+     * This number of separate shared memory blocks can be
+     * reserved concurrently. */
+    unsigned int max_blocks;
 
-	/** Maximum memory block size in bytes
-	 *
-	 * The value of zero means that size is limited only by the available
-	 * memory size. */
-	uint64_t max_size;
+    /** Maximum memory block size in bytes
+     *
+     * The value of zero means that size is limited only by the available
+     * memory size. */
+    uint64_t max_size;
 
-	/** Maximum memory block alignment in bytes
-	 *
-	 * The value of zero means that alignment is limited only by the
-	 * available memory size. */
-	uint64_t max_align;
+    /** Maximum memory block alignment in bytes
+     *
+     * The value of zero means that alignment is limited only by the
+     * available memory size. */
+    uint64_t max_align;
 
 } odp_shm_capability_t;
 
@@ -153,7 +153,7 @@ int odp_shm_capability(odp_shm_capability_t *capa);
  * @retval ODP_SHM_INVALID on failure
  */
 odp_shm_t odp_shm_reserve(const char *name, uint64_t size, uint64_t align,
-			  uint32_t flags);
+              uint32_t flags);
 
 /**
  * Free a contiguous block of shared memory
@@ -191,15 +191,15 @@ odp_shm_t odp_shm_lookup(const char *name);
  * @param remote_name  Name of the block, in the remote ODP instance
  * @param odp_inst     Remote ODP instance, as returned by odp_init_global()
  * @param local_name   Name given to the block, in the local ODP instance
- *		       May be NULL, if the application doesn't need a name
- *		       (for a lookup).
+ *               May be NULL, if the application doesn't need a name
+ *               (for a lookup).
  *
  * @return A handle to access a block exported by another ODP instance.
  * @retval ODP_SHM_INVALID on failure
  */
 odp_shm_t odp_shm_import(const char *remote_name,
-			 odp_instance_t odp_inst,
-			 const char *local_name);
+             odp_instance_t odp_inst,
+             const char *local_name);
 
 /**
  * Shared memory block address

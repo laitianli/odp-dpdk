@@ -1,7 +1,7 @@
 /* Copyright (c) 2015-2018, Linaro Limited
  * All rights reserved.
  *
- * SPDX-License-Identifier:	BSD-3-Clause
+ * SPDX-License-Identifier:    BSD-3-Clause
  */
 
 /**
@@ -51,7 +51,7 @@ uint32_t odp_hash_crc32(const void *data, uint32_t data_len, uint32_t init_val);
 * @return CRC32C value
 */
 uint32_t odp_hash_crc32c(const void *data, uint32_t data_len,
-			 uint32_t init_val);
+             uint32_t init_val);
 
 /**
 * CRC parameters
@@ -59,16 +59,16 @@ uint32_t odp_hash_crc32c(const void *data, uint32_t data_len,
 * Supports CRCs up to 64 bits
 */
 typedef struct odp_hash_crc_param_t {
-	/** CRC width in bits */
-	uint32_t width;
-	/** Polynomial (stored in 'width' LSB bits) */
-	uint64_t poly;
-	/** 0: don't reflect, 1: reflect bits in input bytes */
-	odp_bool_t reflect_in;
-	/** 0: don't reflect, 1: reflect bits in output bytes */
-	odp_bool_t reflect_out;
-	/** XOR this value to CRC output (stored in 'width' LSB bits) */
-	uint64_t xor_out;
+    /** CRC width in bits */
+    uint32_t width;
+    /** Polynomial (stored in 'width' LSB bits) */
+    uint64_t poly;
+    /** 0: don't reflect, 1: reflect bits in input bytes */
+    odp_bool_t reflect_in;
+    /** 0: don't reflect, 1: reflect bits in output bytes */
+    odp_bool_t reflect_out;
+    /** XOR this value to CRC output (stored in 'width' LSB bits) */
+    uint64_t xor_out;
 } odp_hash_crc_param_t;
 
 /**
@@ -85,8 +85,8 @@ typedef struct odp_hash_crc_param_t {
 * @return 0 on success, <0 on failure (e.g. not supported algorithm)
 */
 int odp_hash_crc_gen64(const void *data, uint32_t data_len,
-		       uint64_t init_val, odp_hash_crc_param_t *crc_param,
-		       uint64_t *crc);
+               uint64_t init_val, odp_hash_crc_param_t *crc_param,
+               uint64_t *crc);
 
 /**
  * @}

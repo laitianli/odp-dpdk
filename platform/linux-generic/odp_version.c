@@ -8,5 +8,5 @@
 
 const char *odp_version_api_str(void)
 {
-	return ODP_VERSION_API_STR;
+    return ODP_VERSION_API_STR;
 }

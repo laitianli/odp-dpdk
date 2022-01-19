@@ -33,8 +33,8 @@ extern "C" {
  * IP Lookup Prefix
  */
 typedef struct {
-	uint32_t ip;  /**< IPv4 address */
-	uint8_t cidr; /**< CIDR value for prefix matching */
+    uint32_t ip;  /**< IPv4 address */
+    uint8_t cidr; /**< CIDR value for prefix matching */
 } odph_iplookup_prefix_t;
 
 /**
@@ -49,9 +49,9 @@ typedef struct {
  * @retval NULL If table create failed
  */
 odph_table_t odph_iplookup_table_create(const char *name,
-					uint32_t ODP_IGNORED_1,
-					uint32_t ODP_IGNORED_2,
-					uint32_t value_size);
+                    uint32_t ODP_IGNORED_1,
+                    uint32_t ODP_IGNORED_2,
+                    uint32_t value_size);
 
 /**
  * Lookup an IP lookup table by name
@@ -98,7 +98,7 @@ int odph_iplookup_table_put_value(odph_table_t table, void *key, void *value);
  * @retval < 0 Failure
  */
 int odph_iplookup_table_get_value(odph_table_t table, void *key,
-				  void *buffer, uint32_t buffer_size);
+                  void *buffer, uint32_t buffer_size);
 
 /**
  * Remove a value from an iplookup table

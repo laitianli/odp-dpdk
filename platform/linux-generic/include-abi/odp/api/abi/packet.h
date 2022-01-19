@@ -71,46 +71,46 @@ typedef uint8_t odp_proto_l4_type_t;
 #define ODP_PROTO_L4_TYPE_ROHC      142
 
 typedef enum {
-	ODP_PACKET_GREEN = 0,
-	ODP_PACKET_YELLOW = 1,
-	ODP_PACKET_RED = 2,
-	ODP_PACKET_ALL_COLORS = 3,
+    ODP_PACKET_GREEN = 0,
+    ODP_PACKET_YELLOW = 1,
+    ODP_PACKET_RED = 2,
+    ODP_PACKET_ALL_COLORS = 3,
 } odp_packet_color_t;
 
 #define ODP_NUM_PACKET_COLORS 3
 
 typedef struct odp_packet_parse_result_flag_t {
-	union {
-		uint64_t all;
+    union {
+        uint64_t all;
 
-		struct {
-			uint64_t has_error    : 1;
-			uint64_t has_l2_error : 1;
-			uint64_t has_l3_error : 1;
-			uint64_t has_l4_error : 1;
-			uint64_t has_l2 : 1;
-			uint64_t has_l3 : 1;
-			uint64_t has_l4 : 1;
-			uint64_t has_eth : 1;
-			uint64_t has_eth_bcast : 1;
-			uint64_t has_eth_mcast : 1;
-			uint64_t has_jumbo : 1;
-			uint64_t has_vlan : 1;
-			uint64_t has_vlan_qinq : 1;
-			uint64_t has_arp : 1;
-			uint64_t has_ipv4 : 1;
-			uint64_t has_ipv6 : 1;
-			uint64_t has_ip_bcast : 1;
-			uint64_t has_ip_mcast : 1;
-			uint64_t has_ipfrag : 1;
-			uint64_t has_ipopt : 1;
-			uint64_t has_ipsec : 1;
-			uint64_t has_udp : 1;
-			uint64_t has_tcp : 1;
-			uint64_t has_sctp : 1;
-			uint64_t has_icmp : 1;
-		};
-	};
+        struct {
+            uint64_t has_error    : 1;
+            uint64_t has_l2_error : 1;
+            uint64_t has_l3_error : 1;
+            uint64_t has_l4_error : 1;
+            uint64_t has_l2 : 1;
+            uint64_t has_l3 : 1;
+            uint64_t has_l4 : 1;
+            uint64_t has_eth : 1;
+            uint64_t has_eth_bcast : 1;
+            uint64_t has_eth_mcast : 1;
+            uint64_t has_jumbo : 1;
+            uint64_t has_vlan : 1;
+            uint64_t has_vlan_qinq : 1;
+            uint64_t has_arp : 1;
+            uint64_t has_ipv4 : 1;
+            uint64_t has_ipv6 : 1;
+            uint64_t has_ip_bcast : 1;
+            uint64_t has_ip_mcast : 1;
+            uint64_t has_ipfrag : 1;
+            uint64_t has_ipopt : 1;
+            uint64_t has_ipsec : 1;
+            uint64_t has_udp : 1;
+            uint64_t has_tcp : 1;
+            uint64_t has_sctp : 1;
+            uint64_t has_icmp : 1;
+        };
+    };
 
 } odp_packet_parse_result_flag_t;
 

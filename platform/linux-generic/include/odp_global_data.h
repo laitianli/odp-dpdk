@@ -24,60 +24,60 @@ extern "C" {
 #define UID_MAXLEN 30
 
 typedef struct {
-	uint64_t cpu_hz_max[CONFIG_NUM_CPU];
-	uint64_t page_size;
-	int      cache_line_size;
-	int      cpu_count;
-	char     cpu_arch_str[128];
-	char     model_str[CONFIG_NUM_CPU][MODEL_STR_SIZE];
+    uint64_t cpu_hz_max[CONFIG_NUM_CPU];
+    uint64_t page_size;
+    int      cache_line_size;
+    int      cpu_count;
+    char     cpu_arch_str[128];
+    char     model_str[CONFIG_NUM_CPU][MODEL_STR_SIZE];
 } system_info_t;
 
 typedef struct {
-	uint64_t default_huge_page_size;
-	char     *default_huge_page_dir;
+    uint64_t default_huge_page_size;
+    char     *default_huge_page_dir;
 } hugepage_info_t;
 
 /* Read-only global data. Members should not be modified after global init
  * to enable process more support. */
 typedef struct odp_global_data_ro_t {
-	odp_init_t init_param;
-	/* directory for odp mmaped files */
-	char *shm_dir;
-	/* overload default with env */
-	int   shm_dir_from_env;
-	uint64_t shm_max_memory;
-	uint64_t shm_max_size;
-	int shm_single_va;
-	pid_t main_pid;
-	char uid[UID_MAXLEN];
-	odp_log_func_t log_fn;
-	odp_abort_func_t abort_fn;
+    odp_init_t init_param;
+    /* directory for odp mmaped files */
+    char *shm_dir;
+    /* overload default with env */
+    int   shm_dir_from_env;
+    uint64_t shm_max_memory;
+    uint64_t shm_max_size;
+    int shm_single_va;
+    pid_t main_pid;
+    char uid[UID_MAXLEN];
+    odp_log_func_t log_fn;
+    odp_abort_func_t abort_fn;
     int            log_level;
-	system_info_t system_info;
-	hugepage_info_t hugepage_info;
-	odp_cpumask_t control_cpus;
-	odp_cpumask_t worker_cpus;
-	int num_cpus_installed;
-	config_t libconfig_default;
-	config_t libconfig_runtime;
-	odp_random_kind_t ipsec_rand_kind;
+    system_info_t system_info;
+    hugepage_info_t hugepage_info;
+    odp_cpumask_t control_cpus;
+    odp_cpumask_t worker_cpus;
+    int num_cpus_installed;
+    config_t libconfig_default;
+    config_t libconfig_runtime;
+    odp_random_kind_t ipsec_rand_kind;
 
-	/* Disabled features during global init */
-	struct {
-		uint8_t compress;
-		uint8_t crypto;
-		uint8_t ipsec;
-		uint8_t traffic_mngr;
+    /* Disabled features during global init */
+    struct {
+        uint8_t compress;
+        uint8_t crypto;
+        uint8_t ipsec;
+        uint8_t traffic_mngr;
 
-	} disable;
+    } disable;
 
 } odp_global_data_ro_t;
 
 /* Modifiable global data. Memory region is shared and synchronized amongst all
  * worker processes. */
 typedef struct odp_global_data_rw_t {
-	odp_bool_t dpdk_initialized;
-	odp_bool_t inline_timers;
+    odp_bool_t dpdk_initialized;
+    odp_bool_t inline_timers;
 
 } odp_global_data_rw_t;
 

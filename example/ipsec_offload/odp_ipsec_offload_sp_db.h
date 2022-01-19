@@ -17,21 +17,21 @@ extern "C" {
  * Security Policy (SP) data base entry
  */
 typedef struct sp_db_entry_s {
-	struct sp_db_entry_s *next;        /**< Next entry on list */
-	ip_addr_range_t       src_subnet;  /**< Source IPv4 subnet/range */
-	ip_addr_range_t       dst_subnet;  /**< Destination IPv4 subnet/range */
-	odp_bool_t            input;       /**< Direction when applied */
-	odp_bool_t            esp;         /**< Enable cipher (ESP) */
-	odp_bool_t            ah;          /**< Enable authentication (AH) */
+    struct sp_db_entry_s *next;        /**< Next entry on list */
+    ip_addr_range_t       src_subnet;  /**< Source IPv4 subnet/range */
+    ip_addr_range_t       dst_subnet;  /**< Destination IPv4 subnet/range */
+    odp_bool_t            input;       /**< Direction when applied */
+    odp_bool_t            esp;         /**< Enable cipher (ESP) */
+    odp_bool_t            ah;          /**< Enable authentication (AH) */
 } sp_db_entry_t;
 
 /**
  * Security Policy (SP) data base global structure
  */
 typedef struct sp_db_s {
-	uint32_t         index;          /**< Index of next available entry */
-	sp_db_entry_t   *list;		 /**< List of active entries */
-	sp_db_entry_t    array[MAX_DB];	 /**< Entry storage */
+    uint32_t         index;          /**< Index of next available entry */
+    sp_db_entry_t   *list;         /**< List of active entries */
+    sp_db_entry_t    array[MAX_DB];     /**< Entry storage */
 } sp_db_t;
 
 /** Global pointer to sp db */

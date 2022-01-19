@@ -200,7 +200,7 @@ void odp_atomic_min_u32(odp_atomic_u32_t *atom, uint32_t new_min);
  *
  */
 int odp_atomic_cas_u32(odp_atomic_u32_t *atom, uint32_t *old_val,
-		       uint32_t new_val);
+               uint32_t new_val);
 
 /**
  * Exchange value of atomic uint32 variable
@@ -355,7 +355,7 @@ void odp_atomic_min_u64(odp_atomic_u64_t *atom, uint64_t new_min);
  * @return 0 on failure, !0 on success
  */
 int odp_atomic_cas_u64(odp_atomic_u64_t *atom, uint64_t *old_val,
-		       uint64_t new_val);
+               uint64_t new_val);
 
 /**
  * Exchange value of atomic uint64 variable
@@ -434,7 +434,7 @@ void odp_atomic_sub_rel_u32(odp_atomic_u32_t *atom, uint32_t val);
  * @return 0 on failure, !0 on success
  */
 int odp_atomic_cas_acq_u32(odp_atomic_u32_t *atom, uint32_t *old_val,
-			   uint32_t new_val);
+               uint32_t new_val);
 
 /**
  * Compare and swap atomic uint32 variable using RELEASE memory ordering
@@ -450,7 +450,7 @@ int odp_atomic_cas_acq_u32(odp_atomic_u32_t *atom, uint32_t *old_val,
  * @return 0 on failure, !0 on success
  */
 int odp_atomic_cas_rel_u32(odp_atomic_u32_t *atom, uint32_t *old_val,
-			   uint32_t new_val);
+               uint32_t new_val);
 
 /**
  * Compare and swap atomic uint32 variable using ACQUIRE-and-RELEASE memory
@@ -467,7 +467,7 @@ int odp_atomic_cas_rel_u32(odp_atomic_u32_t *atom, uint32_t *old_val,
  * @return 0 on failure, !0 on success
  */
 int odp_atomic_cas_acq_rel_u32(odp_atomic_u32_t *atom, uint32_t *old_val,
-			       uint32_t new_val);
+                   uint32_t new_val);
 
 /*
  * 64-bit operations in non-RELAXED memory ordering
@@ -533,7 +533,7 @@ void odp_atomic_sub_rel_u64(odp_atomic_u64_t *atom, uint64_t val);
  * @return 0 on failure, !0 on success
  */
 int odp_atomic_cas_acq_u64(odp_atomic_u64_t *atom, uint64_t *old_val,
-			   uint64_t new_val);
+               uint64_t new_val);
 
 /**
  * Compare and swap atomic uint64 variable using RELEASE memory ordering
@@ -549,7 +549,7 @@ int odp_atomic_cas_acq_u64(odp_atomic_u64_t *atom, uint64_t *old_val,
  * @return 0 on failure, !0 on success
  */
 int odp_atomic_cas_rel_u64(odp_atomic_u64_t *atom, uint64_t *old_val,
-			   uint64_t new_val);
+               uint64_t new_val);
 
 /**
  * Compare and swap atomic uint64 variable using ACQUIRE-and-RELEASE memory
@@ -566,7 +566,7 @@ int odp_atomic_cas_rel_u64(odp_atomic_u64_t *atom, uint64_t *old_val,
  * @return 0 on failure, !0 on success
  */
 int odp_atomic_cas_acq_rel_u64(odp_atomic_u64_t *atom, uint64_t *old_val,
-			       uint64_t new_val);
+                   uint64_t new_val);
 
 /**
  * Atomic operations
@@ -574,30 +574,30 @@ int odp_atomic_cas_acq_rel_u64(odp_atomic_u64_t *atom, uint64_t *old_val,
  * Atomic operations listed in a bit field structure.
  */
 typedef union odp_atomic_op_t {
-	/** Operation flags */
-	struct {
-		uint32_t init      : 1;  /**< Init atomic variable */
-		uint32_t load      : 1;  /**< Atomic load */
-		uint32_t store     : 1;  /**< Atomic store */
-		uint32_t fetch_add : 1;  /**< Atomic fetch and add */
-		uint32_t add       : 1;  /**< Atomic add */
-		uint32_t fetch_sub : 1;  /**< Atomic fetch and subtract */
-		uint32_t sub       : 1;  /**< Atomic subtract */
-		uint32_t fetch_inc : 1;  /**< Atomic fetch and increment */
-		uint32_t inc       : 1;  /**< Atomic increment */
-		uint32_t fetch_dec : 1;  /**< Atomic fetch and decrement */
-		uint32_t dec       : 1;  /**< Atomic decrement */
-		uint32_t min       : 1;  /**< Atomic minimum */
-		uint32_t max       : 1;  /**< Atomic maximum */
-		uint32_t cas       : 1;  /**< Atomic compare and swap */
-		uint32_t xchg      : 1;  /**< Atomic exchange */
-	} op;
+    /** Operation flags */
+    struct {
+        uint32_t init      : 1;  /**< Init atomic variable */
+        uint32_t load      : 1;  /**< Atomic load */
+        uint32_t store     : 1;  /**< Atomic store */
+        uint32_t fetch_add : 1;  /**< Atomic fetch and add */
+        uint32_t add       : 1;  /**< Atomic add */
+        uint32_t fetch_sub : 1;  /**< Atomic fetch and subtract */
+        uint32_t sub       : 1;  /**< Atomic subtract */
+        uint32_t fetch_inc : 1;  /**< Atomic fetch and increment */
+        uint32_t inc       : 1;  /**< Atomic increment */
+        uint32_t fetch_dec : 1;  /**< Atomic fetch and decrement */
+        uint32_t dec       : 1;  /**< Atomic decrement */
+        uint32_t min       : 1;  /**< Atomic minimum */
+        uint32_t max       : 1;  /**< Atomic maximum */
+        uint32_t cas       : 1;  /**< Atomic compare and swap */
+        uint32_t xchg      : 1;  /**< Atomic exchange */
+    } op;
 
-	/** All bits of the bit field structure.
-	  * Operation flag mapping is architecture specific. This field can be
-	  * used to set/clear all flags, or bitwise operations over the entire
-	  * structure. */
-	uint32_t all_bits;
+    /** All bits of the bit field structure.
+      * Operation flag mapping is architecture specific. This field can be
+      * used to set/clear all flags, or bitwise operations over the entire
+      * structure. */
+    uint32_t all_bits;
 } odp_atomic_op_t;
 
 /**

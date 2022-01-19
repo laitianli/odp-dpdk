@@ -34,7 +34,7 @@ extern "C" {
  * Don't access directly, use access functions.
  */
 typedef struct odp_thrmask_t {
-	odp_cpumask_t m; /**< @private Mask*/
+    odp_cpumask_t m; /**< @private Mask*/
 } odp_thrmask_t;
 
 /**

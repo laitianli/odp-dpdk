@@ -61,52 +61,52 @@ extern "C" {
  * Supported Packet Matching Rule term values in a bit field structure.
  */
 typedef union odp_cls_pmr_terms_t {
-	/** Packet Matching Rule term fields */
-	struct {
-		/** Total length of received packet */
-		uint64_t	len:1;
-		/** Initial (outer) Ethertype only */
-		uint64_t	ethtype_0:1;
-		/** Ethertype of most inner VLAN tag */
-		uint64_t	ethtype_x:1;
-		/** First VLAN ID (outer) */
-		uint64_t	vlan_id_0:1;
-		/** Last VLAN ID (inner) */
-		uint64_t	vlan_id_x:1;
-		/** destination MAC address */
-		uint64_t	dmac:1;
-		/** IP Protocol or IPv6 Next Header */
-		uint64_t	ip_proto:1;
-		/** Destination UDP port, implies IPPROTO=17 */
-		uint64_t	udp_dport:1;
-		/** Destination TCP port implies IPPROTO=6 */
-		uint64_t	tcp_dport:1;
-		/** Source UDP Port */
-		uint64_t	udp_sport:1;
-		/** Source TCP port */
-		uint64_t	tcp_sport:1;
-		/** Source IP address */
-		uint64_t	sip_addr:1;
-		/** Destination IP address */
-		uint64_t	dip_addr:1;
-		/** Source IP address */
-		uint64_t	sip6_addr:1;
-		/** Destination IP address */
-		uint64_t	dip6_addr:1;
-		/** IPsec session identifier */
-		uint64_t	ipsec_spi:1;
-		/** NVGRE/VXLAN network identifier */
-		uint64_t	ld_vni:1;
-		/** Custom frame match rule. PMR offset is counted from
-		 *  the start of the packet. */
-		uint64_t        custom_frame:1;
-		/** Custom layer 3 match rule. PMR offset is counted from
-		 *  the start of layer 3 in the packet. */
-		uint64_t        custom_l3:1;
+    /** Packet Matching Rule term fields */
+    struct {
+        /** Total length of received packet */
+        uint64_t    len:1;
+        /** Initial (outer) Ethertype only */
+        uint64_t    ethtype_0:1;
+        /** Ethertype of most inner VLAN tag */
+        uint64_t    ethtype_x:1;
+        /** First VLAN ID (outer) */
+        uint64_t    vlan_id_0:1;
+        /** Last VLAN ID (inner) */
+        uint64_t    vlan_id_x:1;
+        /** destination MAC address */
+        uint64_t    dmac:1;
+        /** IP Protocol or IPv6 Next Header */
+        uint64_t    ip_proto:1;
+        /** Destination UDP port, implies IPPROTO=17 */
+        uint64_t    udp_dport:1;
+        /** Destination TCP port implies IPPROTO=6 */
+        uint64_t    tcp_dport:1;
+        /** Source UDP Port */
+        uint64_t    udp_sport:1;
+        /** Source TCP port */
+        uint64_t    tcp_sport:1;
+        /** Source IP address */
+        uint64_t    sip_addr:1;
+        /** Destination IP address */
+        uint64_t    dip_addr:1;
+        /** Source IP address */
+        uint64_t    sip6_addr:1;
+        /** Destination IP address */
+        uint64_t    dip6_addr:1;
+        /** IPsec session identifier */
+        uint64_t    ipsec_spi:1;
+        /** NVGRE/VXLAN network identifier */
+        uint64_t    ld_vni:1;
+        /** Custom frame match rule. PMR offset is counted from
+         *  the start of the packet. */
+        uint64_t        custom_frame:1;
+        /** Custom layer 3 match rule. PMR offset is counted from
+         *  the start of layer 3 in the packet. */
+        uint64_t        custom_l3:1;
 
-	} bit;
-	/** All bits of the bit field structure */
-	uint64_t all_bits;
+    } bit;
+    /** All bits of the bit field structure */
+    uint64_t all_bits;
 } odp_cls_pmr_terms_t;
 
 /** Random Early Detection (RED)
@@ -124,7 +124,7 @@ typedef union odp_cls_pmr_terms_t {
  * * Drop probability is 100%, when resource usage >= threshold.max
  * * Drop probability is 0%, when resource usage <= threshold.min
  * * Drop probability is between 0...100 % when resource usage is between
- *	threshold.min and threshold.max
+ *    threshold.min and threshold.max
  *
  * RED is logically configured in the CoS and could be implemented in either
  * pool or queue linked to the CoS depending on platform capabilities.
@@ -132,16 +132,16 @@ typedef union odp_cls_pmr_terms_t {
  * BP configuration to the same queue or pool.
  */
 typedef struct odp_red_param_t {
-	/** A boolean to enable RED
-	 * When true, RED is enabled and configured with RED parameters.
-	 * Otherwise, RED parameters are ignored. */
-	odp_bool_t enable;
+    /** A boolean to enable RED
+     * When true, RED is enabled and configured with RED parameters.
+     * Otherwise, RED parameters are ignored. */
+    odp_bool_t enable;
 
-	/** Threshold parameters for RED
-	 * RED is enabled when the resource usage is equal to or greater than
-	 * the minimum threshold value and is disabled otherwise
-	 */
-	odp_threshold_t threshold;
+    /** Threshold parameters for RED
+     * RED is enabled when the resource usage is equal to or greater than
+     * the minimum threshold value and is disabled otherwise
+     */
+    odp_threshold_t threshold;
 } odp_red_param_t;
 
 /** Back pressure (BP)
@@ -149,19 +149,19 @@ typedef struct odp_red_param_t {
  * back pressure information to the remote peer indicating a network congestion.
  */
 typedef struct odp_bp_param_t {
-	/** A boolean to enable Back pressure
-	 * When true, back pressure is enabled and configured with the BP
-	 * parameters. Otherwise BP parameters are ignored.
-	 */
-	odp_bool_t enable;
+    /** A boolean to enable Back pressure
+     * When true, back pressure is enabled and configured with the BP
+     * parameters. Otherwise BP parameters are ignored.
+     */
+    odp_bool_t enable;
 
-	/** Threshold value for back pressure.
-	 * BP is enabled when the resource usage is equal to or greater than the
-	 * max backpressure threshold. Min threshold parameters are ignored for
-	 * BP configuration.
-	 * @see odp_red_param_t for 'resource usage' documentation.
-	 */
-	odp_threshold_t threshold;
+    /** Threshold value for back pressure.
+     * BP is enabled when the resource usage is equal to or greater than the
+     * max backpressure threshold. Min threshold parameters are ignored for
+     * BP configuration.
+     * @see odp_red_param_t for 'resource usage' documentation.
+     */
+    odp_threshold_t threshold;
 } odp_bp_param_t;
 
 /**
@@ -169,49 +169,49 @@ typedef struct odp_bp_param_t {
  * This capability structure defines system level classification capability
  */
 typedef struct odp_cls_capability_t {
-	/** PMR terms supported by the classifier
-	 * A bit mask of one bit for each of odp_pmr_term_t
-	 */
-	odp_cls_pmr_terms_t supported_terms;
+    /** PMR terms supported by the classifier
+     * A bit mask of one bit for each of odp_pmr_term_t
+     */
+    odp_cls_pmr_terms_t supported_terms;
 
-	/** Maximum number of PMR terms */
-	unsigned int max_pmr_terms;
+    /** Maximum number of PMR terms */
+    unsigned int max_pmr_terms;
 
-	/** Number of PMR terms available for use now */
-	unsigned int available_pmr_terms;
+    /** Number of PMR terms available for use now */
+    unsigned int available_pmr_terms;
 
-	/** Maximum number of CoS supported */
-	unsigned int max_cos;
+    /** Maximum number of CoS supported */
+    unsigned int max_cos;
 
-	/** Maximun number of queue supported per CoS
-	 * if the value is 1, then hashing is not supported*/
-	unsigned int max_hash_queues;
+    /** Maximun number of queue supported per CoS
+     * if the value is 1, then hashing is not supported*/
+    unsigned int max_hash_queues;
 
-	/** Protocol header combination supported for Hashing */
-	odp_pktin_hash_proto_t hash_protocols;
+    /** Protocol header combination supported for Hashing */
+    odp_pktin_hash_proto_t hash_protocols;
 
-	/** A Boolean to denote support of PMR range */
-	odp_bool_t pmr_range_supported;
+    /** A Boolean to denote support of PMR range */
+    odp_bool_t pmr_range_supported;
 
-	/** Support for Random Early Detection */
-	odp_support_t random_early_detection;
+    /** Support for Random Early Detection */
+    odp_support_t random_early_detection;
 
-	/** Supported threshold type for RED */
-	odp_threshold_types_t threshold_red;
+    /** Supported threshold type for RED */
+    odp_threshold_types_t threshold_red;
 
-	/** Support for Back Pressure to the remote peer */
-	odp_support_t back_pressure;
+    /** Support for Back Pressure to the remote peer */
+    odp_support_t back_pressure;
 
-	/** Supported threshold type for BP */
-	odp_threshold_types_t threshold_bp;
+    /** Supported threshold type for BP */
+    odp_threshold_types_t threshold_bp;
 } odp_cls_capability_t;
 
 /**
  * class of service packet drop policies
  */
 typedef enum {
-	ODP_COS_DROP_POOL,    /**< Follow buffer pool drop policy */
-	ODP_COS_DROP_NEVER,    /**< Never drop, ignoring buffer pool policy */
+    ODP_COS_DROP_POOL,    /**< Follow buffer pool drop policy */
+    ODP_COS_DROP_NEVER,    /**< Never drop, ignoring buffer pool policy */
 } odp_cls_drop_t;
 
 /**
@@ -220,19 +220,19 @@ typedef enum {
  * the flow signature, if present in a packet.
  */
 typedef enum {
-	ODP_COS_FHDR_IN_PKTIO,	/**< Ingress port number */
-	ODP_COS_FHDR_L2_SAP,	/**< Ethernet Source MAC address */
-	ODP_COS_FHDR_L2_DAP,	/**< Ethernet Destination MAC address */
-	ODP_COS_FHDR_L2_VID,	/**< Ethernet VLAN ID */
-	ODP_COS_FHDR_L3_FLOW,	/**< IPv6 flow_id */
-	ODP_COS_FHDR_L3_SAP,	/**< IP source address */
-	ODP_COS_FHDR_L3_DAP,	/**< IP destination address */
-	ODP_COS_FHDR_L4_PROTO,	/**< IP protocol (e.g. TCP/UDP/ICMP) */
-	ODP_COS_FHDR_L4_SAP,	/**< Transport source port */
-	ODP_COS_FHDR_L4_DAP,	/**< Transport destination port */
-	ODP_COS_FHDR_IPSEC_SPI,	/**< IPsec session identifier */
-	ODP_COS_FHDR_LD_VNI,	/**< NVGRE/VXLAN network identifier */
-	ODP_COS_FHDR_USER	/**< Application-specific header field(s) */
+    ODP_COS_FHDR_IN_PKTIO,    /**< Ingress port number */
+    ODP_COS_FHDR_L2_SAP,    /**< Ethernet Source MAC address */
+    ODP_COS_FHDR_L2_DAP,    /**< Ethernet Destination MAC address */
+    ODP_COS_FHDR_L2_VID,    /**< Ethernet VLAN ID */
+    ODP_COS_FHDR_L3_FLOW,    /**< IPv6 flow_id */
+    ODP_COS_FHDR_L3_SAP,    /**< IP source address */
+    ODP_COS_FHDR_L3_DAP,    /**< IP destination address */
+    ODP_COS_FHDR_L4_PROTO,    /**< IP protocol (e.g. TCP/UDP/ICMP) */
+    ODP_COS_FHDR_L4_SAP,    /**< Transport source port */
+    ODP_COS_FHDR_L4_DAP,    /**< Transport destination port */
+    ODP_COS_FHDR_IPSEC_SPI,    /**< IPsec session identifier */
+    ODP_COS_FHDR_LD_VNI,    /**< NVGRE/VXLAN network identifier */
+    ODP_COS_FHDR_USER    /**< Application-specific header field(s) */
 } odp_cos_hdr_flow_fields_t;
 
 /**
@@ -240,47 +240,47 @@ typedef enum {
  * Used to communicate class of service creation options
  */
 typedef struct odp_cls_cos_param {
-	/** Number of queues to be linked to this CoS.
-	 * If the number is greater than 1 then hashing is enabled.
-	 * If number is equal to 1 then hashing is disabled.
-	 * When hashing is enabled the queues are created by the implementation
-	 * and application need not configure any queue to the class of service.
-	 * When hashing is disabled application has to configure the queue to
-	 * the class of service.
-	 * Depening on the implementation this number might be rounded-off to
-	 * nearest supported value (e.g power of 2)
-	 */
-	uint32_t num_queue;
+    /** Number of queues to be linked to this CoS.
+     * If the number is greater than 1 then hashing is enabled.
+     * If number is equal to 1 then hashing is disabled.
+     * When hashing is enabled the queues are created by the implementation
+     * and application need not configure any queue to the class of service.
+     * When hashing is disabled application has to configure the queue to
+     * the class of service.
+     * Depening on the implementation this number might be rounded-off to
+     * nearest supported value (e.g power of 2)
+     */
+    uint32_t num_queue;
 
-	/** Variant mapping for queue hash configurataion */
-	union {
-		/** Mapping used when num_queue = 1, hashing is disabled in
-		 * this case and application has to configure this queue and
-		 * packets are delivered to this queue */
-		odp_queue_t queue;
+    /** Variant mapping for queue hash configurataion */
+    union {
+        /** Mapping used when num_queue = 1, hashing is disabled in
+         * this case and application has to configure this queue and
+         * packets are delivered to this queue */
+        odp_queue_t queue;
 
-		/** Mapping used when num_queue > 1, hashing is enabled in
-		 * this case and queues are created by the implementation */
-		struct {
-			/** Queue parameters */
-			odp_queue_param_t queue_param;
+        /** Mapping used when num_queue > 1, hashing is enabled in
+         * this case and queues are created by the implementation */
+        struct {
+            /** Queue parameters */
+            odp_queue_param_t queue_param;
 
-			/** Protocol header fields which are included in
-			 * packet input hash calculation */
-			odp_pktin_hash_proto_t hash_proto;
-		};
-	};
-	/** Pool associated with CoS */
-	odp_pool_t pool;
+            /** Protocol header fields which are included in
+             * packet input hash calculation */
+            odp_pktin_hash_proto_t hash_proto;
+        };
+    };
+    /** Pool associated with CoS */
+    odp_pool_t pool;
 
-	/** Drop policy associated with CoS */
-	odp_cls_drop_t drop_policy;
+    /** Drop policy associated with CoS */
+    odp_cls_drop_t drop_policy;
 
-	/** Random Early Detection configuration */
-	odp_red_param_t red;
+    /** Random Early Detection configuration */
+    odp_red_param_t red;
 
-	/** Back Pressure configuration */
-	odp_bp_param_t bp;
+    /** Back Pressure configuration */
+    odp_bp_param_t bp;
 } odp_cls_cos_param_t;
 
 /**
@@ -391,7 +391,7 @@ uint32_t odp_cls_cos_num_queue(odp_cos_t cos_id);
  * @retval on 0 failure
  */
 uint32_t odp_cls_cos_queues(odp_cos_t cos_id, odp_queue_t queue[],
-			    uint32_t num);
+                uint32_t num);
 
 /**
  * Assign packet drop policy for specific class-of-service
@@ -429,9 +429,9 @@ odp_cls_drop_t odp_cos_drop(odp_cos_t cos_id);
  * @retval <0 on failure
  */
 int odp_cos_with_l2_priority(odp_pktio_t pktio_in,
-			     uint8_t num_qos,
-			     uint8_t qos_table[],
-			     odp_cos_t cos_table[]);
+                 uint8_t num_qos,
+                 uint8_t qos_table[],
+                 odp_cos_t cos_table[]);
 
 /**
  * Request to override per-port class of service
@@ -442,7 +442,7 @@ int odp_cos_with_l2_priority(odp_pktio_t pktio_in,
  * @param qos_table      Values of the Layer-3 QoS header field.
  * @param cos_table      Class-of-service assigned to each of the allowed
  *                       Layer-3 QOS levels.
- * @param l3_preference	 when true, Layer-3 QoS overrides L2 QoS when present.
+ * @param l3_preference     when true, Layer-3 QoS overrides L2 QoS when present.
  *
  * @retval  0 on success
  * @retval <0 on failure
@@ -450,10 +450,10 @@ int odp_cos_with_l2_priority(odp_pktio_t pktio_in,
  * @note Optional.
  */
 int odp_cos_with_l3_qos(odp_pktio_t pktio_in,
-			uint32_t num_qos,
-			uint8_t qos_table[],
-			odp_cos_t cos_table[],
-			odp_bool_t l3_preference);
+            uint32_t num_qos,
+            uint8_t qos_table[],
+            odp_cos_t cos_table[],
+            odp_bool_t l3_preference);
 
 /**
  * @typedef odp_pmr_t
@@ -475,78 +475,78 @@ int odp_cos_with_l3_qos(odp_pktio_t pktio_in,
  * value/mask data.
  */
 typedef enum {
-	/** Total length of received packet. Exceptionally, value and mask are
-	  * uint32_t (val_sz = 4) in CPU endian. */
-	ODP_PMR_LEN,
+    /** Total length of received packet. Exceptionally, value and mask are
+      * uint32_t (val_sz = 4) in CPU endian. */
+    ODP_PMR_LEN,
 
-	/** Initial (outer) Ethertype only (val_sz = 2) */
-	ODP_PMR_ETHTYPE_0,
+    /** Initial (outer) Ethertype only (val_sz = 2) */
+    ODP_PMR_ETHTYPE_0,
 
-	/** Ethertype of most inner VLAN tag (val_sz = 2) */
-	ODP_PMR_ETHTYPE_X,
+    /** Ethertype of most inner VLAN tag (val_sz = 2) */
+    ODP_PMR_ETHTYPE_X,
 
-	/** First (outer) VLAN ID (val_sz = 2) */
-	ODP_PMR_VLAN_ID_0,
+    /** First (outer) VLAN ID (val_sz = 2) */
+    ODP_PMR_VLAN_ID_0,
 
-	/** Last (most inner) VLAN ID (val_sz = 2) */
-	ODP_PMR_VLAN_ID_X,
+    /** Last (most inner) VLAN ID (val_sz = 2) */
+    ODP_PMR_VLAN_ID_X,
 
-	/** Destination MAC address (val_sz = 6) */
-	ODP_PMR_DMAC,
+    /** Destination MAC address (val_sz = 6) */
+    ODP_PMR_DMAC,
 
-	/** IPv4 Protocol or IPv6 Next Header (val_sz = 1) */
-	ODP_PMR_IPPROTO,
+    /** IPv4 Protocol or IPv6 Next Header (val_sz = 1) */
+    ODP_PMR_IPPROTO,
 
-	/** Destination UDP port (val_sz = 2) */
-	ODP_PMR_UDP_DPORT,
+    /** Destination UDP port (val_sz = 2) */
+    ODP_PMR_UDP_DPORT,
 
-	/** Destination TCP port (val_sz = 2) */
-	ODP_PMR_TCP_DPORT,
+    /** Destination TCP port (val_sz = 2) */
+    ODP_PMR_TCP_DPORT,
 
-	/** Source UDP port (val_sz = 2) */
-	ODP_PMR_UDP_SPORT,
+    /** Source UDP port (val_sz = 2) */
+    ODP_PMR_UDP_SPORT,
 
-	/** Source TCP port (val_sz = 2) */
-	ODP_PMR_TCP_SPORT,
+    /** Source TCP port (val_sz = 2) */
+    ODP_PMR_TCP_SPORT,
 
-	/** Source IPv4 address (val_sz = 4) */
-	ODP_PMR_SIP_ADDR,
+    /** Source IPv4 address (val_sz = 4) */
+    ODP_PMR_SIP_ADDR,
 
-	/** Destination IPv4 address (val_sz = 4) */
-	ODP_PMR_DIP_ADDR,
+    /** Destination IPv4 address (val_sz = 4) */
+    ODP_PMR_DIP_ADDR,
 
-	/** Source IPv6 address (val_sz = 16) */
-	ODP_PMR_SIP6_ADDR,
+    /** Source IPv6 address (val_sz = 16) */
+    ODP_PMR_SIP6_ADDR,
 
-	/** Destination IPv6 address (val_sz = 16) */
-	ODP_PMR_DIP6_ADDR,
+    /** Destination IPv6 address (val_sz = 16) */
+    ODP_PMR_DIP6_ADDR,
 
-	/** IPsec session identifier (val_sz = 4)*/
-	ODP_PMR_IPSEC_SPI,
+    /** IPsec session identifier (val_sz = 4)*/
+    ODP_PMR_IPSEC_SPI,
 
-	/** NVGRE/VXLAN network identifier (val_sz = 4) */
-	ODP_PMR_LD_VNI,
+    /** NVGRE/VXLAN network identifier (val_sz = 4) */
+    ODP_PMR_LD_VNI,
 
-	/**
-	 * Custom frame match rule
-	 *
-	 * PMR offset is counted from the start of the packet. The match is
-	 * defined by the offset, the expected value, and its size. Custom frame
-	 * rules must be applied before any other PMR.
-	 */
-	ODP_PMR_CUSTOM_FRAME,
+    /**
+     * Custom frame match rule
+     *
+     * PMR offset is counted from the start of the packet. The match is
+     * defined by the offset, the expected value, and its size. Custom frame
+     * rules must be applied before any other PMR.
+     */
+    ODP_PMR_CUSTOM_FRAME,
 
-	/**
-	 * Custom layer 3 match rule
-	 *
-	 * PMR offset is counted from the start of layer 3 in the packet.
-	 * The match is defined by the offset, the expected value, and its size.
-	 * Custom L3 rules may be combined with other PMRs.
-	 */
-	ODP_PMR_CUSTOM_L3,
+    /**
+     * Custom layer 3 match rule
+     *
+     * PMR offset is counted from the start of layer 3 in the packet.
+     * The match is defined by the offset, the expected value, and its size.
+     * Custom L3 rules may be combined with other PMRs.
+     */
+    ODP_PMR_CUSTOM_L3,
 
-	/** Inner header may repeat above values with this offset */
-	ODP_PMR_INNER_HDR_OFF = 32
+    /** Inner header may repeat above values with this offset */
+    ODP_PMR_INNER_HDR_OFF = 32
 
 } odp_cls_pmr_term_t;
 
@@ -559,46 +559,46 @@ typedef enum {
  * an exception to this (uint32_t in CPU endian).
  */
 typedef struct odp_pmr_param_t {
-	odp_cls_pmr_term_t  term;	/**< Packet Matching Rule term */
+    odp_cls_pmr_term_t  term;    /**< Packet Matching Rule term */
 
-	/** True if the value is range and false if match */
-	odp_bool_t range_term;
+    /** True if the value is range and false if match */
+    odp_bool_t range_term;
 
-	/** Variant mappings for types of matches */
-	union {
-		/** Parameters for single-valued matches */
-		struct {
-			/** Points to the value to be matched. Value size and
-			 *  endianness are defined by the term used. Values of
-			 *  protocol fields are defined in big endian format.
-			 */
-			const void *value;
+    /** Variant mappings for types of matches */
+    union {
+        /** Parameters for single-valued matches */
+        struct {
+            /** Points to the value to be matched. Value size and
+             *  endianness are defined by the term used. Values of
+             *  protocol fields are defined in big endian format.
+             */
+            const void *value;
 
-			/** Mask of the bits to be matched. The same size and
-			 *  endianness is used than with the value. */
-			const void *mask;
-		} match;
+            /** Mask of the bits to be matched. The same size and
+             *  endianness is used than with the value. */
+            const void *mask;
+        } match;
 
-		/** Parameter for range value matches */
-		struct {
-			/** Start value of the range */
-			const void *val_start;
+        /** Parameter for range value matches */
+        struct {
+            /** Start value of the range */
+            const void *val_start;
 
-			/** End value of the range */
-			const void *val_end;
-		} range;
-	};
+            /** End value of the range */
+            const void *val_end;
+        } range;
+    };
 
-	/** Size of the value to be matched */
-	uint32_t val_sz;
+    /** Size of the value to be matched */
+    uint32_t val_sz;
 
-	/** Offset to the value
-	 *
-	 * Byte offset to the value to be matched in a packet. PMR term defines
-	 * starting point for the offset. Used only with custom PMR terms,
-	 * ignored with other terms.
-	 */
-	uint32_t offset;
+    /** Offset to the value
+     *
+     * Byte offset to the value to be matched in a packet. PMR term defines
+     * starting point for the offset. Used only with custom PMR terms,
+     * ignored with other terms.
+     */
+    uint32_t offset;
 
 } odp_pmr_param_t;
 
@@ -634,7 +634,7 @@ void odp_cls_pmr_param_init(odp_pmr_param_t *param);
  * @retval ODP_PMR_INVALID on failure
  */
 odp_pmr_t odp_cls_pmr_create(const odp_pmr_param_t *terms, int num_terms,
-			     odp_cos_t src_cos, odp_cos_t dst_cos);
+                 odp_cos_t src_cos, odp_cos_t dst_cos);
 
 /**
  * Function to destroy a packet match rule

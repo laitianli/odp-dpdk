@@ -41,7 +41,7 @@ extern "C" {
  *         On failure: -1 for the parent, -2 for the child
  */
 int odph_linux_process_fork(odph_linux_process_t *proc, int cpu,
-			    const odph_linux_thr_params_t *thr_params);
+                const odph_linux_thr_params_t *thr_params);
 
 /**
  * Fork a number of processes
@@ -57,8 +57,8 @@ int odph_linux_process_fork(odph_linux_process_t *proc, int cpu,
  *         On failure: -1 for the parent, -2 for the child
  */
 int odph_linux_process_fork_n(odph_linux_process_t *proc_tbl,
-			      const odp_cpumask_t *mask,
-			      const odph_linux_thr_params_t *thr_params);
+                  const odp_cpumask_t *mask,
+                  const odph_linux_thr_params_t *thr_params);
 
 /**
  * Wait for a number of processes

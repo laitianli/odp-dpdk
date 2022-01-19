@@ -75,25 +75,25 @@ extern "C" {
 #define ODPH_IPV4HDR_IS_FRAGMENT(frag_offset) ((frag_offset) & 0x3fff)
 
 /** @internal Checksum offset in IPv4 header */
-#define ODPH_IPV4HDR_CSUM_OFFSET	10
+#define ODPH_IPV4HDR_CSUM_OFFSET    10
 
 /** IPv4 header */
 typedef struct ODP_PACKED {
-	uint8_t    ver_ihl;     /**< Version / Header length */
-	uint8_t    tos;         /**< Type of service */
-	odp_u16be_t tot_len;    /**< Total length */
-	odp_u16be_t id;         /**< ID */
-	odp_u16be_t frag_offset;/**< Fragmentation offset */
-	uint8_t    ttl;         /**< Time to live */
-	uint8_t    proto;       /**< Protocol */
-	odp_u16sum_t chksum;    /**< Checksum */
-	odp_u32be_t src_addr;   /**< Source address */
-	odp_u32be_t dst_addr;   /**< Destination address */
+    uint8_t    ver_ihl;     /**< Version / Header length */
+    uint8_t    tos;         /**< Type of service */
+    odp_u16be_t tot_len;    /**< Total length */
+    odp_u16be_t id;         /**< ID */
+    odp_u16be_t frag_offset;/**< Fragmentation offset */
+    uint8_t    ttl;         /**< Time to live */
+    uint8_t    proto;       /**< Protocol */
+    odp_u16sum_t chksum;    /**< Checksum */
+    odp_u32be_t src_addr;   /**< Source address */
+    odp_u32be_t dst_addr;   /**< Destination address */
 } odph_ipv4hdr_t;
 
 /** @internal Compile time assert */
 ODP_STATIC_ASSERT(sizeof(odph_ipv4hdr_t) == ODPH_IPV4HDR_LEN,
-		  "ODPH_IPV4HDR_T__SIZE_ERROR");
+          "ODPH_IPV4HDR_T__SIZE_ERROR");
 
 /**
  * Calculate IPv4 header checksum
@@ -107,27 +107,27 @@ ODP_STATIC_ASSERT(sizeof(odph_ipv4hdr_t) == ODPH_IPV4HDR_LEN,
  * @retval <0 On failure
  */
 static inline int odph_ipv4_csum(odp_packet_t pkt,
-				 uint32_t offset,
-				 odph_ipv4hdr_t *ip,
-				 odp_u16sum_t *chksum)
+                 uint32_t offset,
+                 odph_ipv4hdr_t *ip,
+                 odp_u16sum_t *chksum)
 {
-	unsigned nleft = ODPH_IPV4HDR_IHL(ip->ver_ihl) * 4;
-	uint16_t buf[nleft / 2];
-	int res;
+    unsigned nleft = ODPH_IPV4HDR_IHL(ip->ver_ihl) * 4;
+    uint16_t buf[nleft / 2];
+    int res;
 
-	if (odp_unlikely(nleft < sizeof(*ip)))
-		return -1;
-	ip->chksum = 0;
-	memcpy(buf, ip, sizeof(*ip));
-	res = odp_packet_copy_to_mem(pkt, offset + sizeof(*ip),
-				     nleft - sizeof(*ip),
-				     buf + sizeof(*ip) / 2);
-	if (odp_unlikely(res < 0))
-		return res;
+    if (odp_unlikely(nleft < sizeof(*ip)))
+        return -1;
+    ip->chksum = 0;
+    memcpy(buf, ip, sizeof(*ip));
+    res = odp_packet_copy_to_mem(pkt, offset + sizeof(*ip),
+                     nleft - sizeof(*ip),
+                     buf + sizeof(*ip) / 2);
+    if (odp_unlikely(res < 0))
+        return res;
 
-	*chksum = ~odp_chksum_ones_comp16(buf, nleft);
+    *chksum = ~odp_chksum_ones_comp16(buf, nleft);
 
-	return 0;
+    return 0;
 }
 
 /**
@@ -139,26 +139,26 @@ static inline int odph_ipv4_csum(odp_packet_t pkt,
  */
 static inline int odph_ipv4_csum_valid(odp_packet_t pkt)
 {
-	uint32_t offset;
-	int res;
-	odph_ipv4hdr_t ip;
-	odp_u16sum_t chksum, cur_chksum;
+    uint32_t offset;
+    int res;
+    odph_ipv4hdr_t ip;
+    odp_u16sum_t chksum, cur_chksum;
 
-	offset = odp_packet_l3_offset(pkt);
-	if (offset == ODP_PACKET_OFFSET_INVALID)
-		return 0;
+    offset = odp_packet_l3_offset(pkt);
+    if (offset == ODP_PACKET_OFFSET_INVALID)
+        return 0;
 
-	res = odp_packet_copy_to_mem(pkt, offset, sizeof(odph_ipv4hdr_t), &ip);
-	if (odp_unlikely(res < 0))
-		return 0;
+    res = odp_packet_copy_to_mem(pkt, offset, sizeof(odph_ipv4hdr_t), &ip);
+    if (odp_unlikely(res < 0))
+        return 0;
 
-	chksum = ip.chksum;
+    chksum = ip.chksum;
 
-	res = odph_ipv4_csum(pkt, offset, &ip, &cur_chksum);
-	if (odp_unlikely(res < 0))
-		return 0;
+    res = odph_ipv4_csum(pkt, offset, &ip, &cur_chksum);
+    if (odp_unlikely(res < 0))
+        return 0;
 
-	return (cur_chksum == chksum) ? 1 : 0;
+    return (cur_chksum == chksum) ? 1 : 0;
 }
 
 /**
@@ -171,26 +171,26 @@ static inline int odph_ipv4_csum_valid(odp_packet_t pkt)
  */
 static inline int odph_ipv4_csum_update(odp_packet_t pkt)
 {
-	uint32_t offset;
-	odph_ipv4hdr_t ip;
-	odp_u16sum_t chksum;
-	int res;
+    uint32_t offset;
+    odph_ipv4hdr_t ip;
+    odp_u16sum_t chksum;
+    int res;
 
-	offset = odp_packet_l3_offset(pkt);
-	if (offset == ODP_PACKET_OFFSET_INVALID)
-		return -1;
+    offset = odp_packet_l3_offset(pkt);
+    if (offset == ODP_PACKET_OFFSET_INVALID)
+        return -1;
 
-	res = odp_packet_copy_to_mem(pkt, offset, sizeof(ip), &ip);
-	if (odp_unlikely(res < 0))
-		return res;
+    res = odp_packet_copy_to_mem(pkt, offset, sizeof(ip), &ip);
+    if (odp_unlikely(res < 0))
+        return res;
 
-	res = odph_ipv4_csum(pkt, offset, &ip, &chksum);
-	if (odp_unlikely(res < 0))
-		return res;
+    res = odph_ipv4_csum(pkt, offset, &ip, &chksum);
+    if (odp_unlikely(res < 0))
+        return res;
 
-	return odp_packet_copy_from_mem(pkt,
-					offset + ODPH_IPV4HDR_CSUM_OFFSET,
-					2, &chksum);
+    return odp_packet_copy_from_mem(pkt,
+                    offset + ODPH_IPV4HDR_CSUM_OFFSET,
+                    2, &chksum);
 }
 
 /** IPv6 version */
@@ -218,33 +218,33 @@ static inline int odph_ipv4_csum_update(odp_packet_t pkt)
 
 /** @internal Returns IPv6 DSCP */
 #define ODPH_IPV6HDR_DSCP(ver_tc_flow) \
-	(uint8_t)((((ver_tc_flow) & 0x0fc00000) >> 22) & 0xff)
+    (uint8_t)((((ver_tc_flow) & 0x0fc00000) >> 22) & 0xff)
 
 /**
  * IPv6 header
  */
 typedef struct ODP_PACKED {
-	odp_u32be_t ver_tc_flow; /**< Version / Traffic class / Flow label */
-	odp_u16be_t payload_len; /**< Payload length */
-	uint8_t    next_hdr;     /**< Next header */
-	uint8_t    hop_limit;    /**< Hop limit */
-	uint8_t    src_addr[16]; /**< Source address */
-	uint8_t    dst_addr[16]; /**< Destination address */
+    odp_u32be_t ver_tc_flow; /**< Version / Traffic class / Flow label */
+    odp_u16be_t payload_len; /**< Payload length */
+    uint8_t    next_hdr;     /**< Next header */
+    uint8_t    hop_limit;    /**< Hop limit */
+    uint8_t    src_addr[16]; /**< Source address */
+    uint8_t    dst_addr[16]; /**< Destination address */
 } odph_ipv6hdr_t;
 
 /** @internal Compile time assert */
 ODP_STATIC_ASSERT(sizeof(odph_ipv6hdr_t) == ODPH_IPV6HDR_LEN,
-		  "ODPH_IPV6HDR_T__SIZE_ERROR");
+          "ODPH_IPV6HDR_T__SIZE_ERROR");
 
 /**
  * IPv6 Header extensions
  */
 typedef struct ODP_PACKED {
-	uint8_t    next_hdr;     /**< Protocol of next header */
-	uint8_t    ext_len;      /**< Length of this extension in 8 byte units,
-				    not counting first 8 bytes, so 0 = 8 bytes
-				    1 = 16 bytes, etc. */
-	uint8_t    filler[6];    /**< Fill out first 8 byte segment */
+    uint8_t    next_hdr;     /**< Protocol of next header */
+    uint8_t    ext_len;      /**< Length of this extension in 8 byte units,
+                    not counting first 8 bytes, so 0 = 8 bytes
+                    1 = 16 bytes, etc. */
+    uint8_t    filler[6];    /**< Fill out first 8 byte segment */
 } odph_ipv6hdr_ext_t;
 
 /** @name
@@ -260,7 +260,7 @@ typedef struct ODP_PACKED {
 #define ODPH_IPPROTO_ESP     0x32 /**< Encapsulating Security Payload (50) */
 #define ODPH_IPPROTO_ICMPV6  0x3A /**< Internet Control Message Protocol (58) */
 #define ODPH_IPPROTO_SCTP    0x84 /**< Stream Control Transmission protocol
-				       (132) */
+                       (132) */
 #define ODPH_IPPROTO_INVALID 0xFF /**< Reserved invalid by IANA */
 
 /**@}*/

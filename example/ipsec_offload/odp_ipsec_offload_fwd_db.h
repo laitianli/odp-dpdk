@@ -23,21 +23,21 @@ extern "C" {
  */
 
 typedef struct fwd_db_entry_s {
-	struct fwd_db_entry_s *next;          /**< Next entry on list */
-	char                   oif[OIF_LEN];  /**< Output interface name */
-	odp_pktout_queue_t	pktout;         /**< Output transmit queue */
-	uint8_t   src_mac[ODPH_ETHADDR_LEN];  /**< Output source MAC */
-	uint8_t   dst_mac[ODPH_ETHADDR_LEN];  /**< Output destination MAC */
-	ip_addr_range_t        subnet;        /**< Subnet for this router */
+    struct fwd_db_entry_s *next;          /**< Next entry on list */
+    char                   oif[OIF_LEN];  /**< Output interface name */
+    odp_pktout_queue_t    pktout;         /**< Output transmit queue */
+    uint8_t   src_mac[ODPH_ETHADDR_LEN];  /**< Output source MAC */
+    uint8_t   dst_mac[ODPH_ETHADDR_LEN];  /**< Output destination MAC */
+    ip_addr_range_t        subnet;        /**< Subnet for this router */
 } fwd_db_entry_t;
 
 /**
  * Forwarding data base global structure
  */
 typedef struct fwd_db_s {
-	uint32_t          index;          /**< Next available entry */
-	fwd_db_entry_t   *list;           /**< List of active routes */
-	fwd_db_entry_t    array[MAX_DB];  /**< Entry storage */
+    uint32_t          index;          /**< Next available entry */
+    fwd_db_entry_t   *list;           /**< List of active routes */
+    fwd_db_entry_t    array[MAX_DB];  /**< Entry storage */
 } fwd_db_t;
 
 /** Global pointer to fwd db */
@@ -47,18 +47,18 @@ extern fwd_db_t *fwd_db;
  * Flow cache table entry
  */
 typedef struct {
-	void			*next;	/**< Pointer to next flow in list*/
-	uint32_t		l3_src;	/**< Source IP Address*/
-	uint32_t		l3_dst;	/**< Destination IP Address*/
-	ipsec_out_entry_t	out_port; /**< Out interface of matching flow*/
+    void            *next;    /**< Pointer to next flow in list*/
+    uint32_t        l3_src;    /**< Source IP Address*/
+    uint32_t        l3_dst;    /**< Destination IP Address*/
+    ipsec_out_entry_t    out_port; /**< Out interface of matching flow*/
 } flow_entry_t;
 
 /**
  * Flow cache table bucket
  */
 typedef struct {
-	odp_spinlock_t		lock;	/**< Bucket lock*/
-	flow_entry_t		*next;	/**< Pointer to first flow entry in bucket*/
+    odp_spinlock_t        lock;    /**< Bucket lock*/
+    flow_entry_t        *next;    /**< Pointer to first flow entry in bucket*/
 } flow_bucket_t;
 
 /**
@@ -95,52 +95,52 @@ void init_routing_table(void);
  * @return Matching flow entry
  */
 static inline flow_entry_t *route_flow_lookup_in_bucket(uint32_t sip,
-							uint32_t dip,
-							void *bucket)
+                            uint32_t dip,
+                            void *bucket)
 {
-	flow_entry_t      *flow, *head;
+    flow_entry_t      *flow, *head;
 
-	head = ((flow_bucket_t *)bucket)->next;
-	for (flow = head; flow != NULL; flow = flow->next) {
-		if ((flow->l3_src == sip) && (flow->l3_dst == dip))
-			return flow;
-	}
-	return NULL;
+    head = ((flow_bucket_t *)bucket)->next;
+    for (flow = head; flow != NULL; flow = flow->next) {
+        if ((flow->l3_src == sip) && (flow->l3_dst == dip))
+            return flow;
+    }
+    return NULL;
 }
 
 /**
  * Insert the flow into given hash bucket
  *
- * @param flow		Which is to be inserted
- * @param bucket	Target Hash Bucket
+ * @param flow        Which is to be inserted
+ * @param bucket    Target Hash Bucket
  */
 static inline void route_flow_insert_in_bucket(flow_entry_t *flow,
-					       void *bucket)
+                           void *bucket)
 {
-	flow_entry_t *temp;
-	flow_bucket_t *bkt = (flow_bucket_t *)bucket;
+    flow_entry_t *temp;
+    flow_bucket_t *bkt = (flow_bucket_t *)bucket;
 
-	if (!flow) {
-		ODPH_ERR("Invalid flow entry passed\n");
-		return;
-	}
+    if (!flow) {
+        ODPH_ERR("Invalid flow entry passed\n");
+        return;
+    }
 
-	LOCK(&bkt->lock);
-	/*Check that entry already exist or not*/
-	temp = route_flow_lookup_in_bucket(flow->l3_src, flow->l3_dst, bkt);
-	if (temp) {
-		UNLOCK(&bkt->lock);
-		return;
-	}
+    LOCK(&bkt->lock);
+    /*Check that entry already exist or not*/
+    temp = route_flow_lookup_in_bucket(flow->l3_src, flow->l3_dst, bkt);
+    if (temp) {
+        UNLOCK(&bkt->lock);
+        return;
+    }
 
-	if (!bkt->next) {
-		bkt->next = flow;
-	} else {
-		temp = bkt->next;
-		flow->next = temp;
-		bkt->next = flow;
-	}
-	UNLOCK(&bkt->lock);
+    if (!bkt->next) {
+        bkt->next = flow;
+    } else {
+        temp = bkt->next;
+        flow->next = temp;
+        bkt->next = flow;
+    }
+    UNLOCK(&bkt->lock);
 }
 
 /** Initialize FWD DB */
@@ -159,7 +159,7 @@ void init_fwd_db(void);
  * @return 0 if successful else -1
  */
 int create_fwd_db_entry(char *input, char **if_names, int if_count,
-			int entries);
+            int entries);
 
 /**
  * Scan FWD DB entries and resolve output queue and source MAC address

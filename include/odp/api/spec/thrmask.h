@@ -120,7 +120,7 @@ int odp_thrmask_count(const odp_thrmask_t *mask);
  * @param src2       Source thread mask 2
  */
 void odp_thrmask_and(odp_thrmask_t *dest, const odp_thrmask_t *src1,
-		     const odp_thrmask_t *src2);
+             const odp_thrmask_t *src2);
 
 /**
  * Member-wise OR over two thread masks
@@ -130,7 +130,7 @@ void odp_thrmask_and(odp_thrmask_t *dest, const odp_thrmask_t *src1,
  * @param src2       Source thread mask 2
  */
 void odp_thrmask_or(odp_thrmask_t *dest, const odp_thrmask_t *src1,
-		    const odp_thrmask_t *src2);
+            const odp_thrmask_t *src2);
 
 /**
  * Member-wise XOR over two thread masks
@@ -140,7 +140,7 @@ void odp_thrmask_or(odp_thrmask_t *dest, const odp_thrmask_t *src1,
  * @param src2       Source thread mask 2
  */
 void odp_thrmask_xor(odp_thrmask_t *dest, const odp_thrmask_t *src1,
-		     const odp_thrmask_t *src2);
+             const odp_thrmask_t *src2);
 
 /**
  * Test if two thread masks contain the same threads
@@ -152,7 +152,7 @@ void odp_thrmask_xor(odp_thrmask_t *dest, const odp_thrmask_t *src1,
  * @retval 0 if thread masks not equal
  */
 int odp_thrmask_equal(const odp_thrmask_t *mask1,
-		      const odp_thrmask_t *mask2);
+              const odp_thrmask_t *mask2);
 
 /**
  * Copy a thread mask

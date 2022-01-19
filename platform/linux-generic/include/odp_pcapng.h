@@ -20,7 +20,7 @@ extern "C" {
 int _odp_pcapng_start(pktio_entry_t *entry);
 void _odp_pcapng_stop(pktio_entry_t *entry);
 int _odp_pcapng_write_pkts(pktio_entry_t *entry, int qidx,
-			   const odp_packet_t packets[], int num);
+               const odp_packet_t packets[], int num);
 
 #ifdef __cplusplus
 }

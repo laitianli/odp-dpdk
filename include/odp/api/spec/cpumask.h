@@ -122,7 +122,7 @@ int odp_cpumask_count(const odp_cpumask_t *mask);
  * @param src2    Source CPU mask 2
  */
 void odp_cpumask_and(odp_cpumask_t *dest, const odp_cpumask_t *src1,
-		     const odp_cpumask_t *src2);
+             const odp_cpumask_t *src2);
 
 /**
  * Member-wise OR over two CPU masks
@@ -132,7 +132,7 @@ void odp_cpumask_and(odp_cpumask_t *dest, const odp_cpumask_t *src1,
  * @param src2    Source CPU mask 2
  */
 void odp_cpumask_or(odp_cpumask_t *dest, const odp_cpumask_t *src1,
-		    const odp_cpumask_t *src2);
+            const odp_cpumask_t *src2);
 
 /**
  * Member-wise XOR over two CPU masks
@@ -142,7 +142,7 @@ void odp_cpumask_or(odp_cpumask_t *dest, const odp_cpumask_t *src1,
  * @param src2    Source CPU mask 2
  */
 void odp_cpumask_xor(odp_cpumask_t *dest, const odp_cpumask_t *src1,
-		     const odp_cpumask_t *src2);
+             const odp_cpumask_t *src2);
 
 /**
  * Test if two CPU masks contain the same CPUs
@@ -154,7 +154,7 @@ void odp_cpumask_xor(odp_cpumask_t *dest, const odp_cpumask_t *src1,
  * @retval 0 if CPU masks not equal
  */
 int odp_cpumask_equal(const odp_cpumask_t *mask1,
-		      const odp_cpumask_t *mask2);
+              const odp_cpumask_t *mask2);
 
 /**
  * Copy a CPU mask

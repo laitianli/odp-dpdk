@@ -31,18 +31,18 @@ extern "C" {
  * ODP_SUPPORT_NO, the feature is supported in some form.
  */
 typedef enum odp_support_t {
-	/**
-	 * Feature is not supported
-	 */
-	ODP_SUPPORT_NO = 0,
-	/**
-	 * Feature is supported
-	 */
-	ODP_SUPPORT_YES,
-	/**
-	 * Feature is supported and preferred
-	 */
-	ODP_SUPPORT_PREFERRED
+    /**
+     * Feature is not supported
+     */
+    ODP_SUPPORT_NO = 0,
+    /**
+     * Feature is supported
+     */
+    ODP_SUPPORT_YES,
+    /**
+     * Feature is supported and preferred
+     */
+    ODP_SUPPORT_PREFERRED
 } odp_support_t;
 
 /**

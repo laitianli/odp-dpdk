@@ -12,7 +12,7 @@
 
 int main(void)
 {
-	printf("\nHelper library versions is: %s\n\n", odph_version_str());
+    printf("\nHelper library versions is: %s\n\n", odph_version_str());
 
-	return 0;
+    return 0;
 }

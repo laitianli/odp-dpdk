@@ -1,7 +1,7 @@
 /* Copyright (c) 2017-2018, Linaro Limited
  * All rights reserved.
  *
- * SPDX-License-Identifier:	 BSD-3-Clause
+ * SPDX-License-Identifier:     BSD-3-Clause
  */
 
 #ifndef ODP_FRAGREASS_PP_IP_H_
@@ -9,21 +9,21 @@
 
 #include <odp/helper/ip.h>
 
-#define IP_HDR_LEN_MIN	ODPH_IPV4HDR_LEN
-#define IP_HDR_LEN_MAX	60
-#define IP_IHL_MIN	ODPH_IPV4HDR_IHL_MIN
-#define IP_IHL_MAX	15
-#define IP_OCTET_MAX	((1U << 14U) - 1U) /* 65535 bytes, 8192 octs, 14 bits */
-#define IP_FRAGOFF_MAX	8192 /* 13 bits */
+#define IP_HDR_LEN_MIN    ODPH_IPV4HDR_LEN
+#define IP_HDR_LEN_MAX    60
+#define IP_IHL_MIN    ODPH_IPV4HDR_IHL_MIN
+#define IP_IHL_MAX    15
+#define IP_OCTET_MAX    ((1U << 14U) - 1U) /* 65535 bytes, 8192 octs, 14 bits */
+#define IP_FRAGOFF_MAX    8192 /* 13 bits */
 
 #define IP_FRAG_RESV 0x8000 /**< "Reserved" fragment flag (must be zero) */
 #define IP_FRAG_DONT 0x4000 /**< "Don't Fragment" (DF) fragment flag */
 #define IP_FRAG_MORE 0x2000 /**< "More Fragments" (MF) fragment flag */
 #define IP_FRAG_MASK 0x1fff /**< "Fragment Offset" mask */
 
-#define BYTES_TO_OCTS(bytes)	(((bytes) + 7U) / 8U)
-#define OCTS_TO_BYTES(bytes)	((bytes) * 8)
-#define WORDS_TO_BYTES(words)	((words) * 4)
+#define BYTES_TO_OCTS(bytes)    (((bytes) + 7U) / 8U)
+#define OCTS_TO_BYTES(bytes)    ((bytes) * 8)
+#define WORDS_TO_BYTES(words)    ((words) * 4)
 
 /**
  * Initialise an IPv4 header structure
@@ -32,12 +32,12 @@
  */
 static inline void ipv4hdr_init(odph_ipv4hdr_t *h)
 {
-	h->ver_ihl     = 0x45; /* IHL of 5, Version of 4 [0x45 = 0100 0101] */
-	h->tos         = 0;
-	h->tot_len     = odp_cpu_to_be_16(IP_HDR_LEN_MIN);
-	h->frag_offset = 0;
-	h->ttl         = UINT8_MAX;
-	h->chksum      = 0;
+    h->ver_ihl     = 0x45; /* IHL of 5, Version of 4 [0x45 = 0100 0101] */
+    h->tos         = 0;
+    h->tot_len     = odp_cpu_to_be_16(IP_HDR_LEN_MIN);
+    h->frag_offset = 0;
+    h->ttl         = UINT8_MAX;
+    h->chksum      = 0;
 }
 
 /**
@@ -49,7 +49,7 @@ static inline void ipv4hdr_init(odph_ipv4hdr_t *h)
  */
 static inline uint8_t ipv4hdr_ihl_words(odph_ipv4hdr_t h)
 {
-	return ODPH_IPV4HDR_IHL(h.ver_ihl);
+    return ODPH_IPV4HDR_IHL(h.ver_ihl);
 }
 
 /**
@@ -61,7 +61,7 @@ static inline uint8_t ipv4hdr_ihl_words(odph_ipv4hdr_t h)
  */
 static inline uint8_t ipv4hdr_ihl(odph_ipv4hdr_t h)
 {
-	return WORDS_TO_BYTES(ipv4hdr_ihl_words(h));
+    return WORDS_TO_BYTES(ipv4hdr_ihl_words(h));
 }
 
 /**
@@ -72,8 +72,8 @@ static inline uint8_t ipv4hdr_ihl(odph_ipv4hdr_t h)
  */
 static inline void ipv4hdr_set_ihl_words(odph_ipv4hdr_t *h, uint8_t ihl)
 {
-	h->ver_ihl = (ODPH_IPV4HDR_VER(h->ver_ihl) << 4)
-		     | ODPH_IPV4HDR_IHL(ihl);
+    h->ver_ihl = (ODPH_IPV4HDR_VER(h->ver_ihl) << 4)
+             | ODPH_IPV4HDR_IHL(ihl);
 }
 
 /**
@@ -85,7 +85,7 @@ static inline void ipv4hdr_set_ihl_words(odph_ipv4hdr_t *h, uint8_t ihl)
  */
 static inline bool ipv4hdr_dont_fragment(odph_ipv4hdr_t h)
 {
-	return (h.frag_offset & odp_cpu_to_be_16(IP_FRAG_DONT));
+    return (h.frag_offset & odp_cpu_to_be_16(IP_FRAG_DONT));
 }
 
 /**
@@ -96,10 +96,10 @@ static inline bool ipv4hdr_dont_fragment(odph_ipv4hdr_t h)
  */
 static inline void ipv4hdr_set_dont_fragment(odph_ipv4hdr_t *h, bool df)
 {
-	if (df)
-		h->frag_offset |=  odp_cpu_to_be_16(IP_FRAG_DONT);
-	else
-		h->frag_offset &= ~odp_cpu_to_be_16(IP_FRAG_DONT);
+    if (df)
+        h->frag_offset |=  odp_cpu_to_be_16(IP_FRAG_DONT);
+    else
+        h->frag_offset &= ~odp_cpu_to_be_16(IP_FRAG_DONT);
 }
 
 /**
@@ -111,7 +111,7 @@ static inline void ipv4hdr_set_dont_fragment(odph_ipv4hdr_t *h, bool df)
  */
 static inline bool ipv4hdr_more_fragments(odph_ipv4hdr_t h)
 {
-	return (h.frag_offset & odp_cpu_to_be_16(IP_FRAG_MORE));
+    return (h.frag_offset & odp_cpu_to_be_16(IP_FRAG_MORE));
 }
 
 /**
@@ -122,10 +122,10 @@ static inline bool ipv4hdr_more_fragments(odph_ipv4hdr_t h)
  */
 static inline void ipv4hdr_set_more_fragments(odph_ipv4hdr_t *h, bool mf)
 {
-	if (mf)
-		h->frag_offset |=  odp_cpu_to_be_16(IP_FRAG_MORE);
-	else
-		h->frag_offset &= ~odp_cpu_to_be_16(IP_FRAG_MORE);
+    if (mf)
+        h->frag_offset |=  odp_cpu_to_be_16(IP_FRAG_MORE);
+    else
+        h->frag_offset &= ~odp_cpu_to_be_16(IP_FRAG_MORE);
 }
 
 /**
@@ -137,7 +137,7 @@ static inline void ipv4hdr_set_more_fragments(odph_ipv4hdr_t *h, bool mf)
  */
 static inline bool ipv4hdr_is_fragment(odph_ipv4hdr_t h)
 {
-	return (h.frag_offset & odp_cpu_to_be_16(IP_FRAG_MORE | IP_FRAG_MASK));
+    return (h.frag_offset & odp_cpu_to_be_16(IP_FRAG_MORE | IP_FRAG_MASK));
 }
 
 /**
@@ -149,20 +149,20 @@ static inline bool ipv4hdr_is_fragment(odph_ipv4hdr_t h)
  */
 static inline uint16_t ipv4hdr_fragment_offset_oct(odph_ipv4hdr_t h)
 {
-	return (odp_be_to_cpu_16(h.frag_offset) & IP_FRAG_MASK);
+    return (odp_be_to_cpu_16(h.frag_offset) & IP_FRAG_MASK);
 }
 
 /**
  * Set the fragment offset of an IPv4 header in octets
  *
- * @param h	 A pointer to the header to set the fragment offset of
+ * @param h     A pointer to the header to set the fragment offset of
  * @param offset The new fragment offset in octets
  */
 static inline void ipv4hdr_set_fragment_offset_oct(odph_ipv4hdr_t *h,
-						   uint16_t offset)
+                           uint16_t offset)
 {
-	h->frag_offset = odp_cpu_to_be_16((odp_be_to_cpu_16(h->frag_offset)
-					   & ~IP_FRAG_MASK) | offset);
+    h->frag_offset = odp_cpu_to_be_16((odp_be_to_cpu_16(h->frag_offset)
+                       & ~IP_FRAG_MASK) | offset);
 }
 
 /**
@@ -174,11 +174,11 @@ static inline void ipv4hdr_set_fragment_offset_oct(odph_ipv4hdr_t *h,
  */
 static inline uint16_t ipv4hdr_payload_len(odph_ipv4hdr_t h)
 {
-	uint32_t packet_len  = odp_be_to_cpu_16(h.tot_len);
-	uint32_t header_size = ipv4hdr_ihl(h);
+    uint32_t packet_len  = odp_be_to_cpu_16(h.tot_len);
+    uint32_t header_size = ipv4hdr_ihl(h);
 
-	return (uint16_t)(packet_len >= header_size ? (packet_len - header_size)
-						    : 0);
+    return (uint16_t)(packet_len >= header_size ? (packet_len - header_size)
+                            : 0);
 }
 
 /**
@@ -190,7 +190,7 @@ static inline uint16_t ipv4hdr_payload_len(odph_ipv4hdr_t h)
  */
 static inline uint16_t ipv4hdr_payload_len_oct(odph_ipv4hdr_t h)
 {
-	return BYTES_TO_OCTS(ipv4hdr_payload_len(h));
+    return BYTES_TO_OCTS(ipv4hdr_payload_len(h));
 }
 
 /**
@@ -201,7 +201,7 @@ static inline uint16_t ipv4hdr_payload_len_oct(odph_ipv4hdr_t h)
  */
 static inline void ipv4hdr_set_payload_len(odph_ipv4hdr_t *h, uint16_t len)
 {
-	h->tot_len = odp_cpu_to_be_16(len + ipv4hdr_ihl(*h));
+    h->tot_len = odp_cpu_to_be_16(len + ipv4hdr_ihl(*h));
 }
 
 /**
@@ -217,13 +217,13 @@ static inline void ipv4hdr_set_payload_len(odph_ipv4hdr_t *h, uint16_t len)
  */
 static inline uint16_t ipv4hdr_reass_payload_len(odph_ipv4hdr_t h)
 {
-	uint16_t fragment_offset_oct;
+    uint16_t fragment_offset_oct;
 
-	if (ipv4hdr_more_fragments(h))
-		return UINT16_MAX;
+    if (ipv4hdr_more_fragments(h))
+        return UINT16_MAX;
 
-	fragment_offset_oct = ipv4hdr_fragment_offset_oct(h);
-	return OCTS_TO_BYTES(fragment_offset_oct) + ipv4hdr_payload_len(h);
+    fragment_offset_oct = ipv4hdr_fragment_offset_oct(h);
+    return OCTS_TO_BYTES(fragment_offset_oct) + ipv4hdr_payload_len(h);
 }
 
 /**
@@ -239,13 +239,13 @@ static inline uint16_t ipv4hdr_reass_payload_len(odph_ipv4hdr_t h)
  */
 static inline uint16_t ipv4hdr_reass_payload_len_oct(odph_ipv4hdr_t h)
 {
-	uint16_t fragment_offset_oct;
+    uint16_t fragment_offset_oct;
 
-	if (ipv4hdr_more_fragments(h))
-		return IP_OCTET_MAX;
+    if (ipv4hdr_more_fragments(h))
+        return IP_OCTET_MAX;
 
-	fragment_offset_oct = ipv4hdr_fragment_offset_oct(h);
-	return fragment_offset_oct + ipv4hdr_payload_len_oct(h);
+    fragment_offset_oct = ipv4hdr_fragment_offset_oct(h);
+    return fragment_offset_oct + ipv4hdr_payload_len_oct(h);
 }
 
 #endif

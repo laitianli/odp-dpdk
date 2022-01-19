@@ -28,22 +28,22 @@
  */
 int mac_addr_get_fd(int fd, const char *name, unsigned char mac_dst[])
 {
-	struct ifreq ethreq;
-	int ret;
+    struct ifreq ethreq;
+    int ret;
 
-	memset(&ethreq, 0, sizeof(ethreq));
-	snprintf(ethreq.ifr_name, IF_NAMESIZE, "%s", name);
-	ret = ioctl(fd, SIOCGIFHWADDR, &ethreq);
-	if (ret != 0) {
-		__odp_errno = errno;
-		ODP_ERR("ioctl(SIOCGIFHWADDR): %s: \"%s\".\n", strerror(errno),
-			ethreq.ifr_name);
-		return -1;
-	}
+    memset(&ethreq, 0, sizeof(ethreq));
+    snprintf(ethreq.ifr_name, IF_NAMESIZE, "%s", name);
+    ret = ioctl(fd, SIOCGIFHWADDR, &ethreq);
+    if (ret != 0) {
+        __odp_errno = errno;
+        ODP_ERR("ioctl(SIOCGIFHWADDR): %s: \"%s\".\n", strerror(errno),
+            ethreq.ifr_name);
+        return -1;
+    }
 
-	memcpy(mac_dst, (unsigned char *)ethreq.ifr_ifru.ifru_hwaddr.sa_data,
-	       ETH_ALEN);
-	return 0;
+    memcpy(mac_dst, (unsigned char *)ethreq.ifr_ifru.ifru_hwaddr.sa_data,
+           ETH_ALEN);
+    return 0;
 }
 
 /*
@@ -53,18 +53,18 @@ int mac_addr_get_fd(int fd, const char *name, unsigned char mac_dst[])
  */
 uint32_t mtu_get_fd(int fd, const char *name)
 {
-	struct ifreq ifr;
-	int ret;
+    struct ifreq ifr;
+    int ret;
 
-	snprintf(ifr.ifr_name, IF_NAMESIZE, "%s", name);
-	ret = ioctl(fd, SIOCGIFMTU, &ifr);
-	if (ret < 0) {
-		__odp_errno = errno;
-		ODP_DBG("ioctl(SIOCGIFMTU): %s: \"%s\".\n", strerror(errno),
-			ifr.ifr_name);
-		return 0;
-	}
-	return ifr.ifr_mtu + _ODP_ETHHDR_LEN;
+    snprintf(ifr.ifr_name, IF_NAMESIZE, "%s", name);
+    ret = ioctl(fd, SIOCGIFMTU, &ifr);
+    if (ret < 0) {
+        __odp_errno = errno;
+        ODP_DBG("ioctl(SIOCGIFMTU): %s: \"%s\".\n", strerror(errno),
+            ifr.ifr_name);
+        return 0;
+    }
+    return ifr.ifr_mtu + _ODP_ETHHDR_LEN;
 }
 
 /*
@@ -72,20 +72,20 @@ uint32_t mtu_get_fd(int fd, const char *name)
  */
 int mtu_set_fd(int fd, const char *name, int mtu)
 {
-	struct ifreq ifr;
-	int ret;
+    struct ifreq ifr;
+    int ret;
 
-	snprintf(ifr.ifr_name, IF_NAMESIZE, "%s", name);
-	ifr.ifr_mtu = mtu;
+    snprintf(ifr.ifr_name, IF_NAMESIZE, "%s", name);
+    ifr.ifr_mtu = mtu;
 
-	ret = ioctl(fd, SIOCSIFMTU, &ifr);
-	if (ret < 0) {
-		__odp_errno = errno;
-		ODP_DBG("ioctl(SIOCSIFMTU): %s: \"%s\".\n", strerror(errno),
-			ifr.ifr_name);
-		return -1;
-	}
-	return 0;
+    ret = ioctl(fd, SIOCSIFMTU, &ifr);
+    if (ret < 0) {
+        __odp_errno = errno;
+        ODP_DBG("ioctl(SIOCSIFMTU): %s: \"%s\".\n", strerror(errno),
+            ifr.ifr_name);
+        return -1;
+    }
+    return 0;
 }
 
 /*
@@ -95,31 +95,31 @@ int mtu_set_fd(int fd, const char *name, int mtu)
  */
 int promisc_mode_set_fd(int fd, const char *name, int enable)
 {
-	struct ifreq ifr;
-	int ret;
+    struct ifreq ifr;
+    int ret;
 
-	snprintf(ifr.ifr_name, IF_NAMESIZE, "%s", name);
-	ret = ioctl(fd, SIOCGIFFLAGS, &ifr);
-	if (ret < 0) {
-		__odp_errno = errno;
-		ODP_DBG("ioctl(SIOCGIFFLAGS): %s: \"%s\".\n", strerror(errno),
-			ifr.ifr_name);
-		return -1;
-	}
+    snprintf(ifr.ifr_name, IF_NAMESIZE, "%s", name);
+    ret = ioctl(fd, SIOCGIFFLAGS, &ifr);
+    if (ret < 0) {
+        __odp_errno = errno;
+        ODP_DBG("ioctl(SIOCGIFFLAGS): %s: \"%s\".\n", strerror(errno),
+            ifr.ifr_name);
+        return -1;
+    }
 
-	if (enable)
-		ifr.ifr_flags |= IFF_PROMISC;
-	else
-		ifr.ifr_flags &= ~(IFF_PROMISC);
+    if (enable)
+        ifr.ifr_flags |= IFF_PROMISC;
+    else
+        ifr.ifr_flags &= ~(IFF_PROMISC);
 
-	ret = ioctl(fd, SIOCSIFFLAGS, &ifr);
-	if (ret < 0) {
-		__odp_errno = errno;
-		ODP_DBG("ioctl(SIOCSIFFLAGS): %s: \"%s\".\n", strerror(errno),
-			ifr.ifr_name);
-		return -1;
-	}
-	return 0;
+    ret = ioctl(fd, SIOCSIFFLAGS, &ifr);
+    if (ret < 0) {
+        __odp_errno = errno;
+        ODP_DBG("ioctl(SIOCSIFFLAGS): %s: \"%s\".\n", strerror(errno),
+            ifr.ifr_name);
+        return -1;
+    }
+    return 0;
 }
 
 /*
@@ -129,34 +129,34 @@ int promisc_mode_set_fd(int fd, const char *name, int enable)
  */
 int promisc_mode_get_fd(int fd, const char *name)
 {
-	struct ifreq ifr;
-	int ret;
+    struct ifreq ifr;
+    int ret;
 
-	snprintf(ifr.ifr_name, IF_NAMESIZE, "%s", name);
-	ret = ioctl(fd, SIOCGIFFLAGS, &ifr);
-	if (ret < 0) {
-		__odp_errno = errno;
-		ODP_DBG("ioctl(SIOCGIFFLAGS): %s: \"%s\".\n", strerror(errno),
-			ifr.ifr_name);
-		return -1;
-	}
+    snprintf(ifr.ifr_name, IF_NAMESIZE, "%s", name);
+    ret = ioctl(fd, SIOCGIFFLAGS, &ifr);
+    if (ret < 0) {
+        __odp_errno = errno;
+        ODP_DBG("ioctl(SIOCGIFFLAGS): %s: \"%s\".\n", strerror(errno),
+            ifr.ifr_name);
+        return -1;
+    }
 
-	return !!(ifr.ifr_flags & IFF_PROMISC);
+    return !!(ifr.ifr_flags & IFF_PROMISC);
 }
 
 int link_status_fd(int fd, const char *name)
 {
-	struct ifreq ifr;
-	int ret;
+    struct ifreq ifr;
+    int ret;
 
-	snprintf(ifr.ifr_name, IF_NAMESIZE, "%s", name);
-	ret = ioctl(fd, SIOCGIFFLAGS, &ifr);
-	if (ret < 0) {
-		__odp_errno = errno;
-		ODP_DBG("ioctl(SIOCGIFFLAGS): %s: \"%s\".\n", strerror(errno),
-			ifr.ifr_name);
-		return -1;
-	}
+    snprintf(ifr.ifr_name, IF_NAMESIZE, "%s", name);
+    ret = ioctl(fd, SIOCGIFFLAGS, &ifr);
+    if (ret < 0) {
+        __odp_errno = errno;
+        ODP_DBG("ioctl(SIOCGIFFLAGS): %s: \"%s\".\n", strerror(errno),
+            ifr.ifr_name);
+        return -1;
+    }
 
-	return !!(ifr.ifr_flags & IFF_RUNNING);
+    return !!(ifr.ifr_flags & IFF_RUNNING);
 }

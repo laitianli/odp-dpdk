@@ -21,10 +21,10 @@ extern "C" {
 
 /** @internal */
 typedef struct odp_rwlock_s {
-	odp_atomic_u32_t cnt; /**< lock count
-				0 lock not taken
-				-1 write lock taken
-				>0 read lock(s) taken */
+    odp_atomic_u32_t cnt; /**< lock count
+                0 lock not taken
+                -1 write lock taken
+                >0 read lock(s) taken */
 } odp_rwlock_t;
 
 #ifdef __cplusplus

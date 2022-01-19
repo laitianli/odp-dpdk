@@ -26,75 +26,75 @@ extern const _odp_packet_inline_offset_t _odp_packet_inline;
 
 static inline uint64_t _odp_packet_input_flags(odp_packet_t pkt)
 {
-	return _odp_pkt_get(pkt, uint64_t, input_flags);
+    return _odp_pkt_get(pkt, uint64_t, input_flags);
 }
 
 #ifndef _ODP_NO_INLINE
-	/* Inline functions by default */
-	#define _ODP_INLINE static inline
-	#define odp_packet_has_l2 __odp_packet_has_l2
-	#define odp_packet_has_eth __odp_packet_has_eth
-	#define odp_packet_has_jumbo __odp_packet_has_jumbo
-	#define odp_packet_has_flow_hash __odp_packet_has_flow_hash
-	#define odp_packet_has_flow_hash_clr __odp_packet_has_flow_hash_clr
-	#define odp_packet_has_ts __odp_packet_has_ts
-	#define odp_packet_has_ipsec __odp_packet_has_ipsec
+    /* Inline functions by default */
+    #define _ODP_INLINE static inline
+    #define odp_packet_has_l2 __odp_packet_has_l2
+    #define odp_packet_has_eth __odp_packet_has_eth
+    #define odp_packet_has_jumbo __odp_packet_has_jumbo
+    #define odp_packet_has_flow_hash __odp_packet_has_flow_hash
+    #define odp_packet_has_flow_hash_clr __odp_packet_has_flow_hash_clr
+    #define odp_packet_has_ts __odp_packet_has_ts
+    #define odp_packet_has_ipsec __odp_packet_has_ipsec
 #else
-	#undef _ODP_INLINE
-	#define _ODP_INLINE
+    #undef _ODP_INLINE
+    #define _ODP_INLINE
 #endif
 
 _ODP_INLINE int odp_packet_has_l2(odp_packet_t pkt)
 {
-	_odp_packet_input_flags_t flags;
+    _odp_packet_input_flags_t flags;
 
-	flags.all = _odp_packet_input_flags(pkt);
-	return flags.l2;
+    flags.all = _odp_packet_input_flags(pkt);
+    return flags.l2;
 }
 
 _ODP_INLINE int odp_packet_has_eth(odp_packet_t pkt)
 {
-	_odp_packet_input_flags_t flags;
+    _odp_packet_input_flags_t flags;
 
-	flags.all = _odp_packet_input_flags(pkt);
-	return flags.eth;
+    flags.all = _odp_packet_input_flags(pkt);
+    return flags.eth;
 }
 
 _ODP_INLINE int odp_packet_has_jumbo(odp_packet_t pkt)
 {
-	_odp_packet_input_flags_t flags;
+    _odp_packet_input_flags_t flags;
 
-	flags.all = _odp_packet_input_flags(pkt);
-	return flags.jumbo;
+    flags.all = _odp_packet_input_flags(pkt);
+    return flags.jumbo;
 }
 
 _ODP_INLINE int odp_packet_has_flow_hash(odp_packet_t pkt)
 {
-	return _odp_pkt_get(pkt, uint64_t, ol_flags) &
-			_odp_packet_inline.rss_flag;
+    return _odp_pkt_get(pkt, uint64_t, ol_flags) &
+            _odp_packet_inline.rss_flag;
 }
 
 _ODP_INLINE void odp_packet_has_flow_hash_clr(odp_packet_t pkt)
 {
-	uint64_t *ol_flags = &_odp_pkt_get(pkt, uint64_t, ol_flags);
+    uint64_t *ol_flags = &_odp_pkt_get(pkt, uint64_t, ol_flags);
 
-	*ol_flags &= ~_odp_packet_inline.rss_flag;
+    *ol_flags &= ~_odp_packet_inline.rss_flag;
 }
 
 _ODP_INLINE int odp_packet_has_ts(odp_packet_t pkt)
 {
-	_odp_packet_input_flags_t flags;
+    _odp_packet_input_flags_t flags;
 
-	flags.all = _odp_packet_input_flags(pkt);
-	return flags.timestamp;
+    flags.all = _odp_packet_input_flags(pkt);
+    return flags.timestamp;
 }
 
 _ODP_INLINE int odp_packet_has_ipsec(odp_packet_t pkt)
 {
-	_odp_packet_input_flags_t flags;
+    _odp_packet_input_flags_t flags;
 
-	flags.all = _odp_packet_input_flags(pkt);
-	return flags.ipsec;
+    flags.all = _odp_packet_input_flags(pkt);
+    return flags.ipsec;
 }
 
 /** @endcond */

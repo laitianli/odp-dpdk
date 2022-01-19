@@ -27,95 +27,95 @@ extern "C" {
 #include <protocols/ip.h>
 
 /* Maximum Class Of Service Entry */
-#define CLS_COS_MAX_ENTRY		64
+#define CLS_COS_MAX_ENTRY        64
 /* Maximum PMR Entry */
-#define CLS_PMR_MAX_ENTRY		256
+#define CLS_PMR_MAX_ENTRY        256
 /* Maximum PMR Terms in a PMR Set */
-#define CLS_PMRTERM_MAX			8
+#define CLS_PMRTERM_MAX            8
 /* Maximum PMRs attached in PKTIO Level */
-#define CLS_PMR_PER_COS_MAX		8
+#define CLS_PMR_PER_COS_MAX        8
 /* L2 Priority Bits */
-#define CLS_COS_L2_QOS_BITS		3
+#define CLS_COS_L2_QOS_BITS        3
 /* Max L2 QoS value */
-#define CLS_COS_MAX_L2_QOS		(1 << CLS_COS_L2_QOS_BITS)
+#define CLS_COS_MAX_L2_QOS        (1 << CLS_COS_L2_QOS_BITS)
 /* L2 DSCP Bits */
-#define CLS_COS_L3_QOS_BITS		6
+#define CLS_COS_L3_QOS_BITS        6
 /* Max L3 QoS Value */
-#define CLS_COS_MAX_L3_QOS		(1 << CLS_COS_L3_QOS_BITS)
+#define CLS_COS_MAX_L3_QOS        (1 << CLS_COS_L3_QOS_BITS)
 /* Max PMR Term size */
-#define MAX_PMR_TERM_SIZE		16
+#define MAX_PMR_TERM_SIZE        16
 /* Max queue per Class of service */
-#define CLS_COS_QUEUE_MAX		32
+#define CLS_COS_QUEUE_MAX        32
 /* Max number of implementation created queues */
-#define CLS_QUEUE_GROUP_MAX		(CLS_COS_MAX_ENTRY * CLS_COS_QUEUE_MAX)
+#define CLS_QUEUE_GROUP_MAX        (CLS_COS_MAX_ENTRY * CLS_COS_QUEUE_MAX)
 
 typedef union {
-	/* All proto fileds */
-	uint32_t all;
+    /* All proto fileds */
+    uint32_t all;
 
-	struct {
-		uint32_t ipv4:1;
-		uint32_t ipv6:1;
-		uint32_t udp:1;
-		uint32_t tcp:1;
-	};
+    struct {
+        uint32_t ipv4:1;
+        uint32_t ipv6:1;
+        uint32_t udp:1;
+        uint32_t tcp:1;
+    };
 } odp_cls_hash_proto_t;
 
 /*
  * Term and value mapping for a PMR
  */
 typedef struct pmr_term_value {
-	/* PMR Term */
-	odp_cls_pmr_term_t term;
+    /* PMR Term */
+    odp_cls_pmr_term_t term;
 
-	/* True if range, false if match */
-	odp_bool_t range_term;
+    /* True if range, false if match */
+    odp_bool_t range_term;
 
-	union {
-		/* Match value and mask */
-		struct {
-			/* Value to be matched. Arrays are used with custom and
-			 * IPv6 address terms. */
-			union {
-				uint64_t value;
-				uint8_t  value_u8[MAX_PMR_TERM_SIZE];
-				uint64_t value_u64[2];
-			};
+    union {
+        /* Match value and mask */
+        struct {
+            /* Value to be matched. Arrays are used with custom and
+             * IPv6 address terms. */
+            union {
+                uint64_t value;
+                uint8_t  value_u8[MAX_PMR_TERM_SIZE];
+                uint64_t value_u64[2];
+            };
 
-			/* Mask for the data to be matched */
-			union {
-				uint64_t mask;
-				uint8_t  mask_u8[MAX_PMR_TERM_SIZE];
-				uint64_t mask_u64[2];
-			};
+            /* Mask for the data to be matched */
+            union {
+                uint64_t mask;
+                uint8_t  mask_u8[MAX_PMR_TERM_SIZE];
+                uint64_t mask_u64[2];
+            };
 
-		} match;
+        } match;
 
-		/* Range values */
-		struct {
-			/* Start value of the range */
-			union {
-				uint64_t start;
-				uint8_t  start_u8[MAX_PMR_TERM_SIZE];
-				uint64_t start_u64[2];
-			};
+        /* Range values */
+        struct {
+            /* Start value of the range */
+            union {
+                uint64_t start;
+                uint8_t  start_u8[MAX_PMR_TERM_SIZE];
+                uint64_t start_u64[2];
+            };
 
-			/* End value of the range */
-			union {
-				uint64_t end;
-				uint8_t  end_u8[MAX_PMR_TERM_SIZE];
-				uint64_t end_u64[2];
-			};
+            /* End value of the range */
+            union {
+                uint64_t end;
+                uint8_t  end_u8[MAX_PMR_TERM_SIZE];
+                uint64_t end_u64[2];
+            };
 
-		} range;
+        } range;
 
-	};
+    };
 
-	/* Offset used with custom PMR */
-	uint32_t offset;
+    /* Offset used with custom PMR */
+    uint32_t offset;
 
-	/* Size of the value to be matched */
-	uint32_t val_sz;
+    /* Size of the value to be matched */
+    uint32_t val_sz;
 
 } pmr_term_value_t;
 
@@ -123,26 +123,26 @@ typedef struct pmr_term_value {
 Class Of Service
 */
 struct cos_s {
-	odp_queue_t queue;			/* Associated Queue */
-	odp_pool_t pool;		/* Associated Buffer pool */
-	union pmr_u *pmr[CLS_PMR_PER_COS_MAX];	/* Chained PMR */
-	union cos_u *linked_cos[CLS_PMR_PER_COS_MAX]; /* Chained CoS with PMR*/
-	uint32_t valid;			/* validity Flag */
-	odp_cls_drop_t drop_policy;	/* Associated Drop Policy */
-	size_t headroom;		/* Headroom for this CoS */
-	odp_spinlock_t lock;		/* cos lock */
-	odp_atomic_u32_t num_rule;	/* num of PMRs attached with this CoS */
-	bool queue_group;
-	odp_cls_hash_proto_t hash_proto;
-	uint32_t num_queue;
-	odp_queue_param_t queue_param;
-	char name[ODP_COS_NAME_LEN];	/* name */
-	uint8_t index;
+    odp_queue_t queue;            /* Associated Queue */
+    odp_pool_t pool;        /* Associated Buffer pool */
+    union pmr_u *pmr[CLS_PMR_PER_COS_MAX];    /* Chained PMR */
+    union cos_u *linked_cos[CLS_PMR_PER_COS_MAX]; /* Chained CoS with PMR*/
+    uint32_t valid;            /* validity Flag */
+    odp_cls_drop_t drop_policy;    /* Associated Drop Policy */
+    size_t headroom;        /* Headroom for this CoS */
+    odp_spinlock_t lock;        /* cos lock */
+    odp_atomic_u32_t num_rule;    /* num of PMRs attached with this CoS */
+    bool queue_group;
+    odp_cls_hash_proto_t hash_proto;
+    uint32_t num_queue;
+    odp_queue_param_t queue_param;
+    char name[ODP_COS_NAME_LEN];    /* name */
+    uint8_t index;
 };
 
 typedef union cos_u {
-	struct cos_s s;
-	uint8_t pad[ROUNDUP_CACHE_LINE(sizeof(struct cos_s))];
+    struct cos_s s;
+    uint8_t pad[ROUNDUP_CACHE_LINE(sizeof(struct cos_s))];
 } cos_t;
 
 /**
@@ -150,27 +150,27 @@ Packet Matching Rule
 
 **/
 struct pmr_s {
-	uint32_t valid;			/* Validity Flag */
-	odp_atomic_u32_t count;		/* num of packets matching this rule */
-	uint32_t num_pmr;		/* num of PMR Term Values*/
-	odp_spinlock_t lock;		/* pmr lock*/
-	cos_t *src_cos;			/* source CoS where PMR is attached */
-	pmr_term_value_t  pmr_term_value[CLS_PMRTERM_MAX];
-			/* List of associated PMR Terms */
+    uint32_t valid;            /* Validity Flag */
+    odp_atomic_u32_t count;        /* num of packets matching this rule */
+    uint32_t num_pmr;        /* num of PMR Term Values*/
+    odp_spinlock_t lock;        /* pmr lock*/
+    cos_t *src_cos;            /* source CoS where PMR is attached */
+    pmr_term_value_t  pmr_term_value[CLS_PMRTERM_MAX];
+            /* List of associated PMR Terms */
 };
 
 typedef union pmr_u {
-	struct pmr_s s;
-	uint8_t pad[ROUNDUP_CACHE_LINE(sizeof(struct pmr_s))];
+    struct pmr_s s;
+    uint8_t pad[ROUNDUP_CACHE_LINE(sizeof(struct pmr_s))];
 } pmr_t;
 
 typedef struct _cls_queue_grp_tbl_s {
-	odp_queue_t queue[CLS_QUEUE_GROUP_MAX];
+    odp_queue_t queue[CLS_QUEUE_GROUP_MAX];
 } _cls_queue_grp_tbl_s;
 
 typedef union _cls_queue_grp_tbl_t {
-	_cls_queue_grp_tbl_s s;
-	uint8_t pad[ROUNDUP_CACHE_LINE(sizeof(_cls_queue_grp_tbl_s))];
+    _cls_queue_grp_tbl_s s;
+    uint8_t pad[ROUNDUP_CACHE_LINE(sizeof(_cls_queue_grp_tbl_s))];
 } _cls_queue_grp_tbl_t;
 
 /**
@@ -180,8 +180,8 @@ This structure holds the mapping between L2 QoS value and
 corresponding cos_t object
 **/
 typedef struct pmr_l2_cos {
-	odp_spinlock_t lock;	/* pmr_l2_cos lock */
-	cos_t *cos[CLS_COS_MAX_L2_QOS];	/* Array of CoS objects */
+    odp_spinlock_t lock;    /* pmr_l2_cos lock */
+    cos_t *cos[CLS_COS_MAX_L2_QOS];    /* Array of CoS objects */
 } pmr_l2_cos_t;
 
 /**
@@ -191,8 +191,8 @@ This structure holds the mapping between L3 QoS value and
 corresponding cos_t object
 **/
 typedef struct pmr_l3_cos {
-	odp_spinlock_t lock;	/* pmr_l3_cos lock */
-	cos_t *cos[CLS_COS_MAX_L3_QOS];	/* Array of CoS objects */
+    odp_spinlock_t lock;    /* pmr_l3_cos lock */
+    cos_t *cos[CLS_COS_MAX_L3_QOS];    /* Array of CoS objects */
 } pmr_l3_cos_t;
 
 /**
@@ -202,27 +202,27 @@ This structure is stored in pktio_entry and holds all
 the classifier configuration value.
 **/
 typedef struct classifier {
-	cos_t *error_cos;		/* Associated Error CoS */
-	cos_t *default_cos;		/* Associated Default CoS */
-	uint32_t l3_precedence;		/* L3 QoS precedence */
-	pmr_l2_cos_t l2_cos_table;	/* L2 QoS-CoS table map */
-	pmr_l3_cos_t l3_cos_table;	/* L3 Qos-CoS table map */
-	size_t headroom;		/* Pktio Headroom */
-	size_t skip;			/* Pktio Skip Offset */
+    cos_t *error_cos;        /* Associated Error CoS */
+    cos_t *default_cos;        /* Associated Default CoS */
+    uint32_t l3_precedence;        /* L3 QoS precedence */
+    pmr_l2_cos_t l2_cos_table;    /* L2 QoS-CoS table map */
+    pmr_l3_cos_t l3_cos_table;    /* L3 Qos-CoS table map */
+    size_t headroom;        /* Pktio Headroom */
+    size_t skip;            /* Pktio Skip Offset */
 } classifier_t;
 
 /**
 Class of Service Table
 **/
 typedef struct odp_cos_table {
-	cos_t cos_entry[CLS_COS_MAX_ENTRY];
+    cos_t cos_entry[CLS_COS_MAX_ENTRY];
 } cos_tbl_t;
 
 /**
 PMR table
 **/
 typedef struct pmr_tbl {
-	pmr_t pmr[CLS_PMR_MAX_ENTRY];
+    pmr_t pmr[CLS_PMR_MAX_ENTRY];
 } pmr_tbl_t;
 
 #ifdef __cplusplus

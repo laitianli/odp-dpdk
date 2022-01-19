@@ -22,13 +22,13 @@ extern "C" {
  * them.
  */
 typedef enum fd_server_context {
-	FD_SRV_CTX_NA,  /* Not Applicable   */
-	FD_SRV_CTX_ISHM,
-	FD_SRV_CTX_END, /* upper enum limit */
+    FD_SRV_CTX_NA,  /* Not Applicable   */
+    FD_SRV_CTX_ISHM,
+    FD_SRV_CTX_END, /* upper enum limit */
 } fd_server_context_e;
 
 int _odp_fdserver_register_fd(fd_server_context_e context, uint64_t key,
-			      int fd);
+                  int fd);
 int _odp_fdserver_deregister_fd(fd_server_context_e context, uint64_t key);
 int _odp_fdserver_lookup_fd(fd_server_context_e context, uint64_t key);
 

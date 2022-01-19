@@ -25,7 +25,7 @@ _odp_int_sorted_pool_t _odp_sorted_pool_create(uint32_t max_sorted_lists);
 
 _odp_int_sorted_list_t
 _odp_sorted_list_create(_odp_int_sorted_pool_t sorted_pool,
-			uint32_t               max_entries);
+            uint32_t               max_entries);
 
 /* Enters the pair <sort_key, user_data> into a list of such entries, all
  * sorted by sort_key (lowest value first with ties going to the oldest
@@ -33,9 +33,9 @@ _odp_sorted_list_create(_odp_int_sorted_pool_t sorted_pool,
  * when a _odp_int_sorted_list_remove() call is made.
  */
 int _odp_sorted_list_insert(_odp_int_sorted_pool_t sorted_pool,
-			    _odp_int_sorted_list_t sorted_list,
-			    uint64_t               sort_key,
-			    uint64_t               user_data);
+                _odp_int_sorted_list_t sorted_list,
+                uint64_t               sort_key,
+                uint64_t               user_data);
 
 /* The odp_sorted_list_find function returns 1 iff a <sort_key, user_data>
  * pair exists in the linked list whose user_data field matches the given
@@ -45,16 +45,16 @@ int _odp_sorted_list_insert(_odp_int_sorted_pool_t sorted_pool,
  * entry is found, it's sort_key is returned via this pointer,
  */
 int _odp_sorted_list_find(_odp_int_sorted_pool_t sorted_pool,
-			  _odp_int_sorted_list_t sorted_list,
-			  uint64_t               user_data,
-			  uint64_t              *sort_key_ptr);
+              _odp_int_sorted_list_t sorted_list,
+              uint64_t               user_data,
+              uint64_t              *sort_key_ptr);
 
 /* Deletes a <sort_key, user_data> pair from the given sorted list. Returns 0
  * if the pair is found, otherwise returns -1.
  */
 int _odp_sorted_list_delete(_odp_int_sorted_pool_t sorted_pool,
-			    _odp_int_sorted_list_t sorted_list,
-			    uint64_t              user_data);
+                _odp_int_sorted_list_t sorted_list,
+                uint64_t              user_data);
 
 /* Removes and returns the list entry with the smallest sort_key.  The
  * sort_key is returned via the out ptr sort_key_ptr, and the opaque user data
@@ -63,12 +63,12 @@ int _odp_sorted_list_delete(_odp_int_sorted_pool_t sorted_pool,
  * by sort_key_ptr remains unchanged.
  */
 int _odp_sorted_list_remove(_odp_int_sorted_pool_t sorted_pool,
-			    _odp_int_sorted_list_t sorted_list,
-			    uint64_t             *sort_key_ptr,
-			    uint64_t             *user_data_ptr);
+                _odp_int_sorted_list_t sorted_list,
+                uint64_t             *sort_key_ptr,
+                uint64_t             *user_data_ptr);
 
 int _odp_sorted_list_destroy(_odp_int_sorted_pool_t sorted_pool,
-			     _odp_int_sorted_list_t sorted_list);
+                 _odp_int_sorted_list_t sorted_list);
 
 void _odp_sorted_list_stats_print(_odp_int_sorted_pool_t sorted_pool);
 

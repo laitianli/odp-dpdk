@@ -15,15 +15,15 @@ extern "C" {
 
 /* Lock-free queue functions */
 typedef struct {
-	queue_enq_fn_t enq;
-	queue_enq_multi_fn_t enq_multi;
-	queue_deq_fn_t deq;
-	queue_deq_multi_fn_t deq_multi;
+    queue_enq_fn_t enq;
+    queue_enq_multi_fn_t enq_multi;
+    queue_deq_fn_t deq;
+    queue_deq_multi_fn_t deq_multi;
 
 } queue_lf_func_t;
 
 uint32_t queue_lf_init_global(uint32_t *queue_lf_size,
-			      queue_lf_func_t *lf_func);
+                  queue_lf_func_t *lf_func);
 void queue_lf_term_global(void);
 void *queue_lf_create(queue_entry_t *queue);
 void queue_lf_destroy(void *queue_lf);

@@ -13,28 +13,28 @@
 ODP_WEAK_SYMBOL ODP_PRINTF_FORMAT(2, 3)
 int odp_override_log(odp_log_level_t level, const char *fmt, ...)
 {
-	va_list args;
-	int r;
-	FILE *logfd;
+    va_list args;
+    int r;
+    FILE *logfd;
 
-	switch (level) {
-	case ODP_LOG_ERR:
-	case ODP_LOG_UNIMPLEMENTED:
-	case ODP_LOG_ABORT:
-		logfd = stderr;
-		break;
-	default:
-		logfd = stdout;
-	}
+    switch (level) {
+    case ODP_LOG_ERR:
+    case ODP_LOG_UNIMPLEMENTED:
+    case ODP_LOG_ABORT:
+        logfd = stderr;
+        break;
+    default:
+        logfd = stdout;
+    }
 
-	va_start(args, fmt);
-	r = vfprintf(logfd, fmt, args);
-	va_end(args);
+    va_start(args, fmt);
+    r = vfprintf(logfd, fmt, args);
+    va_end(args);
 
-	return r;
+    return r;
 }
 
 ODP_WEAK_SYMBOL void odp_override_abort(void)
 {
-	abort();
+    abort();
 }

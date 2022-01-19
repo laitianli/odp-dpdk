@@ -43,22 +43,22 @@ extern uint32_t bucket_count;
 /**
  * Hash calculation utility
  */
-#define JHASH_GOLDEN_RATIO	0x9e3779b9
+#define JHASH_GOLDEN_RATIO    0x9e3779b9
 #define rot(x, k) (((x) << (k)) | ((x) >> (32 - (k))))
 #define BJ3_MIX(a, b, c) \
 { \
-	a -= c; a ^= rot(c, 4); c += b; \
-	b -= a; b ^= rot(a, 6); a += c; \
-	c -= b; c ^= rot(b, 8); b += a; \
-	a -= c; a ^= rot(c, 16); c += b; \
-	b -= a; b ^= rot(a, 19); a += c; \
-	c -= b; c ^= rot(b, 4); b += a; \
+    a -= c; a ^= rot(c, 4); c += b; \
+    b -= a; b ^= rot(a, 6); a += c; \
+    c -= b; c ^= rot(b, 8); b += a; \
+    a -= c; a ^= rot(c, 16); c += b; \
+    b -= a; b ^= rot(a, 19); a += c; \
+    c -= b; c ^= rot(b, 4); b += a; \
 }
 
 /**
  * Default Hash bucket number
  */
-#define DEFAULT_BUCKET_COUNT	1024
+#define DEFAULT_BUCKET_COUNT    1024
 
 /**< Number of bits represented by a string of hexadecimal characters */
 #define KEY_STR_BITS(str) (4 * strlen(str))
@@ -68,43 +68,43 @@ extern uint32_t bucket_count;
 
 /** Get rid of path in filename - only for unix-type paths using '/' */
 #define NO_PATH(file_name) (strrchr((file_name), '/') ?                 \
-			    strrchr((file_name), '/') + 1 : (file_name))
+                strrchr((file_name), '/') + 1 : (file_name))
 
 /**
  * Actual entries
  */
 typedef struct {
-	odp_pktout_queue_t pktout;		/**< queue handle*/
-	odph_ethaddr_t	addr;		/**< pktio MAC Address*/
-	odph_ethaddr_t	next_hop_addr;	/**< Next Hop MAC Address*/
-	odp_ipsec_sa_t sa;	/**< IPSec sa handle*/
+    odp_pktout_queue_t pktout;        /**< queue handle*/
+    odph_ethaddr_t    addr;        /**< pktio MAC Address*/
+    odph_ethaddr_t    next_hop_addr;    /**< Next Hop MAC Address*/
+    odp_ipsec_sa_t sa;    /**< IPSec sa handle*/
 } ipsec_out_entry_t;
 
 /**
  * IPsec key
  */
 typedef struct {
-	uint8_t  data[32];  /**< Key data */
-	uint8_t  length;    /**< Key length */
+    uint8_t  data[32];  /**< Key data */
+    uint8_t  length;    /**< Key length */
 } ipsec_key_t;
 
 /**
  * IPsec algorithm
  */
 typedef struct {
-	odp_bool_t cipher;
-	union {
-		odp_cipher_alg_t cipher;
-		odp_auth_alg_t   auth;
-	} u;
+    odp_bool_t cipher;
+    union {
+        odp_cipher_alg_t cipher;
+        odp_auth_alg_t   auth;
+    } u;
 } ipsec_alg_t;
 
 /**
  * IP address range (subnet)
  */
 typedef struct ip_addr_range_s {
-	uint32_t  addr;     /**< IP address */
-	uint32_t  mask;     /**< mask, 1 indicates bits are valid */
+    uint32_t  addr;     /**< IP address */
+    uint32_t  mask;     /**< mask, 1 indicates bits are valid */
 } ip_addr_range_t;
 
 /**
@@ -118,43 +118,43 @@ typedef struct ip_addr_range_s {
  */
 static inline
 int parse_key_string(char *keystring,
-		     ipsec_key_t *key,
-		     ipsec_alg_t *alg)
+             ipsec_key_t *key,
+             ipsec_alg_t *alg)
 {
-	int idx;
-	int key_bits_in = KEY_STR_BITS(keystring);
-	char temp[3];
+    int idx;
+    int key_bits_in = KEY_STR_BITS(keystring);
+    char temp[3];
 
-	key->length = 0;
+    key->length = 0;
 
-	/* Algorithm is either cipher or authentication */
-	if (alg->cipher) {
-		if ((alg->u.cipher == ODP_CIPHER_ALG_3DES_CBC) &&
-		    (KEY_BITS_3DES == key_bits_in))
-			key->length = key_bits_in / 8;
-		if ((alg->u.cipher == ODP_CIPHER_ALG_AES_CBC) &&
-		    (KEY_BITS_AES == key_bits_in))
-			key->length = key_bits_in / 8;
-	} else {
-		if ((alg->u.auth == ODP_AUTH_ALG_MD5_HMAC) &&
-		    (KEY_BITS_MD5_96 == key_bits_in))
-			key->length = key_bits_in / 8;
-		if ((alg->u.auth == ODP_AUTH_ALG_SHA1_HMAC) &&
-		    (KEY_BITS_SHA1_96 == key_bits_in))
-			key->length = key_bits_in / 8;
-		if ((alg->u.auth == ODP_AUTH_ALG_SHA256_HMAC) &&
-		    (KEY_BITS_SHA2_256 == key_bits_in))
-			key->length = key_bits_in / 8;
-	}
+    /* Algorithm is either cipher or authentication */
+    if (alg->cipher) {
+        if ((alg->u.cipher == ODP_CIPHER_ALG_3DES_CBC) &&
+            (KEY_BITS_3DES == key_bits_in))
+            key->length = key_bits_in / 8;
+        if ((alg->u.cipher == ODP_CIPHER_ALG_AES_CBC) &&
+            (KEY_BITS_AES == key_bits_in))
+            key->length = key_bits_in / 8;
+    } else {
+        if ((alg->u.auth == ODP_AUTH_ALG_MD5_HMAC) &&
+            (KEY_BITS_MD5_96 == key_bits_in))
+            key->length = key_bits_in / 8;
+        if ((alg->u.auth == ODP_AUTH_ALG_SHA1_HMAC) &&
+            (KEY_BITS_SHA1_96 == key_bits_in))
+            key->length = key_bits_in / 8;
+        if ((alg->u.auth == ODP_AUTH_ALG_SHA256_HMAC) &&
+            (KEY_BITS_SHA2_256 == key_bits_in))
+            key->length = key_bits_in / 8;
+    }
 
-	for (idx = 0; idx < key->length; idx++) {
-		temp[0] = *keystring++;
-		temp[1] = *keystring++;
-		temp[2] = 0;
-		key->data[idx] = strtol(temp, NULL, 16);
-	}
+    for (idx = 0; idx < key->length; idx++) {
+        temp[0] = *keystring++;
+        temp[1] = *keystring++;
+        temp[2] = 0;
+        key->data[idx] = strtol(temp, NULL, 16);
+    }
 
-	return key->length ? 0 : -1;
+    return key->length ? 0 : -1;
 }
 
 /**
@@ -168,7 +168,7 @@ int parse_key_string(char *keystring,
 static inline
 int match_ip_range(uint32_t addr, ip_addr_range_t *range)
 {
-	return (range->addr == (addr & range->mask));
+    return (range->addr == (addr & range->mask));
 }
 
 /**
@@ -182,12 +182,12 @@ int match_ip_range(uint32_t addr, ip_addr_range_t *range)
 static inline
 char *ipv4_addr_str(char *b, uint32_t addr)
 {
-	sprintf(b, "%03d.%03d.%03d.%03d",
-		0xFF & ((addr) >> 24),
-		0xFF & ((addr) >> 16),
-		0xFF & ((addr) >>  8),
-		0xFF & ((addr) >>  0));
-	return b;
+    sprintf(b, "%03d.%03d.%03d.%03d",
+        0xFF & ((addr) >> 24),
+        0xFF & ((addr) >> 16),
+        0xFF & ((addr) >>  8),
+        0xFF & ((addr) >>  0));
+    return b;
 }
 
 /**
@@ -205,33 +205,33 @@ char *ipv4_addr_str(char *b, uint32_t addr)
 static inline
 int parse_ipv4_string(char *ipaddress, uint32_t *addr, uint32_t *mask)
 {
-	int b[4];
-	int qualifier = 32;
-	int converted;
+    int b[4];
+    int qualifier = 32;
+    int converted;
 
-	if (strchr(ipaddress, '/')) {
-		converted = sscanf(ipaddress, "%d.%d.%d.%d/%d",
-				   &b[3], &b[2], &b[1], &b[0],
-				   &qualifier);
-		if (5 != converted)
-			return -1;
-	} else {
-		converted = sscanf(ipaddress, "%d.%d.%d.%d",
-				   &b[3], &b[2], &b[1], &b[0]);
-		if (4 != converted)
-			return -1;
-	}
+    if (strchr(ipaddress, '/')) {
+        converted = sscanf(ipaddress, "%d.%d.%d.%d/%d",
+                   &b[3], &b[2], &b[1], &b[0],
+                   &qualifier);
+        if (5 != converted)
+            return -1;
+    } else {
+        converted = sscanf(ipaddress, "%d.%d.%d.%d",
+                   &b[3], &b[2], &b[1], &b[0]);
+        if (4 != converted)
+            return -1;
+    }
 
-	if ((b[0] > 255) || (b[1] > 255) || (b[2] > 255) || (b[3] > 255))
-		return -1;
-	if (!qualifier || (qualifier > 32))
-		return -1;
+    if ((b[0] > 255) || (b[1] > 255) || (b[2] > 255) || (b[3] > 255))
+        return -1;
+    if (!qualifier || (qualifier > 32))
+        return -1;
 
-	*addr = b[0] | b[1] << 8 | b[2] << 16 | b[3] << 24;
-	if (mask)
-		*mask = ~(0xFFFFFFFF & ((1ULL << (32 - qualifier)) - 1));
+    *addr = b[0] | b[1] << 8 | b[2] << 16 | b[3] << 24;
+    if (mask)
+        *mask = ~(0xFFFFFFFF & ((1ULL << (32 - qualifier)) - 1));
 
-	return 0;
+    return 0;
 }
 
 /**
@@ -246,21 +246,21 @@ int parse_ipv4_string(char *ipaddress, uint32_t *addr, uint32_t *mask)
 static inline
 char *ipv4_subnet_str(char *b, ip_addr_range_t *range)
 {
-	int idx;
-	int len;
+    int idx;
+    int len;
 
-	for (idx = 0; idx < 32; idx++)
-		if (range->mask & (1 << idx))
-			break;
-	len = 32 - idx;
+    for (idx = 0; idx < 32; idx++)
+        if (range->mask & (1 << idx))
+            break;
+    len = 32 - idx;
 
-	sprintf(b, "%03d.%03d.%03d.%03d/%d",
-		0xFF & ((range->addr) >> 24),
-		0xFF & ((range->addr) >> 16),
-		0xFF & ((range->addr) >>  8),
-		0xFF & ((range->addr) >>  0),
-		len);
-	return b;
+    sprintf(b, "%03d.%03d.%03d.%03d/%d",
+        0xFF & ((range->addr) >> 24),
+        0xFF & ((range->addr) >> 16),
+        0xFF & ((range->addr) >>  8),
+        0xFF & ((range->addr) >>  0),
+        len);
+    return b;
 }
 
 /**
@@ -274,9 +274,9 @@ char *ipv4_subnet_str(char *b, ip_addr_range_t *range)
 static inline
 char *mac_addr_str(char *b, uint8_t *mac)
 {
-	sprintf(b, "%02X.%02X.%02X.%02X.%02X.%02X",
-		mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
-	return b;
+    sprintf(b, "%02X.%02X.%02X.%02X.%02X.%02X",
+        mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
+    return b;
 }
 
 /**
@@ -292,24 +292,24 @@ char *mac_addr_str(char *b, uint8_t *mac)
 static inline
 int parse_mac_string(char *macaddress, uint8_t *mac)
 {
-	int macwords[ODPH_ETHADDR_LEN];
-	int converted;
+    int macwords[ODPH_ETHADDR_LEN];
+    int converted;
 
-	converted = sscanf(macaddress,
-			   "%x.%x.%x.%x.%x.%x",
-			   &macwords[0], &macwords[1], &macwords[2],
-			   &macwords[3], &macwords[4], &macwords[5]);
-	if (6 != converted)
-		return -1;
+    converted = sscanf(macaddress,
+               "%x.%x.%x.%x.%x.%x",
+               &macwords[0], &macwords[1], &macwords[2],
+               &macwords[3], &macwords[4], &macwords[5]);
+    if (6 != converted)
+        return -1;
 
-	mac[0] = macwords[0];
-	mac[1] = macwords[1];
-	mac[2] = macwords[2];
-	mac[3] = macwords[3];
-	mac[4] = macwords[4];
-	mac[5] = macwords[5];
+    mac[0] = macwords[0];
+    mac[1] = macwords[1];
+    mac[2] = macwords[2];
+    mac[3] = macwords[3];
+    mac[4] = macwords[4];
+    mac[5] = macwords[5];
 
-	return 0;
+    return 0;
 }
 
 /**
@@ -323,28 +323,28 @@ int parse_mac_string(char *macaddress, uint8_t *mac)
  */
 static inline
 int locate_ipsec_headers(odph_ipv4hdr_t *ip,
-			 odph_ahhdr_t **ah_p,
-			 odph_esphdr_t **esp_p)
+             odph_ahhdr_t **ah_p,
+             odph_esphdr_t **esp_p)
 {
-	uint8_t *in = ipv4_data_p(ip);
-	odph_ahhdr_t *ah = NULL;
-	odph_esphdr_t *esp = NULL;
+    uint8_t *in = ipv4_data_p(ip);
+    odph_ahhdr_t *ah = NULL;
+    odph_esphdr_t *esp = NULL;
 
-	if (ODPH_IPPROTO_AH == ip->proto) {
-		ah = (odph_ahhdr_t *)in;
-		in += ((ah)->ah_len + 2) * 4;
-		if (ODPH_IPPROTO_ESP == ah->next_header) {
-			esp = (odph_esphdr_t *)in;
-			in += sizeof(odph_esphdr_t);
-		}
-	} else if (ODPH_IPPROTO_ESP == ip->proto) {
-		esp = (odph_esphdr_t *)in;
-		in += sizeof(odph_esphdr_t);
-	}
+    if (ODPH_IPPROTO_AH == ip->proto) {
+        ah = (odph_ahhdr_t *)in;
+        in += ((ah)->ah_len + 2) * 4;
+        if (ODPH_IPPROTO_ESP == ah->next_header) {
+            esp = (odph_esphdr_t *)in;
+            in += sizeof(odph_esphdr_t);
+        }
+    } else if (ODPH_IPPROTO_ESP == ip->proto) {
+        esp = (odph_esphdr_t *)in;
+        in += sizeof(odph_esphdr_t);
+    }
 
-	*ah_p = ah;
-	*esp_p = esp;
-	return in - (ipv4_data_p(ip));
+    *ah_p = ah;
+    *esp_p = esp;
+    return in - (ipv4_data_p(ip));
 }
 
 /**
@@ -356,7 +356,7 @@ int locate_ipsec_headers(odph_ipv4hdr_t *ip,
 static inline
 void ipv4_adjust_len(odph_ipv4hdr_t *ip, int adj)
 {
-	ip->tot_len = odp_cpu_to_be_16(odp_be_to_cpu_16(ip->tot_len) + adj);
+    ip->tot_len = odp_cpu_to_be_16(odp_be_to_cpu_16(ip->tot_len) + adj);
 }
 
 #ifdef __cplusplus

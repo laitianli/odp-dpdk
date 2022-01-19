@@ -35,12 +35,12 @@ extern "C" {
  * Don't access directly, use access functions.
  */
 typedef struct ODP_ALIGNED(8) odp_cpumask_t {
-	/** @private CPU mask storage
-	  *
-	  * This is private to the implementation.
-	  * Don't access directly, use access functions.
-	  */
-	uint8_t _u8[ODP_CPUMASK_SIZE / 8];
+    /** @private CPU mask storage
+      *
+      * This is private to the implementation.
+      * Don't access directly, use access functions.
+      */
+    uint8_t _u8[ODP_CPUMASK_SIZE / 8];
 } odp_cpumask_t;
 
 /**

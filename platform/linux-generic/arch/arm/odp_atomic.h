@@ -15,16 +15,16 @@
 
 #ifdef CONFIG_DMBSTR
 
-#define atomic_store_release(loc, val, ro)		\
-do {							\
-	_odp_release_barrier(ro);			\
-	__atomic_store_n(loc, val, __ATOMIC_RELAXED);   \
+#define atomic_store_release(loc, val, ro)        \
+do {                            \
+    _odp_release_barrier(ro);            \
+    __atomic_store_n(loc, val, __ATOMIC_RELAXED);   \
 } while (0)
 
 #else
 
 #define atomic_store_release(loc, val, ro) \
-	__atomic_store_n(loc, val, __ATOMIC_RELEASE)
+    __atomic_store_n(loc, val, __ATOMIC_RELEASE)
 
 #endif  /* CONFIG_DMBSTR */
 

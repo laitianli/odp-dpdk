@@ -73,21 +73,21 @@ extern "C" {
 
 /** IPv4 header */
 typedef struct ODP_PACKED {
-	uint8_t    ver_ihl;     /**< Version / Header length */
-	uint8_t    tos;         /**< Type of service */
-	odp_u16be_t tot_len;    /**< Total length */
-	odp_u16be_t id;         /**< ID */
-	odp_u16be_t frag_offset;/**< Fragmentation offset */
-	uint8_t    ttl;         /**< Time to live */
-	uint8_t    proto;       /**< Protocol */
-	odp_u16sum_t chksum;    /**< Checksum */
-	odp_u32be_t src_addr;   /**< Source address */
-	odp_u32be_t dst_addr;   /**< Destination address */
+    uint8_t    ver_ihl;     /**< Version / Header length */
+    uint8_t    tos;         /**< Type of service */
+    odp_u16be_t tot_len;    /**< Total length */
+    odp_u16be_t id;         /**< ID */
+    odp_u16be_t frag_offset;/**< Fragmentation offset */
+    uint8_t    ttl;         /**< Time to live */
+    uint8_t    proto;       /**< Protocol */
+    odp_u16sum_t chksum;    /**< Checksum */
+    odp_u32be_t src_addr;   /**< Source address */
+    odp_u32be_t dst_addr;   /**< Destination address */
 } _odp_ipv4hdr_t;
 
 /** @internal Compile time assert */
 ODP_STATIC_ASSERT(sizeof(_odp_ipv4hdr_t) == _ODP_IPV4HDR_LEN,
-		  "_ODP_IPV4HDR_T__SIZE_ERROR");
+          "_ODP_IPV4HDR_T__SIZE_ERROR");
 
 /** IPv6 version */
 #define _ODP_IPV6 6
@@ -114,43 +114,43 @@ ODP_STATIC_ASSERT(sizeof(_odp_ipv4hdr_t) == _ODP_IPV4HDR_LEN,
 
 /** @internal Returns IPv6 DSCP */
 #define _ODP_IPV6HDR_DSCP(ver_tc_flow) \
-	(uint8_t)((((ver_tc_flow) & 0x0fc00000) >> 22) & 0xff)
+    (uint8_t)((((ver_tc_flow) & 0x0fc00000) >> 22) & 0xff)
 
 /**
  * Ipv6 address
  */
 typedef union ODP_PACKED {
-	uint8_t		u8[16];
-	odp_u16be_t	u16[8];
-	odp_u32be_t	u32[4];
-	odp_u64be_t	u64[2];
+    uint8_t        u8[16];
+    odp_u16be_t    u16[8];
+    odp_u32be_t    u32[4];
+    odp_u64be_t    u64[2];
 } _odp_ipv6_addr_t;
 
 /**
  * IPv6 header
  */
 typedef struct ODP_PACKED {
-	odp_u32be_t ver_tc_flow; /**< Version / Traffic class / Flow label */
-	odp_u16be_t payload_len; /**< Payload length */
-	uint8_t    next_hdr;     /**< Next header */
-	uint8_t    hop_limit;    /**< Hop limit */
-	_odp_ipv6_addr_t src_addr; /**< Source address */
-	_odp_ipv6_addr_t dst_addr; /**< Destination address */
+    odp_u32be_t ver_tc_flow; /**< Version / Traffic class / Flow label */
+    odp_u16be_t payload_len; /**< Payload length */
+    uint8_t    next_hdr;     /**< Next header */
+    uint8_t    hop_limit;    /**< Hop limit */
+    _odp_ipv6_addr_t src_addr; /**< Source address */
+    _odp_ipv6_addr_t dst_addr; /**< Destination address */
 } _odp_ipv6hdr_t;
 
 /** @internal Compile time assert */
 ODP_STATIC_ASSERT(sizeof(_odp_ipv6hdr_t) == _ODP_IPV6HDR_LEN,
-		  "_ODP_IPV6HDR_T__SIZE_ERROR");
+          "_ODP_IPV6HDR_T__SIZE_ERROR");
 
 /**
  * IPv6 Header extensions
  */
 typedef struct ODP_PACKED {
-	uint8_t    next_hdr;     /**< Protocol of next header */
-	uint8_t    ext_len;      /**< Length of this extension in 8 byte units,
-				    not counting first 8 bytes, so 0 = 8 bytes
-				    1 = 16 bytes, etc. */
-	uint8_t    filler[6];    /**< Fill out first 8 byte segment */
+    uint8_t    next_hdr;     /**< Protocol of next header */
+    uint8_t    ext_len;      /**< Length of this extension in 8 byte units,
+                    not counting first 8 bytes, so 0 = 8 bytes
+                    1 = 16 bytes, etc. */
+    uint8_t    filler[6];    /**< Fill out first 8 byte segment */
 } _odp_ipv6hdr_ext_t;
 
 /** @name
@@ -170,7 +170,7 @@ typedef struct ODP_PACKED {
 #define _ODP_IPPROTO_NO_NEXT 0x3B /**< No Next Header (59) */
 #define _ODP_IPPROTO_DEST    0x3C /**< IPv6 Destination header (60) */
 #define _ODP_IPPROTO_SCTP    0x84 /**< Stream Control Transmission protocol
-				       (132) */
+                       (132) */
 #define _ODP_IPPROTO_INVALID 0xFF /**< Reserved invalid by IANA */
 
 /**@}*/

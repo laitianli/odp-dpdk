@@ -14,7 +14,7 @@ extern "C" {
 void *_ishmphy_book_va(uint64_t len);
 int _ishmphy_unbook_va(void);
 void *_ishmphy_map(int fd, void *start, uint64_t size,
-		   int flags, int mmap_flags);
+           int flags, int mmap_flags);
 int _ishmphy_unmap(void *start, uint64_t len, int flags);
 
 #ifdef __cplusplus

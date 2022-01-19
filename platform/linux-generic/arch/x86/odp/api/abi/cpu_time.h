@@ -16,7 +16,7 @@ extern "C" {
 
 static inline uint64_t _odp_cpu_global_time(void)
 {
-	return _odp_cpu_rdtsc();
+    return _odp_cpu_rdtsc();
 }
 
 int _odp_cpu_has_global_time(void);

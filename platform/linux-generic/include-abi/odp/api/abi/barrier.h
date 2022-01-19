@@ -25,8 +25,8 @@ extern "C" {
  * ODP thread synchronization barrier
  */
 struct odp_barrier_s {
-	uint32_t         count;  /**< Thread count */
-	odp_atomic_u32_t bar;    /**< Barrier counter */
+    uint32_t         count;  /**< Thread count */
+    odp_atomic_u32_t bar;    /**< Barrier counter */
 };
 
 typedef struct odp_barrier_s odp_barrier_t;

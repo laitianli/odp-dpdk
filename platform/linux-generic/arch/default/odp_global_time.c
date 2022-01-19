@@ -10,17 +10,17 @@
 
 uint64_t _odp_cpu_global_time(void)
 {
-	return 0;
+    return 0;
 }
 
 #include <odp/visibility_end.h>
 
 int _odp_cpu_has_global_time(void)
 {
-	return 0;
+    return 0;
 }
 
 uint64_t _odp_cpu_global_time_freq(void)
 {
-	return 0;
+    return 0;
 }

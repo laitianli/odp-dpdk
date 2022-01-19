@@ -14,18 +14,18 @@
 
 int main(void)
 {
-	printf("\nHelper library version is: %s\n\n", odph_version_str());
+    printf("\nHelper library version is: %s\n\n", odph_version_str());
 
-	printf("Helper debugging:\n");
-	printf("  ODPH_DEBUG:       %i\n", ODPH_DEBUG);
-	printf("  ODPH_DEBUG_PRINT: %i\n\n", ODPH_DEBUG_PRINT);
+    printf("Helper debugging:\n");
+    printf("  ODPH_DEBUG:       %i\n", ODPH_DEBUG);
+    printf("  ODPH_DEBUG_PRINT: %i\n\n", ODPH_DEBUG_PRINT);
 
-	/* ASSERT(true) should work always */
-	ODPH_ASSERT(1);
+    /* ASSERT(true) should work always */
+    ODPH_ASSERT(1);
 
-	/* ASSERT(false) should not abort when not debugging */
-	if (ODPH_DEBUG == 0)
-		ODPH_ASSERT(0);
+    /* ASSERT(false) should not abort when not debugging */
+    if (ODPH_DEBUG == 0)
+        ODPH_ASSERT(0);
 
-	return 0;
+    return 0;
 }

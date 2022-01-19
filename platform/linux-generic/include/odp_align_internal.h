@@ -1,7 +1,7 @@
 /* Copyright (c) 2014-2018, Linaro Limited
  * All rights reserved.
  *
- * SPDX-License-Identifier:	BSD-3-Clause
+ * SPDX-License-Identifier:    BSD-3-Clause
  */
 
 /**
@@ -35,25 +35,25 @@ extern "C" {
  * The value must be larger than 0 and not exceed 0x80000000.
  */
 #define ROUNDUP_POWER2_U32(x) \
-	((((uint32_t)(x)) > 0x80000000) ? 0 : (_POW2_U32_R5(x - 1) + 1))
+    ((((uint32_t)(x)) > 0x80000000) ? 0 : (_POW2_U32_R5(x - 1) + 1))
 
 /*
  * Round up 'x' to alignment 'align'
  */
 #define ROUNDUP_ALIGN(x, align)\
-	((align) * (((x) + (align) - 1) / (align)))
+    ((align) * (((x) + (align) - 1) / (align)))
 
 /*
  * Round up 'x' to cache line size alignment
  */
 #define ROUNDUP_CACHE_LINE(x)\
-	ROUNDUP_ALIGN(x, ODP_CACHE_LINE_SIZE)
+    ROUNDUP_ALIGN(x, ODP_CACHE_LINE_SIZE)
 
 /*
  * Round down 'x' to 'align' alignment, which is a power of two
  */
 #define ROUNDDOWN_POWER2(x, align)\
-	((x) & (~((align) - 1)))
+    ((x) & (~((align) - 1)))
 
 /*
  * Check if value is a power of two

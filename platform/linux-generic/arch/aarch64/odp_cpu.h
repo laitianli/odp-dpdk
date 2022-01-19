@@ -42,17 +42,17 @@
 
 static inline void _odp_dmb(void)
 {
-	__asm__ volatile("dmb" : : : "memory");
+    __asm__ volatile("dmb" : : : "memory");
 }
 
 /* Only ARMv8 supports DMB ISHLD */
 /* A load only barrier is much cheaper than full barrier */
 #define _odp_release_barrier(ro) \
-do {							     \
-	if (ro)						     \
-		__asm__ volatile("dmb ishld" ::: "memory");  \
-	else						     \
-		__asm__ volatile("dmb ish" ::: "memory");    \
+do {                                 \
+    if (ro)                             \
+        __asm__ volatile("dmb ishld" ::: "memory");  \
+    else                             \
+        __asm__ volatile("dmb ish" ::: "memory");    \
 } while (0)
 
 #include "odp_llsc.h"

@@ -1,7 +1,7 @@
 /* Copyright (c) 2015-2018, Linaro Limited
  * All rights reserved.
  *
- * SPDX-License-Identifier:	BSD-3-Clause
+ * SPDX-License-Identifier:    BSD-3-Clause
  */
 
 /**
@@ -69,7 +69,7 @@ void odp_errno_print(const char *str);
 * Interprets the value of ODP errno, generating a string with a message that
 * describes the error. Errno values and messages are implementation specific.
 *
-* @param errnum	 ODP errno value
+* @param errnum     ODP errno value
 *
 * @retval Pointer to the error message string
 */

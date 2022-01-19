@@ -38,11 +38,11 @@ extern "C" {
  * Clock sources for timers in timer pool.
  */
 typedef enum {
-	/** Use CPU clock as clock source for timers */
-	ODP_CLOCK_CPU,
-	/** Use external clock as clock source for timers */
-	ODP_CLOCK_EXT
-	/* Platform dependent which other clock sources exist */
+    /** Use CPU clock as clock source for timers */
+    ODP_CLOCK_CPU,
+    /** Use external clock as clock source for timers */
+    ODP_CLOCK_EXT
+    /* Platform dependent which other clock sources exist */
 } odp_timer_clk_src_t;
 
 /**
@@ -69,28 +69,28 @@ typedef enum {
  * Return values of timer set calls.
  */
 typedef enum {
-	/**
-	 * Timer set operation succeeded
-	 */
-	ODP_TIMER_SUCCESS = 0,
+    /**
+     * Timer set operation succeeded
+     */
+    ODP_TIMER_SUCCESS = 0,
 
-	/**
-	 * Timer set operation failed, expiration too early.
-	 * Either retry with a later expiration time or process the timeout
-	 * immediately. */
-	ODP_TIMER_TOOEARLY = -1,
+    /**
+     * Timer set operation failed, expiration too early.
+     * Either retry with a later expiration time or process the timeout
+     * immediately. */
+    ODP_TIMER_TOOEARLY = -1,
 
-	/**
-	 * Timer set operation failed, expiration too late.
-	 * Truncate the expiration time against the maximum timeout for the
-	 * timer pool. */
-	ODP_TIMER_TOOLATE = -2,
+    /**
+     * Timer set operation failed, expiration too late.
+     * Truncate the expiration time against the maximum timeout for the
+     * timer pool. */
+    ODP_TIMER_TOOLATE = -2,
 
-	/**
-	 * Timer set operation failed because no event specified and no event
-	 * present in the timer (timer inactive/expired).
-	 */
-	ODP_TIMER_NOEVENT = -3
+    /**
+     * Timer set operation failed because no event specified and no event
+     * present in the timer (timer inactive/expired).
+     */
+    ODP_TIMER_NOEVENT = -3
 
 } odp_timer_set_t;
 
@@ -103,35 +103,35 @@ typedef enum {
  * Timer pool parameters
  */
 typedef struct {
-	/** Timeout resolution in nanoseconds. Timer pool must serve timeouts
-	 *  with this or higher resolution. The minimum valid value (highest
-	 *  resolution) is defined by timer capability 'highest_res_ns'. */
-	uint64_t res_ns;
+    /** Timeout resolution in nanoseconds. Timer pool must serve timeouts
+     *  with this or higher resolution. The minimum valid value (highest
+     *  resolution) is defined by timer capability 'highest_res_ns'. */
+    uint64_t res_ns;
 
-	/** Minimum relative timeout in nanoseconds. All requested timeouts
-	 *  will be at least this many nanoseconds after the current
-	 *  time of the timer pool. Timer set functions return an error, if too
-	 *  short timeout was requested. The value may be also less than
-	 *  'res_ns'. */
-	uint64_t min_tmo;
+    /** Minimum relative timeout in nanoseconds. All requested timeouts
+     *  will be at least this many nanoseconds after the current
+     *  time of the timer pool. Timer set functions return an error, if too
+     *  short timeout was requested. The value may be also less than
+     *  'res_ns'. */
+    uint64_t min_tmo;
 
-	/** Maximum relative timeout in nanoseconds. All requested timeouts
-	 *  will be at most this many nanoseconds after the current
-	 *  time of the timer pool. Timer set functions return an error, if too
-	 *  long timeout was requested. */
-	uint64_t max_tmo;
+    /** Maximum relative timeout in nanoseconds. All requested timeouts
+     *  will be at most this many nanoseconds after the current
+     *  time of the timer pool. Timer set functions return an error, if too
+     *  long timeout was requested. */
+    uint64_t max_tmo;
 
-	/** Number of timers needed. Application will create in maximum this
-	 *  many concurrent timers from the timer pool. */
-	uint32_t num_timers;
+    /** Number of timers needed. Application will create in maximum this
+     *  many concurrent timers from the timer pool. */
+    uint32_t num_timers;
 
-	/** Thread private timer pool. When zero, multiple thread may use the
-	 *  timer pool concurrently. When non-zero, only single thread uses the
-	 *  timer pool (concurrently). */
-	int priv;
+    /** Thread private timer pool. When zero, multiple thread may use the
+     *  timer pool concurrently. When non-zero, only single thread uses the
+     *  timer pool (concurrently). */
+    int priv;
 
-	/** Clock source for timers */
-	odp_timer_clk_src_t clk_src;
+    /** Clock source for timers */
+    odp_timer_clk_src_t clk_src;
 
 } odp_timer_pool_param_t;
 
@@ -139,14 +139,14 @@ typedef struct {
  * Timer resolution capability
  */
 typedef struct {
-	/** Timeout resolution in nanoseconds */
-	uint64_t res_ns;
+    /** Timeout resolution in nanoseconds */
+    uint64_t res_ns;
 
-	/** Minimum relative timeout in nanoseconds */
-	uint64_t min_tmo;
+    /** Minimum relative timeout in nanoseconds */
+    uint64_t min_tmo;
 
-	/** Maximum relative timeout in nanoseconds */
-	uint64_t max_tmo;
+    /** Maximum relative timeout in nanoseconds */
+    uint64_t max_tmo;
 
 } odp_timer_res_capability_t;
 
@@ -154,55 +154,55 @@ typedef struct {
  * Timer capability
  */
 typedef struct {
-	/** Maximum number of timer pools over all clock sources
-	 *
-	 * The total number of timer pools that can be created combining
-	 * different clock sources.
-	 */
-	uint32_t max_pools_combined;
+    /** Maximum number of timer pools over all clock sources
+     *
+     * The total number of timer pools that can be created combining
+     * different clock sources.
+     */
+    uint32_t max_pools_combined;
 
-	/** Maximum number of timer pools for the requested clock source */
-	uint32_t max_pools;
+    /** Maximum number of timer pools for the requested clock source */
+    uint32_t max_pools;
 
-	/** Maximum number of timers in a pool
-	 *
-	 * The value of zero means that limited only by the available
-	 * memory size for the pool. */
-	uint32_t max_timers;
+    /** Maximum number of timers in a pool
+     *
+     * The value of zero means that limited only by the available
+     * memory size for the pool. */
+    uint32_t max_timers;
 
-	/** Highest timer resolution in nanoseconds.
-	 *
-	 *  This defines the highest resolution supported by a timer.
-	 *  It's the minimum valid value for 'res_ns' timer pool
-	 *  parameter.
-	 *
-	 *  This value is equal to 'max_res.res_ns' capability.
-	 */
-	uint64_t highest_res_ns;
+    /** Highest timer resolution in nanoseconds.
+     *
+     *  This defines the highest resolution supported by a timer.
+     *  It's the minimum valid value for 'res_ns' timer pool
+     *  parameter.
+     *
+     *  This value is equal to 'max_res.res_ns' capability.
+     */
+    uint64_t highest_res_ns;
 
-	/**
-	 * Maximum resolution
-	 *
-	 * This defines the highest resolution supported by a timer, with
-	 * limits to min/max timeout values. The highest resolution for a timer
-	 * pool is defined by 'max_res.res_ns', therefore it's the minimum value
-	 * for 'res_ns' timer pool parameter. When this resolution is used:
-	 * - 'min_tmo' parameter value must be in minimum 'max_res.min_tmo'
-	 * - 'max_tmo' parameter value must be in maximum 'max_res.max_tmo'
-	 */
-	odp_timer_res_capability_t max_res;
+    /**
+     * Maximum resolution
+     *
+     * This defines the highest resolution supported by a timer, with
+     * limits to min/max timeout values. The highest resolution for a timer
+     * pool is defined by 'max_res.res_ns', therefore it's the minimum value
+     * for 'res_ns' timer pool parameter. When this resolution is used:
+     * - 'min_tmo' parameter value must be in minimum 'max_res.min_tmo'
+     * - 'max_tmo' parameter value must be in maximum 'max_res.max_tmo'
+     */
+    odp_timer_res_capability_t max_res;
 
-	/**
-	 * Maximum timeout length
-	 *
-	 * This defines the maximum relative timeout value supported by a timer,
-	 * with limits to min timeout and max resolution values. The maximum
-	 * value for 'max_tmo' timer pool parameter is defined by
-	 * 'max_tmo.max_tmo'. When this max timeout value is used:
-	 * - 'min_tmo' parameter value must be in minimum 'max_tmo.min_tmo'
-	 * - 'res_ns'  parameter value must be in minimum 'max_tmo.res_ns'
-	 */
-	odp_timer_res_capability_t max_tmo;
+    /**
+     * Maximum timeout length
+     *
+     * This defines the maximum relative timeout value supported by a timer,
+     * with limits to min timeout and max resolution values. The maximum
+     * value for 'max_tmo' timer pool parameter is defined by
+     * 'max_tmo.max_tmo'. When this max timeout value is used:
+     * - 'min_tmo' parameter value must be in minimum 'max_tmo.min_tmo'
+     * - 'res_ns'  parameter value must be in minimum 'max_tmo.res_ns'
+     */
+    odp_timer_res_capability_t max_tmo;
 
 } odp_timer_capability_t;
 
@@ -218,7 +218,7 @@ typedef struct {
  * @retval <0 on failure
  */
 int odp_timer_capability(odp_timer_clk_src_t clk_src,
-			 odp_timer_capability_t *capa);
+             odp_timer_capability_t *capa);
 
 /**
  * Timer resolution capability
@@ -240,7 +240,7 @@ int odp_timer_capability(odp_timer_clk_src_t clk_src,
  * @retval <0 on failure
  */
 int odp_timer_res_capability(odp_timer_clk_src_t clk_src,
-			     odp_timer_res_capability_t *res_capa);
+                 odp_timer_res_capability_t *res_capa);
 
 /**
  * Create a timer pool
@@ -255,7 +255,7 @@ int odp_timer_res_capability(odp_timer_clk_src_t clk_src,
  * @retval ODP_TIMER_POOL_INVALID on failure and errno set
  */
 odp_timer_pool_t odp_timer_pool_create(const char *name,
-				       const odp_timer_pool_param_t *params);
+                       const odp_timer_pool_param_t *params);
 
 /**
  * Start a timer pool
@@ -310,17 +310,17 @@ uint64_t odp_timer_current_tick(odp_timer_pool_t timer_pool);
  * ODP timer pool information and configuration
  */
 typedef struct {
-	/** Parameters specified at creation */
-	odp_timer_pool_param_t param;
+    /** Parameters specified at creation */
+    odp_timer_pool_param_t param;
 
-	/** Number of currently allocated timers */
-	uint32_t cur_timers;
+    /** Number of currently allocated timers */
+    uint32_t cur_timers;
 
-	/** High watermark of allocated timers */
-	uint32_t hwm_timers;
+    /** High watermark of allocated timers */
+    uint32_t hwm_timers;
 
-	/** Name of timer pool */
-	const char *name;
+    /** Name of timer pool */
+    const char *name;
 
 } odp_timer_pool_info_t;
 
@@ -334,7 +334,7 @@ typedef struct {
  * @retval <0 on failure. Info could not be retrieved.
  */
 int odp_timer_pool_info(odp_timer_pool_t timer_pool,
-			odp_timer_pool_info_t *info);
+            odp_timer_pool_info_t *info);
 
 /**
  * Allocate a timer
@@ -351,7 +351,7 @@ int odp_timer_pool_info(odp_timer_pool_t timer_pool,
  * @retval ODP_TIMER_INVALID on failure and errno set.
  */
 odp_timer_t odp_timer_alloc(odp_timer_pool_t timer_pool, odp_queue_t queue,
-			    void *user_ptr);
+                void *user_ptr);
 
 /**
  * Free a timer
@@ -401,7 +401,7 @@ odp_event_t odp_timer_free(odp_timer_t timer);
  * @see odp_timer_set_rel(), odp_timer_alloc(), odp_timer_cancel()
  */
 int odp_timer_set_abs(odp_timer_t timer, uint64_t abs_tick,
-		      odp_event_t *tmo_ev);
+              odp_event_t *tmo_ev);
 
 /**
  * Set (or reset) a timer with relative expiration time
@@ -429,7 +429,7 @@ int odp_timer_set_abs(odp_timer_t timer, uint64_t abs_tick,
  * @see odp_timer_set_abs(), odp_timer_alloc(), odp_timer_cancel()
  */
 int odp_timer_set_rel(odp_timer_t timer, uint64_t rel_tick,
-		      odp_event_t *tmo_ev);
+              odp_event_t *tmo_ev);
 
 /**
  * Cancel a timer

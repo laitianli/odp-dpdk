@@ -33,92 +33,92 @@ extern "C" {
 
 /** Thread parameter for Linux pthreads and processes */
 typedef struct {
-	void *(*start)(void *);    /**< Thread entry point function */
-	void *arg;                  /**< Argument for the function */
-	odp_thread_type_t thr_type; /**< ODP thread type */
-	odp_instance_t instance;    /**< ODP instance handle */
+    void *(*start)(void *);    /**< Thread entry point function */
+    void *arg;                  /**< Argument for the function */
+    odp_thread_type_t thr_type; /**< ODP thread type */
+    odp_instance_t instance;    /**< ODP instance handle */
 } odph_linux_thr_params_t;
 
 /** Linux pthread state information */
 typedef struct {
-	pthread_t      thread; /**< Pthread ID */
-	pthread_attr_t attr;   /**< Pthread attributes */
-	int            cpu;    /**< CPU ID */
-	/** Copy of thread params */
-	odph_linux_thr_params_t thr_params;
+    pthread_t      thread; /**< Pthread ID */
+    pthread_attr_t attr;   /**< Pthread attributes */
+    int            cpu;    /**< CPU ID */
+    /** Copy of thread params */
+    odph_linux_thr_params_t thr_params;
 } odph_linux_pthread_t;
 
 /** Linux process state information */
 typedef struct {
-	pid_t pid;      /**< Process ID */
-	int   cpu;      /**< CPU ID */
-	int   status;   /**< Process state change status */
+    pid_t pid;      /**< Process ID */
+    int   cpu;      /**< CPU ID */
+    int   status;   /**< Process state change status */
 } odph_linux_process_t;
 
 /** Thread parameters (pthreads and processes) */
 typedef struct {
-	/** Thread entry point function */
-	int (*start)(void *arg);
+    /** Thread entry point function */
+    int (*start)(void *arg);
 
-	/** Argument for the function */
-	void *arg;
+    /** Argument for the function */
+    void *arg;
 
-	/** ODP thread type */
-	odp_thread_type_t thr_type;
+    /** ODP thread type */
+    odp_thread_type_t thr_type;
 
-	/** @deprecated ODP instance handle for odph_odpthreads_create(). */
-	odp_instance_t instance;
+    /** @deprecated ODP instance handle for odph_odpthreads_create(). */
+    odp_instance_t instance;
 
 } odph_thread_param_t;
 
 /** Helper internal thread start arguments. Used both in process and thread
  *  mode */
 typedef struct {
-	/** Atomic variable to sync status */
-	odp_atomic_u32_t status;
+    /** Atomic variable to sync status */
+    odp_atomic_u32_t status;
 
-	/** Process or thread */
-	odp_mem_model_t mem_model;
+    /** Process or thread */
+    odp_mem_model_t mem_model;
 
-	/** ODP instance handle */
-	odp_instance_t instance;
+    /** ODP instance handle */
+    odp_instance_t instance;
 
-	/** Thread parameters */
-	odph_thread_param_t thr_params;
+    /** Thread parameters */
+    odph_thread_param_t thr_params;
 
 } odph_thread_start_args_t;
 
 /** Thread state information. Used both in process and thread mode */
 typedef struct {
-	/** Start arguments */
-	odph_thread_start_args_t start_args;
+    /** Start arguments */
+    odph_thread_start_args_t start_args;
 
-	/** CPU ID */
-	int cpu;
+    /** CPU ID */
+    int cpu;
 
-	/** 1: last table entry */
-	uint8_t last;
+    /** 1: last table entry */
+    uint8_t last;
 
-	/** Variant field mappings for thread/process modes */
-	union {
-		/** For thread implementation */
-		struct {
-			pthread_t	thread_id; /**< Pthread ID */
-			pthread_attr_t	attr;	/**< Pthread attributes */
-		} thread;
+    /** Variant field mappings for thread/process modes */
+    union {
+        /** For thread implementation */
+        struct {
+            pthread_t    thread_id; /**< Pthread ID */
+            pthread_attr_t    attr;    /**< Pthread attributes */
+        } thread;
 
-		/** For process implementation */
-		struct {
-			pid_t		pid;	/**< Process ID */
-			int		status;	/**< Process state chge status*/
-		} proc;
-	};
+        /** For process implementation */
+        struct {
+            pid_t        pid;    /**< Process ID */
+            int        status;    /**< Process state chge status*/
+        } proc;
+    };
 
 } odph_thread_t;
 
 /** Linux helper options */
 typedef struct {
-	odp_mem_model_t mem_model; /**< Process or thread */
+    odp_mem_model_t mem_model; /**< Process or thread */
 } odph_helper_options_t;
 
 /** Legacy thread table entry */
@@ -129,52 +129,52 @@ typedef odph_thread_param_t odph_odpthread_params_t;
 
 /** Common parameters for odph_thread_create() call */
 typedef struct {
-	/**
-	 * ODP instance handle
-	 *
-	 * This is used for all threads, instead of 'instance' field of per
-	 * thread parameters (odph_thread_param_t).
-	 */
-	odp_instance_t instance;
+    /**
+     * ODP instance handle
+     *
+     * This is used for all threads, instead of 'instance' field of per
+     * thread parameters (odph_thread_param_t).
+     */
+    odp_instance_t instance;
 
-	/**
-	 * CPU mask for thread pinning
-	 */
-	const odp_cpumask_t *cpumask;
+    /**
+     * CPU mask for thread pinning
+     */
+    const odp_cpumask_t *cpumask;
 
-	/**
-	 * Select between Linux pthreads and processes
-	 *
-	 * 0: Use pthreads
-	 * 1: Use processes
-	 *
-	 * Default value is 0.
-	 */
-	int thread_model;
+    /**
+     * Select between Linux pthreads and processes
+     *
+     * 0: Use pthreads
+     * 1: Use processes
+     *
+     * Default value is 0.
+     */
+    int thread_model;
 
-	/**
-	 * Synchronized thread creation
-	 *
-	 * 0: Don't synchronize thread creation
-	 * 1: Create threads in series so that the next thread is created
-	 *    only after the previous thread have signaled that it has passed
-	 *    ODP local initialization.
-	 *
-	 * Default value is 0.
-	 */
-	int sync;
+    /**
+     * Synchronized thread creation
+     *
+     * 0: Don't synchronize thread creation
+     * 1: Create threads in series so that the next thread is created
+     *    only after the previous thread have signaled that it has passed
+     *    ODP local initialization.
+     *
+     * Default value is 0.
+     */
+    int sync;
 
-	/**
-	 * Thread parameter sharing
-	 *
-	 * 0: Thread parameters are not shared. The thread parameter table
-	 *    contains 'num' elements.
-	 * 1: The thread parameter table contains a single element, which is
-	 *    used for creating all 'num' threads.
-	 *
-	 * Default value is 0.
-	 */
-	int share_param;
+    /**
+     * Thread parameter sharing
+     *
+     * 0: Thread parameters are not shared. The thread parameter table
+     *    contains 'num' elements.
+     * 1: The thread parameter table contains a single element, which is
+     *    used for creating all 'num' threads.
+     *
+     * Default value is 0.
+     */
+    int share_param;
 
 } odph_thread_common_param_t;
 
@@ -215,9 +215,9 @@ typedef struct {
  * @see odph_thread_join()
  */
 int odph_thread_create(odph_thread_t thread[],
-		       const odph_thread_common_param_t *param,
-		       const odph_thread_param_t thr_param[],
-		       int num);
+               const odph_thread_common_param_t *param,
+               const odph_thread_param_t thr_param[],
+               int num);
 
 /**
  * Wait previously launched threads to exit
@@ -252,8 +252,8 @@ int odph_thread_join(odph_thread_t thread[], int num);
  * @deprecated Use odph_thread_create() instead.
  */
 int odph_odpthreads_create(odph_odpthread_t *thread_tbl,
-			   const odp_cpumask_t *mask,
-			   const odph_odpthread_params_t *thr_params);
+               const odp_cpumask_t *mask,
+               const odph_odpthread_params_t *thr_params);
 
 /**
  * Waits odpthreads (as linux threads or processes) to exit.

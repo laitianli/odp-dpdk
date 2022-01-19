@@ -25,7 +25,7 @@ extern "C" {
  * Atomic 32-bit unsigned integer
  */
 struct odp_atomic_u32_s {
-	uint32_t v; /**< Actual storage for the atomic variable */
+    uint32_t v; /**< Actual storage for the atomic variable */
 } ODP_ALIGNED(sizeof(uint32_t)); /* Enforce alignment! */
 
 #if __GCC_ATOMIC_LLONG_LOCK_FREE >= 2
@@ -35,22 +35,22 @@ struct odp_atomic_u32_s {
  * Atomic 64-bit unsigned integer
  */
 struct odp_atomic_u64_s {
-	uint64_t v; /**< Actual storage for the atomic variable */
+    uint64_t v; /**< Actual storage for the atomic variable */
 } ODP_ALIGNED(sizeof(uint64_t)); /* Enforce alignment! */
 
 #else
 
-#define ODP_ATOMIC_U64_LOCK	1
+#define ODP_ATOMIC_U64_LOCK    1
 
 /**
  * @internal
  * Atomic 64-bit unsigned integer
  */
 struct odp_atomic_u64_s {
-	uint64_t v; /**< Actual storage for the atomic variable */
-	/* Some architectures do not support lock-free operations on 64-bit
-	 * data types. We use a spin lock to ensure atomicity. */
-	char lock; /**< Spin lock (if needed) used to ensure atomic access */
+    uint64_t v; /**< Actual storage for the atomic variable */
+    /* Some architectures do not support lock-free operations on 64-bit
+     * data types. We use a spin lock to ensure atomicity. */
+    char lock; /**< Spin lock (if needed) used to ensure atomic access */
 } ODP_ALIGNED(sizeof(uint64_t)); /* Enforce alignment! */
 
 #endif

@@ -29,9 +29,9 @@ extern "C" {
  * it has calculated the TCP/UDP check sum.
  */
 typedef enum {
-	ODPH_CHKSUM_GENERATE, /**< Set TCP/UDP header chksum field */
-	ODPH_CHKSUM_VERIFY,   /**< See if TCP/UDP header chksum is correct */
-	ODPH_CHKSUM_RETURN    /**< Don't generate or verify chksum */
+    ODPH_CHKSUM_GENERATE, /**< Set TCP/UDP header chksum field */
+    ODPH_CHKSUM_VERIFY,   /**< See if TCP/UDP header chksum is correct */
+    ODPH_CHKSUM_RETURN    /**< Don't generate or verify chksum */
 } odph_chksum_op_t;
 
 /**
@@ -74,8 +74,8 @@ typedef enum {
  *                     of 0).
  */
 int odph_udp_tcp_chksum(odp_packet_t     odp_pkt,
-			odph_chksum_op_t op,
-			uint16_t        *chksum_ptr);
+            odph_chksum_op_t op,
+            uint16_t        *chksum_ptr);
 
 /**
  * Generate TCP checksum
@@ -98,10 +98,10 @@ int odph_udp_tcp_chksum(odp_packet_t     odp_pkt,
  */
 static inline int odph_tcp_chksum_set(odp_packet_t odp_pkt)
 {
-	if (!odp_packet_has_tcp(odp_pkt))
-		return -1;
+    if (!odp_packet_has_tcp(odp_pkt))
+        return -1;
 
-	return odph_udp_tcp_chksum(odp_pkt, ODPH_CHKSUM_GENERATE, NULL);
+    return odph_udp_tcp_chksum(odp_pkt, ODPH_CHKSUM_GENERATE, NULL);
 }
 
 /**
@@ -125,10 +125,10 @@ static inline int odph_tcp_chksum_set(odp_packet_t odp_pkt)
  */
 static inline int odph_udp_chksum_set(odp_packet_t odp_pkt)
 {
-	if (!odp_packet_has_udp(odp_pkt))
-		return -1;
+    if (!odp_packet_has_udp(odp_pkt))
+        return -1;
 
-	return odph_udp_tcp_chksum(odp_pkt, ODPH_CHKSUM_GENERATE, NULL);
+    return odph_udp_tcp_chksum(odp_pkt, ODPH_CHKSUM_GENERATE, NULL);
 }
 
 /**
@@ -153,10 +153,10 @@ static inline int odph_udp_chksum_set(odp_packet_t odp_pkt)
  */
 static inline int odph_tcp_chksum_verify(odp_packet_t odp_pkt)
 {
-	if (!odp_packet_has_tcp(odp_pkt))
-		return -1;
+    if (!odp_packet_has_tcp(odp_pkt))
+        return -1;
 
-	return odph_udp_tcp_chksum(odp_pkt, ODPH_CHKSUM_VERIFY, NULL);
+    return odph_udp_tcp_chksum(odp_pkt, ODPH_CHKSUM_VERIFY, NULL);
 }
 
 /**
@@ -183,10 +183,10 @@ static inline int odph_tcp_chksum_verify(odp_packet_t odp_pkt)
  */
 static inline int odph_udp_chksum_verify(odp_packet_t odp_pkt)
 {
-	if (!odp_packet_has_udp(odp_pkt))
-		return -1;
+    if (!odp_packet_has_udp(odp_pkt))
+        return -1;
 
-	return odph_udp_tcp_chksum(odp_pkt, ODPH_CHKSUM_VERIFY, NULL);
+    return odph_udp_tcp_chksum(odp_pkt, ODPH_CHKSUM_VERIFY, NULL);
 }
 
 /**

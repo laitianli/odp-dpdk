@@ -160,17 +160,17 @@ extern "C" {
  * Protocol
  */
 typedef enum odp_proto_t {
-	/** No protocol defined */
-	ODP_PROTO_NONE = 0,
+    /** No protocol defined */
+    ODP_PROTO_NONE = 0,
 
-	/** Ethernet (including VLAN) */
-	ODP_PROTO_ETH,
+    /** Ethernet (including VLAN) */
+    ODP_PROTO_ETH,
 
-	/** IP version 4 */
-	ODP_PROTO_IPV4,
+    /** IP version 4 */
+    ODP_PROTO_IPV4,
 
-	/** IP version 6 */
-	ODP_PROTO_IPV6
+    /** IP version 6 */
+    ODP_PROTO_IPV6
 
 } odp_proto_t;
 
@@ -178,20 +178,20 @@ typedef enum odp_proto_t {
  * Protocol layer
  */
 typedef enum odp_proto_layer_t {
-	/** No layers */
-	ODP_PROTO_LAYER_NONE = 0,
+    /** No layers */
+    ODP_PROTO_LAYER_NONE = 0,
 
-	/** Layer L2 protocols (Ethernet, VLAN, etc) */
-	ODP_PROTO_LAYER_L2,
+    /** Layer L2 protocols (Ethernet, VLAN, etc) */
+    ODP_PROTO_LAYER_L2,
 
-	/** Layer L3 protocols (IPv4, IPv6, ICMP, IPSEC, etc) */
-	ODP_PROTO_LAYER_L3,
+    /** Layer L3 protocols (IPv4, IPv6, ICMP, IPSEC, etc) */
+    ODP_PROTO_LAYER_L3,
 
-	/** Layer L4 protocols (UDP, TCP, SCTP) */
-	ODP_PROTO_LAYER_L4,
+    /** Layer L4 protocols (UDP, TCP, SCTP) */
+    ODP_PROTO_LAYER_L4,
 
-	/** All layers */
-	ODP_PROTO_LAYER_ALL
+    /** All layers */
+    ODP_PROTO_LAYER_ALL
 
 } odp_proto_layer_t;
 
@@ -199,11 +199,11 @@ typedef enum odp_proto_layer_t {
  * Packet API data range specifier
  */
 typedef struct odp_packet_data_range {
-	/** Offset from beginning of packet */
-	uint32_t offset;
+    /** Offset from beginning of packet */
+    uint32_t offset;
 
-	/** Length of data to operate on */
-	uint32_t length;
+    /** Length of data to operate on */
+    uint32_t length;
 
 } odp_packet_data_range_t;
 
@@ -211,15 +211,15 @@ typedef struct odp_packet_data_range {
  * Checksum check status in packet
  */
 typedef enum odp_packet_chksum_status_t {
-	/** Checksum was not checked. Checksum check was not attempted or
-	  * the attempt failed. */
-	ODP_PACKET_CHKSUM_UNKNOWN = 0,
+    /** Checksum was not checked. Checksum check was not attempted or
+      * the attempt failed. */
+    ODP_PACKET_CHKSUM_UNKNOWN = 0,
 
-	/** Checksum was checked and it was not correct */
-	ODP_PACKET_CHKSUM_BAD,
+    /** Checksum was checked and it was not correct */
+    ODP_PACKET_CHKSUM_BAD,
 
-	/** Checksum was checked and it was correct */
-	ODP_PACKET_CHKSUM_OK
+    /** Checksum was checked and it was correct */
+    ODP_PACKET_CHKSUM_OK
 
 } odp_packet_chksum_status_t;
 
@@ -280,7 +280,7 @@ odp_packet_t odp_packet_alloc(odp_pool_t pool, uint32_t len);
  *
  */
 int odp_packet_alloc_multi(odp_pool_t pool, uint32_t len,
-			   odp_packet_t pkt[], int num);
+               odp_packet_t pkt[], int num);
 
 /**
  * Free packet
@@ -354,7 +354,7 @@ odp_packet_t odp_packet_from_event(odp_event_t ev);
  * @param      num  Number of packets and events
  */
 void odp_packet_from_event_multi(odp_packet_t pkt[], const odp_event_t ev[],
-				 int num);
+                 int num);
 
 /**
  * Convert packet handle to event
@@ -373,7 +373,7 @@ odp_event_t odp_packet_to_event(odp_packet_t pkt);
  * @param      num  Number of packets and events
  */
 void odp_packet_to_event_multi(const odp_packet_t pkt[], odp_event_t ev[],
-			       int num);
+                   int num);
 
 /*
  *
@@ -538,7 +538,7 @@ void *odp_packet_tail(odp_packet_t pkt);
  * @retval NULL  Requested offset exceeds packet length
  */
 void *odp_packet_offset(odp_packet_t pkt, uint32_t offset, uint32_t *len,
-			odp_packet_seg_t *seg);
+            odp_packet_seg_t *seg);
 
 /**
  * Packet data prefetch
@@ -699,7 +699,7 @@ void *odp_packet_pull_tail(odp_packet_t pkt, uint32_t len);
  * @retval <0  Operation failed (e.g. due to an allocation failure)
  */
 int odp_packet_extend_head(odp_packet_t *pkt, uint32_t len, void **data_ptr,
-			   uint32_t *seg_len);
+               uint32_t *seg_len);
 
 /**
  * Truncate packet head
@@ -735,7 +735,7 @@ int odp_packet_extend_head(odp_packet_t *pkt, uint32_t len, void **data_ptr,
  * @retval <0  Operation failed
  */
 int odp_packet_trunc_head(odp_packet_t *pkt, uint32_t len, void **data_ptr,
-			  uint32_t *seg_len);
+              uint32_t *seg_len);
 
 /**
  * Extend packet tail
@@ -772,7 +772,7 @@ int odp_packet_trunc_head(odp_packet_t *pkt, uint32_t len, void **data_ptr,
  * @retval <0  Operation failed (e.g. due to an allocation failure)
  */
 int odp_packet_extend_tail(odp_packet_t *pkt, uint32_t len, void **data_ptr,
-			   uint32_t *seg_len);
+               uint32_t *seg_len);
 
 /**
  * Truncate packet tail
@@ -807,7 +807,7 @@ int odp_packet_extend_tail(odp_packet_t *pkt, uint32_t len, void **data_ptr,
  * @retval <0  Operation failed
  */
 int odp_packet_trunc_tail(odp_packet_t *pkt, uint32_t len, void **tail_ptr,
-			  uint32_t *tailroom);
+              uint32_t *tailroom);
 
 /**
  * Add data into an offset
@@ -904,7 +904,7 @@ int odp_packet_rem_data(odp_packet_t *pkt, uint32_t offset, uint32_t len);
  * @retval <0  Operation failed
  */
 int odp_packet_align(odp_packet_t *pkt, uint32_t offset, uint32_t len,
-		     uint32_t align);
+             uint32_t align);
 
 /*
  *
@@ -1167,7 +1167,7 @@ odp_packet_t odp_packet_ref(odp_packet_t pkt, uint32_t offset);
  * @retval ODP_PACKET_INVALID On failure
  */
 odp_packet_t odp_packet_ref_pkt(odp_packet_t pkt, uint32_t offset,
-				odp_packet_t hdr);
+                odp_packet_t hdr);
 
 /**
  * Test if packet has multiple references
@@ -1230,7 +1230,7 @@ odp_packet_t odp_packet_copy(odp_packet_t pkt, odp_pool_t pool);
  * @retval ODP_PACKET_INVALID on failure
  */
 odp_packet_t odp_packet_copy_part(odp_packet_t pkt, uint32_t offset,
-				  uint32_t len, odp_pool_t pool);
+                  uint32_t len, odp_pool_t pool);
 
 /**
  * Copy data from packet to memory
@@ -1248,7 +1248,7 @@ odp_packet_t odp_packet_copy_part(odp_packet_t pkt, uint32_t offset,
  * @retval <0 on failure
  */
 int odp_packet_copy_to_mem(odp_packet_t pkt, uint32_t offset,
-			   uint32_t len, void *dst);
+               uint32_t len, void *dst);
 
 /**
  * Copy data from memory to packet
@@ -1266,7 +1266,7 @@ int odp_packet_copy_to_mem(odp_packet_t pkt, uint32_t offset,
  * @retval <0 on failure
  */
 int odp_packet_copy_from_mem(odp_packet_t pkt, uint32_t offset,
-			     uint32_t len, const void *src);
+                 uint32_t len, const void *src);
 
 /**
  * Copy data from another packet
@@ -1289,8 +1289,8 @@ int odp_packet_copy_from_mem(odp_packet_t pkt, uint32_t offset,
  * @retval <0 on failure
  */
 int odp_packet_copy_from_pkt(odp_packet_t dst, uint32_t dst_offset,
-			     odp_packet_t src, uint32_t src_offset,
-			     uint32_t len);
+                 odp_packet_t src, uint32_t src_offset,
+                 uint32_t len);
 
 /**
  * Copy data within packet
@@ -1308,7 +1308,7 @@ int odp_packet_copy_from_pkt(odp_packet_t dst, uint32_t dst_offset,
  * @retval <0 on failure
  */
 int odp_packet_copy_data(odp_packet_t pkt, uint32_t dst_offset,
-			 uint32_t src_offset, uint32_t len);
+             uint32_t src_offset, uint32_t len);
 
 /**
  * Move data within packet
@@ -1328,7 +1328,7 @@ int odp_packet_copy_data(odp_packet_t pkt, uint32_t dst_offset,
  * @retval <0 on failure
  */
 int odp_packet_move_data(odp_packet_t pkt, uint32_t dst_offset,
-			 uint32_t src_offset, uint32_t len);
+             uint32_t src_offset, uint32_t len);
 
 /*
  *
@@ -1341,24 +1341,24 @@ int odp_packet_move_data(odp_packet_t pkt, uint32_t dst_offset,
  * Flags to control packet data checksum checking
  */
 typedef union odp_proto_chksums_t {
-	/** Individual checksum bits. */
-	struct {
-		/** IPv4 header checksum */
-		uint32_t ipv4   : 1;
+    /** Individual checksum bits. */
+    struct {
+        /** IPv4 header checksum */
+        uint32_t ipv4   : 1;
 
-		/** UDP checksum */
-		uint32_t udp    : 1;
+        /** UDP checksum */
+        uint32_t udp    : 1;
 
-		/** TCP checksum */
-		uint32_t tcp    : 1;
+        /** TCP checksum */
+        uint32_t tcp    : 1;
 
-		/** SCTP checksum */
-		uint32_t sctp   : 1;
+        /** SCTP checksum */
+        uint32_t sctp   : 1;
 
-	} chksum;
+    } chksum;
 
-	/** All checksum bits. This can be used to set/clear all flags. */
-	uint32_t all_chksum;
+    /** All checksum bits. This can be used to set/clear all flags. */
+    uint32_t all_chksum;
 
 } odp_proto_chksums_t;
 
@@ -1366,20 +1366,20 @@ typedef union odp_proto_chksums_t {
  * Packet parse parameters
  */
 typedef struct odp_packet_parse_param_t {
-	/** Protocol header at parse starting point. Valid values for this
-	 *  field are: ODP_PROTO_ETH, ODP_PROTO_IPV4, ODP_PROTO_IPV6. */
-	odp_proto_t proto;
+    /** Protocol header at parse starting point. Valid values for this
+     *  field are: ODP_PROTO_ETH, ODP_PROTO_IPV4, ODP_PROTO_IPV6. */
+    odp_proto_t proto;
 
-	/** Continue parsing until this layer. Must be the same or higher
-	 *  layer than the layer of 'proto'. */
-	odp_proto_layer_t last_layer;
+    /** Continue parsing until this layer. Must be the same or higher
+     *  layer than the layer of 'proto'. */
+    odp_proto_layer_t last_layer;
 
-	/** Flags to control payload data checksums checks up to the selected
-	 *  parse layer. Checksum checking status can be queried for each packet
-	 *  with odp_packet_l3_chksum_status() and
-	 *  odp_packet_l4_chksum_status().
-	 */
-	odp_proto_chksums_t chksums;
+    /** Flags to control payload data checksums checks up to the selected
+     *  parse layer. Checksum checking status can be queried for each packet
+     *  with odp_packet_l3_chksum_status() and
+     *  odp_packet_l4_chksum_status().
+     */
+    odp_proto_chksums_t chksums;
 
 } odp_packet_parse_param_t;
 
@@ -1406,7 +1406,7 @@ typedef struct odp_packet_parse_param_t {
  * @retval <0 on failure
  */
 int odp_packet_parse(odp_packet_t pkt, uint32_t offset,
-		     const odp_packet_parse_param_t *param);
+             const odp_packet_parse_param_t *param);
 
 /**
  * Parse multiple packets
@@ -1425,34 +1425,34 @@ int odp_packet_parse(odp_packet_t pkt, uint32_t offset,
  * @retval <0 on failure
  */
 int odp_packet_parse_multi(const odp_packet_t pkt[], const uint32_t offset[],
-			   int num, const odp_packet_parse_param_t *param);
+               int num, const odp_packet_parse_param_t *param);
 
 /** Packet parse results */
 typedef struct odp_packet_parse_result_t {
-	/** Parse result flags */
-	odp_packet_parse_result_flag_t flag;
+    /** Parse result flags */
+    odp_packet_parse_result_flag_t flag;
 
-	/** @see odp_packet_len() */
-	uint32_t packet_len;
+    /** @see odp_packet_len() */
+    uint32_t packet_len;
 
-	/** @see odp_packet_l2_offset() */
-	uint32_t l2_offset;
-	/** @see odp_packet_l3_offset() */
-	uint32_t l3_offset;
-	/** @see odp_packet_l4_offset() */
-	uint32_t l4_offset;
+    /** @see odp_packet_l2_offset() */
+    uint32_t l2_offset;
+    /** @see odp_packet_l3_offset() */
+    uint32_t l3_offset;
+    /** @see odp_packet_l4_offset() */
+    uint32_t l4_offset;
 
-	/** @see odp_packet_l3_chksum_status() */
-	odp_packet_chksum_status_t l3_chksum_status;
-	/** @see odp_packet_l4_chksum_status() */
-	odp_packet_chksum_status_t l4_chksum_status;
+    /** @see odp_packet_l3_chksum_status() */
+    odp_packet_chksum_status_t l3_chksum_status;
+    /** @see odp_packet_l4_chksum_status() */
+    odp_packet_chksum_status_t l4_chksum_status;
 
-	/** @see odp_packet_l2_type() */
-	odp_proto_l2_type_t l2_type;
-	/** @see odp_packet_l3_type() */
-	odp_proto_l3_type_t l3_type;
-	/** @see odp_packet_l4_type() */
-	odp_proto_l4_type_t l4_type;
+    /** @see odp_packet_l2_type() */
+    odp_proto_l2_type_t l2_type;
+    /** @see odp_packet_l3_type() */
+    odp_proto_l3_type_t l3_type;
+    /** @see odp_packet_l4_type() */
+    odp_proto_l4_type_t l4_type;
 
 } odp_packet_parse_result_t;
 
@@ -1467,7 +1467,7 @@ typedef struct odp_packet_parse_result_t {
  * @param[out] result  Pointer for parse result output
  */
 void odp_packet_parse_result(odp_packet_t pkt,
-			     odp_packet_parse_result_t *result);
+                 odp_packet_parse_result_t *result);
 
 /**
  * Read parse results from multiple packets
@@ -1480,8 +1480,8 @@ void odp_packet_parse_result(odp_packet_t pkt,
  * @param      num     Number of packets and results
  */
 void odp_packet_parse_result_multi(const odp_packet_t pkt[],
-				   odp_packet_parse_result_t *result[],
-				   int num);
+                   odp_packet_parse_result_t *result[],
+                   int num);
 
 /**
  * Packet pool

@@ -43,8 +43,8 @@ extern "C" {
  * Maximum number of queues
  */
 #define CONFIG_MAX_QUEUES (CONFIG_INTERNAL_QUEUES + \
-			   CONFIG_MAX_PLAIN_QUEUES + \
-			   CONFIG_MAX_SCHED_QUEUES)
+               CONFIG_MAX_PLAIN_QUEUES + \
+               CONFIG_MAX_SCHED_QUEUES)
 
 /*
  * Maximum number of ordered locks per queue
@@ -105,8 +105,8 @@ extern "C" {
  * be larger than this.
 */
 #define CONFIG_PACKET_MAX_SEG_LEN  (CONFIG_PACKET_SEG_SIZE - \
-				    CONFIG_PACKET_HEADROOM - \
-				    CONFIG_PACKET_TAILROOM)
+                    CONFIG_PACKET_HEADROOM - \
+                    CONFIG_PACKET_TAILROOM)
 
 /*
  * Minimum packet segment length
@@ -116,8 +116,8 @@ extern "C" {
  * this value.
  */
 #define CONFIG_PACKET_SEG_LEN_MIN ((2 * 1024) + \
-				   CONFIG_PACKET_HEADROOM + \
-				   CONFIG_PACKET_TAILROOM)
+                   CONFIG_PACKET_HEADROOM + \
+                   CONFIG_PACKET_TAILROOM)
 
 /* Maximum number of shared memory blocks.
  *

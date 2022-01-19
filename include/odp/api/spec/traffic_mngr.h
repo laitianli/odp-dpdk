@@ -195,55 +195,55 @@ extern "C" {
  * that might vary based upon the tm_node level.  It is always used as
  * part of the odp_tm_capabilities record. */
 typedef struct {
-	/** max_num_tm_nodes specifies the maximum number of tm_nodes allowed
-	 * at this level. */
-	uint32_t max_num_tm_nodes;
+    /** max_num_tm_nodes specifies the maximum number of tm_nodes allowed
+     * at this level. */
+    uint32_t max_num_tm_nodes;
 
-	/** max_fanin_per_level specifies the maximum number of fan_in links
-	 * to any given scheduler (whether weighted or using fair queueing or
-	 * round robin) belonging to tm_nodes at this level. */
-	uint32_t max_fanin_per_node;
+    /** max_fanin_per_level specifies the maximum number of fan_in links
+     * to any given scheduler (whether weighted or using fair queueing or
+     * round robin) belonging to tm_nodes at this level. */
+    uint32_t max_fanin_per_node;
 
-	/** max_priority specifies the maximum number of strict priority
-	 * levels used by any tm_node at this level.  Note that lower numeric
-	 * values represent higher (more important or time critical)
-	 * priorities. */
-	uint8_t max_priority;
+    /** max_priority specifies the maximum number of strict priority
+     * levels used by any tm_node at this level.  Note that lower numeric
+     * values represent higher (more important or time critical)
+     * priorities. */
+    uint8_t max_priority;
 
-	/** min_weight only has significance when the weights_supported field
-	 * below is true, in which case it specifies the smallest value
-	 * of the weights allowed at this level. */
-	uint8_t min_weight;
+    /** min_weight only has significance when the weights_supported field
+     * below is true, in which case it specifies the smallest value
+     * of the weights allowed at this level. */
+    uint8_t min_weight;
 
-	/** max_weight only has significance when the weights_supported field
-	 * below is true, in which case it specifies the largest value
-	 * of the weights allowed at this level. */
-	uint8_t max_weight;
+    /** max_weight only has significance when the weights_supported field
+     * below is true, in which case it specifies the largest value
+     * of the weights allowed at this level. */
+    uint8_t max_weight;
 
-	/** tm_node_shaper_supported indicates that the tm_nodes at this level
-	 * all support TM shaping, */
-	odp_bool_t tm_node_shaper_supported;
+    /** tm_node_shaper_supported indicates that the tm_nodes at this level
+     * all support TM shaping, */
+    odp_bool_t tm_node_shaper_supported;
 
-	/** tm_node_wred_supported indicates that the tm_nodes at this level
-	 * support some form of Random Early Detection. */
-	odp_bool_t tm_node_wred_supported;
+    /** tm_node_wred_supported indicates that the tm_nodes at this level
+     * support some form of Random Early Detection. */
+    odp_bool_t tm_node_wred_supported;
 
-	/** tm_node_dual_slope_supported indicates that the tm_nodes at this
-	 * level support the dual slope WRED capability.  This field is
-	 * ignored if tm_node_wred_supported above is false. */
-	odp_bool_t tm_node_dual_slope_supported;
+    /** tm_node_dual_slope_supported indicates that the tm_nodes at this
+     * level support the dual slope WRED capability.  This field is
+     * ignored if tm_node_wred_supported above is false. */
+    odp_bool_t tm_node_dual_slope_supported;
 
-	/** fair_queuing_supported indicates that the tm_node schedulers at
-	 * this level can implement WFQ or FQ scheduling disciplines
-	 * (otherwise these schedulers can only implement WRR or RR
-	 * algorithms. */
-	odp_bool_t fair_queuing_supported;
+    /** fair_queuing_supported indicates that the tm_node schedulers at
+     * this level can implement WFQ or FQ scheduling disciplines
+     * (otherwise these schedulers can only implement WRR or RR
+     * algorithms. */
+    odp_bool_t fair_queuing_supported;
 
-	/** weights_supported indicates that the tm_node schedulers at this
-	 * level can have their different weights for their different fanins.
-	 * When true the min_weight and max_weight fields above specify
-	 * the legal range of such weights. */
-	odp_bool_t weights_supported;
+    /** weights_supported indicates that the tm_node schedulers at this
+     * level can have their different weights for their different fanins.
+     * When true the min_weight and max_weight fields above specify
+     * the legal range of such weights. */
+    odp_bool_t weights_supported;
 } odp_tm_level_capabilities_t;
 
 /** TM Capabilities Record.
@@ -251,86 +251,86 @@ typedef struct {
  * The odp_tm_capabilities_t record type is used to describe the feature set
  * and limits of a TM system. */
 typedef struct {
-	/** The name is an optional name associated with a capabilities
-	 * record.  This name, if present, can be used by odp_tm_find to
-	 * return a TM system matching this set of capabilities. */
-	char *name;
+    /** The name is an optional name associated with a capabilities
+     * record.  This name, if present, can be used by odp_tm_find to
+     * return a TM system matching this set of capabilities. */
+    char *name;
 
-	/** max_tm_queues specifies the maximum number of tm_queues that can
-	 * be in existence for this TM System. */
-	uint32_t max_tm_queues;
+    /** max_tm_queues specifies the maximum number of tm_queues that can
+     * be in existence for this TM System. */
+    uint32_t max_tm_queues;
 
-	/** max_levels specifies that maximum number of levels of hierarchical
-	 * scheduling allowed by this TM System.  This is a count of the
-	 * tm_node stages and does not include tm_queues or tm_egress objects.
-	 * Hence any given tm_node will have associated tm_node_level in the
-	 * range 0 to max_levels - 1, where tm_node's at level 0 output's only
-	 * go to egress objects and tm_nodes whose level is max_levels - 1
-	 * have their fan_in only from tm_queues. */
-	uint8_t max_levels;
+    /** max_levels specifies that maximum number of levels of hierarchical
+     * scheduling allowed by this TM System.  This is a count of the
+     * tm_node stages and does not include tm_queues or tm_egress objects.
+     * Hence any given tm_node will have associated tm_node_level in the
+     * range 0 to max_levels - 1, where tm_node's at level 0 output's only
+     * go to egress objects and tm_nodes whose level is max_levels - 1
+     * have their fan_in only from tm_queues. */
+    uint8_t max_levels;
 
-	/** egress_fcn_supported indicates whether the tm system supports
-	* egress function. It is an optional feature used to receive the
-	* packet from the tm system and its performance might be limited.
-	*/
-	odp_bool_t egress_fcn_supported;
+    /** egress_fcn_supported indicates whether the tm system supports
+    * egress function. It is an optional feature used to receive the
+    * packet from the tm system and its performance might be limited.
+    */
+    odp_bool_t egress_fcn_supported;
 
-	/** tm_queue_shaper_supported indicates that the tm_queues support
-	 * proper TM shaping.  Note that TM Shaping is NOT the same thing as
-	 * Ingress Metering/Policing as specified by RFC 2697 (A Single Rate
-	 * Three Color Marker) or RFC 2698 (A Two Rate Three Color Marker).
-	 * These RFC's can be used for a Diffserv traffic conditioner, or
-	 * other ingress policing.  They make no mention of and have no
-	 * algorithms for delaying packets - which is what TM shapers are
-	 * expected to do. */
-	odp_bool_t tm_queue_shaper_supported;
+    /** tm_queue_shaper_supported indicates that the tm_queues support
+     * proper TM shaping.  Note that TM Shaping is NOT the same thing as
+     * Ingress Metering/Policing as specified by RFC 2697 (A Single Rate
+     * Three Color Marker) or RFC 2698 (A Two Rate Three Color Marker).
+     * These RFC's can be used for a Diffserv traffic conditioner, or
+     * other ingress policing.  They make no mention of and have no
+     * algorithms for delaying packets - which is what TM shapers are
+     * expected to do. */
+    odp_bool_t tm_queue_shaper_supported;
 
-	/** tm_queue_wred_supported indicates that the tm_queues support some
-	 * form of Random Early Detection. */
-	odp_bool_t tm_queue_wred_supported;
+    /** tm_queue_wred_supported indicates that the tm_queues support some
+     * form of Random Early Detection. */
+    odp_bool_t tm_queue_wred_supported;
 
-	/** tm_queue_dual_slope_supported indicates that the tm_queues support
-	 * the dual slope WRED capability.  This field is ignored if
-	 * tm_queue_wred_supported above is false. */
-	odp_bool_t tm_queue_dual_slope_supported;
+    /** tm_queue_dual_slope_supported indicates that the tm_queues support
+     * the dual slope WRED capability.  This field is ignored if
+     * tm_queue_wred_supported above is false. */
+    odp_bool_t tm_queue_dual_slope_supported;
 
-	/** vlan_marking_supported indicates that this TM system supports SOME
-	 * form of VLAN egress marking using the odp_tm_vlan_marking()
-	 * function.  This being true does not imply that all colors and
-	 * subfield values and changes are supported.  Unsupported features
-	 * can be detected by the marking function returning an error code. */
-	odp_bool_t vlan_marking_supported;
+    /** vlan_marking_supported indicates that this TM system supports SOME
+     * form of VLAN egress marking using the odp_tm_vlan_marking()
+     * function.  This being true does not imply that all colors and
+     * subfield values and changes are supported.  Unsupported features
+     * can be detected by the marking function returning an error code. */
+    odp_bool_t vlan_marking_supported;
 
-	/** ecn_marking_supported indicates that this TM system supports
-	 * Explicit Congestion Notification egress marking by using the
-	 * odp_tm_ip_ecn_marking() function.  Note that the ECN is the bottom
-	 * two bits of the IPv4 TOS field or the analogous IPv6 Traffic Class
-	 * (TC) field.  Note that the ecn_marking_supported boolean being
-	 * true does not imply that all colors are supported. */
-	odp_bool_t ecn_marking_supported;
+    /** ecn_marking_supported indicates that this TM system supports
+     * Explicit Congestion Notification egress marking by using the
+     * odp_tm_ip_ecn_marking() function.  Note that the ECN is the bottom
+     * two bits of the IPv4 TOS field or the analogous IPv6 Traffic Class
+     * (TC) field.  Note that the ecn_marking_supported boolean being
+     * true does not imply that all colors are supported. */
+    odp_bool_t ecn_marking_supported;
 
-	/** drop_prec_marking_supported indicates that this TM system supports
-	 * SOME form of IPv4/IPv6 egress marking by using the
-	 * odp_tm_drop_prec_marking() function.  Note that the actually field
-	 * modified for IPv4 pkts is called TOS, whereas the field modified
-	 * for IPv6 pkts is called Traffic Class (TC) - but they are analogous
-	 * fields.  Note that the drop_prec_marking_supported boolean being true
-	 * does not imply that all colors and subfield values and changes are
-	 * supported.  Unsupported features can be detected by the marking
-	 * function returning an error code.*/
-	odp_bool_t drop_prec_marking_supported;
+    /** drop_prec_marking_supported indicates that this TM system supports
+     * SOME form of IPv4/IPv6 egress marking by using the
+     * odp_tm_drop_prec_marking() function.  Note that the actually field
+     * modified for IPv4 pkts is called TOS, whereas the field modified
+     * for IPv6 pkts is called Traffic Class (TC) - but they are analogous
+     * fields.  Note that the drop_prec_marking_supported boolean being true
+     * does not imply that all colors and subfield values and changes are
+     * supported.  Unsupported features can be detected by the marking
+     * function returning an error code.*/
+    odp_bool_t drop_prec_marking_supported;
 
-	/** The marking_colors_supported array is used to indicate which colors
-	 * can be used for marking.  A value of FALSE means that this color
-	 * should not be enabled for either vlan marking, ecn marking or
-	 * drop precedence marking.  A value of TRUE means that this color is
-	 * supported for at least one of (and ideally all of) vlan marking,
-	 * ecn marking or drop precedence marking. */
-	odp_bool_t marking_colors_supported[ODP_NUM_PACKET_COLORS];
+    /** The marking_colors_supported array is used to indicate which colors
+     * can be used for marking.  A value of FALSE means that this color
+     * should not be enabled for either vlan marking, ecn marking or
+     * drop precedence marking.  A value of TRUE means that this color is
+     * supported for at least one of (and ideally all of) vlan marking,
+     * ecn marking or drop precedence marking. */
+    odp_bool_t marking_colors_supported[ODP_NUM_PACKET_COLORS];
 
-	/** The per_level array specifies the TM system capabilities that
-	 * can vary based upon the tm_node level. */
-	odp_tm_level_capabilities_t per_level[ODP_TM_MAX_LEVELS];
+    /** The per_level array specifies the TM system capabilities that
+     * can vary based upon the tm_node level. */
+    odp_tm_level_capabilities_t per_level[ODP_TM_MAX_LEVELS];
 } odp_tm_capabilities_t;
 
 /** Per Level Requirements
@@ -339,55 +339,55 @@ typedef struct {
  * that might vary based upon the tm_node level.  It is always used as
  * part of the odp_tm_requirements record. */
 typedef struct {
-	/** max_num_tm_nodes specifies the maximum number of tm_nodes required
-	 * at this level. */
-	uint32_t max_num_tm_nodes;
+    /** max_num_tm_nodes specifies the maximum number of tm_nodes required
+     * at this level. */
+    uint32_t max_num_tm_nodes;
 
-	/** max_fanin_per_level specifies the maximum number of fan_in links
-	 * to any given scheduler (whether weighted or using fair queueing or
-	 * round robin) required of tm_nodes at this level. */
-	uint32_t max_fanin_per_node;
+    /** max_fanin_per_level specifies the maximum number of fan_in links
+     * to any given scheduler (whether weighted or using fair queueing or
+     * round robin) required of tm_nodes at this level. */
+    uint32_t max_fanin_per_node;
 
-	/** max_priority specifies the maximum number of strict priority
-	 * levels that will be used by any tm_node at this level.  Note that
-	 * lower numeric values represent higher (more important or time
-	 * critical) priorities. */
-	uint8_t max_priority;
+    /** max_priority specifies the maximum number of strict priority
+     * levels that will be used by any tm_node at this level.  Note that
+     * lower numeric values represent higher (more important or time
+     * critical) priorities. */
+    uint8_t max_priority;
 
-	/** min_weight only has significance when the weights_supported field
-	 * below is true, in which case it specifies the smallest value
-	 * of the weights that will be used at this level. */
-	uint8_t min_weight;
+    /** min_weight only has significance when the weights_supported field
+     * below is true, in which case it specifies the smallest value
+     * of the weights that will be used at this level. */
+    uint8_t min_weight;
 
-	/** max_weight only has significance when the weights_supported field
-	 * below is true, in which case it specifies the largest value
-	 * of the weights that will be used at this level. */
-	uint8_t max_weight;
+    /** max_weight only has significance when the weights_supported field
+     * below is true, in which case it specifies the largest value
+     * of the weights that will be used at this level. */
+    uint8_t max_weight;
 
-	/** tm_node_shaper_needed indicates that the tm_nodes at this level
-	 * are expected to do TM shaping, */
-	odp_bool_t tm_node_shaper_needed;
+    /** tm_node_shaper_needed indicates that the tm_nodes at this level
+     * are expected to do TM shaping, */
+    odp_bool_t tm_node_shaper_needed;
 
-	/** tm_node_wred_needed indicates that the tm_nodes at this level
-	 * are expected to participate in some form of Random Early
-	 * Detection. */
-	odp_bool_t tm_node_wred_needed;
+    /** tm_node_wred_needed indicates that the tm_nodes at this level
+     * are expected to participate in some form of Random Early
+     * Detection. */
+    odp_bool_t tm_node_wred_needed;
 
-	/** tm_node_dual_slope_needed indicates that the tm_nodes at this
-	 * level are expected to use the dual slope WRED capability.  This
-	 * field is ignored if tm_node_wred_needed above is false. */
-	odp_bool_t tm_node_dual_slope_needed;
+    /** tm_node_dual_slope_needed indicates that the tm_nodes at this
+     * level are expected to use the dual slope WRED capability.  This
+     * field is ignored if tm_node_wred_needed above is false. */
+    odp_bool_t tm_node_dual_slope_needed;
 
-	/** fair_queuing_needed indicates that the tm_node schedulers at
-	 * this level are expected to implement WFQ or FQ scheduling
-	 * disciplines. */
-	odp_bool_t fair_queuing_needed;
+    /** fair_queuing_needed indicates that the tm_node schedulers at
+     * this level are expected to implement WFQ or FQ scheduling
+     * disciplines. */
+    odp_bool_t fair_queuing_needed;
 
-	/** weights_needd indicates that the tm_node schedulers at this
-	 * level are expected have different weights for their different
-	 * fanins.  When true the min_weight and max_weight fields above
-	 * specify the used range of such weights. */
-	odp_bool_t weights_needed;
+    /** weights_needd indicates that the tm_node schedulers at this
+     * level are expected have different weights for their different
+     * fanins.  When true the min_weight and max_weight fields above
+     * specify the used range of such weights. */
+    odp_bool_t weights_needed;
 } odp_tm_level_requirements_t;
 
 /** TM Requirements Record.
@@ -395,57 +395,57 @@ typedef struct {
  * The odp_tm_requirements_t record type is used to describe the minimum
  * set of features and limits to be actually used by the application. */
 typedef struct {
-	/** max_tm_queues specifies the maximum number of tm_queues that will
-	 * be used for this TM System. */
-	uint32_t max_tm_queues;
+    /** max_tm_queues specifies the maximum number of tm_queues that will
+     * be used for this TM System. */
+    uint32_t max_tm_queues;
 
-	/** num_levels specifies that number of levels of hierarchical
-	 * scheduling that will be used.  This is a count of the tm_node
-	 * stages and does not include tm_queues or tm_egress objects. */
-	uint8_t num_levels;
+    /** num_levels specifies that number of levels of hierarchical
+     * scheduling that will be used.  This is a count of the tm_node
+     * stages and does not include tm_queues or tm_egress objects. */
+    uint8_t num_levels;
 
-	/** tm_queue_shaper_needed indicates that the tm_queues are expected
-	 * to do TM shaping. */
-	odp_bool_t tm_queue_shaper_needed;
+    /** tm_queue_shaper_needed indicates that the tm_queues are expected
+     * to do TM shaping. */
+    odp_bool_t tm_queue_shaper_needed;
 
-	/** tm_queue_wred_needed indicates that the tm_queues are expected
-	 * to participate in some form of Random Early Detection. */
-	odp_bool_t tm_queue_wred_needed;
+    /** tm_queue_wred_needed indicates that the tm_queues are expected
+     * to participate in some form of Random Early Detection. */
+    odp_bool_t tm_queue_wred_needed;
 
-	/** tm_queue_dual_slope_needed indicates that the tm_queues are
-	 * expected to use the dual slope WRED capability.  This field is
-	 * ignored if tm_queue_wred_needed above is false. */
-	odp_bool_t tm_queue_dual_slope_needed;
+    /** tm_queue_dual_slope_needed indicates that the tm_queues are
+     * expected to use the dual slope WRED capability.  This field is
+     * ignored if tm_queue_wred_needed above is false. */
+    odp_bool_t tm_queue_dual_slope_needed;
 
-	/** vlan_marking_needed indicates that the ODP application expects
-	 * to use some form of VLAN egress marking using the
-	 * odp_tm_vlan_marking() function.  See also comments for
-	 * vlan_marking_supported. */
-	odp_bool_t vlan_marking_needed;
+    /** vlan_marking_needed indicates that the ODP application expects
+     * to use some form of VLAN egress marking using the
+     * odp_tm_vlan_marking() function.  See also comments for
+     * vlan_marking_supported. */
+    odp_bool_t vlan_marking_needed;
 
-	/** ecn_marking_needed indicates that the ODP application expects
-	 * to use some form of IPv4 TOS or IPv6 TC field egress marking by
-	 * using the odp_tm_ecn_marking() function.  See also comments for
-	 * ecn_marking_supported. */
-	odp_bool_t ecn_marking_needed;
+    /** ecn_marking_needed indicates that the ODP application expects
+     * to use some form of IPv4 TOS or IPv6 TC field egress marking by
+     * using the odp_tm_ecn_marking() function.  See also comments for
+     * ecn_marking_supported. */
+    odp_bool_t ecn_marking_needed;
 
-	/** drop_prec_marking_needed indicates that the ODP application expects
-	 * to use some form of IPv4 TOS or IPv6 TC field egress marking by
-	 * using the odp_tm_drop_prec_marking() function.  See also comments for
-	 * drop_prec_marking_supported. */
-	odp_bool_t drop_prec_marking_needed;
+    /** drop_prec_marking_needed indicates that the ODP application expects
+     * to use some form of IPv4 TOS or IPv6 TC field egress marking by
+     * using the odp_tm_drop_prec_marking() function.  See also comments for
+     * drop_prec_marking_supported. */
+    odp_bool_t drop_prec_marking_needed;
 
-	/** The marking_colors_needed array is used to indicate which colors
-	 * are expected to be used for marking.  A value of FALSE means that
-	 * the application will not enable this color for vlan marking,
-	 * ecn marking nor drop precedence marking.  A value of TRUE means that
-	 * the application expects to use this color in conjunction with one or
-	 * more of the marking API's. */
-	odp_bool_t marking_colors_needed[ODP_NUM_PACKET_COLORS];
+    /** The marking_colors_needed array is used to indicate which colors
+     * are expected to be used for marking.  A value of FALSE means that
+     * the application will not enable this color for vlan marking,
+     * ecn marking nor drop precedence marking.  A value of TRUE means that
+     * the application expects to use this color in conjunction with one or
+     * more of the marking API's. */
+    odp_bool_t marking_colors_needed[ODP_NUM_PACKET_COLORS];
 
-	/** The per_level array specifies the TM system requirements that
-	 * can vary based upon the tm_node level. */
-	odp_tm_level_requirements_t per_level[ODP_TM_MAX_LEVELS];
+    /** The per_level array specifies the TM system requirements that
+     * can vary based upon the tm_node level. */
+    odp_tm_level_requirements_t per_level[ODP_TM_MAX_LEVELS];
 } odp_tm_requirements_t;
 
 /** The odp_tm_egress_fcn_t type defines the parameter profile of the egress
@@ -461,21 +461,21 @@ typedef void (*odp_tm_egress_fcn_t) (odp_packet_t odp_pkt);
  * subsystem, and users are warned that its performance might be limited.
  */
 typedef enum {
-	ODP_TM_EGRESS_PKT_IO,
-	ODP_TM_EGRESS_FN,
+    ODP_TM_EGRESS_PKT_IO,
+    ODP_TM_EGRESS_FN,
 } odp_tm_egress_kind_t;
 
 /** The odp_tm_egress_t type is used to describe that type of "egress spigot"
  * associated with this TM system.
  */
 typedef struct {
-	odp_tm_egress_kind_t egress_kind; /**< Union discriminator */
+    odp_tm_egress_kind_t egress_kind; /**< Union discriminator */
 
-	/** Variant parameters for different TM outputs */
-	union {
-		odp_pktio_t pktio;              /**< Output to PktIO */
-		odp_tm_egress_fcn_t egress_fcn; /**< Output to user func */
-	};
+    /** Variant parameters for different TM outputs */
+    union {
+        odp_pktio_t pktio;              /**< Output to PktIO */
+        odp_tm_egress_fcn_t egress_fcn; /**< Output to user func */
+    };
 } odp_tm_egress_t;
 
 /** Initialize Requirements record.
@@ -527,7 +527,7 @@ void odp_tm_egress_init(odp_tm_egress_t *egress);
  *                               number can be > capabilities_size!
  */
 int odp_tm_capabilities(odp_tm_capabilities_t capabilities[],
-			uint32_t              capabilities_size);
+            uint32_t              capabilities_size);
 
 /** Create/instantiate a TM Packet Scheduling system.
  *
@@ -543,8 +543,8 @@ int odp_tm_capabilities(odp_tm_capabilities_t capabilities[],
  *                      returned.
  */
 odp_tm_t odp_tm_create(const char            *name,
-		       odp_tm_requirements_t *requirements,
-		       odp_tm_egress_t       *egress);
+               odp_tm_requirements_t *requirements,
+               odp_tm_egress_t       *egress);
 
 /** Find a pre-existing TM system.
  *
@@ -575,8 +575,8 @@ odp_tm_t odp_tm_create(const char            *name,
  *                      ODP_TM_INVALID is returned.
  */
 odp_tm_t odp_tm_find(const char            *name,
-		     odp_tm_requirements_t *requirements,
-		     odp_tm_egress_t       *egress);
+             odp_tm_requirements_t *requirements,
+             odp_tm_egress_t       *egress);
 
 /** Query Specific TM Capabilities
  *
@@ -649,8 +649,8 @@ int odp_tm_destroy(odp_tm_t odp_tm);
  * @return                       0 upon success, < 0 upon failure.
  */
 int odp_tm_vlan_marking(odp_tm_t           odp_tm,
-			odp_packet_color_t color,
-			odp_bool_t         drop_eligible_enabled);
+            odp_packet_color_t color,
+            odp_bool_t         drop_eligible_enabled);
 
 /** Explicit Congestion Notification Marking.
  *
@@ -681,8 +681,8 @@ int odp_tm_vlan_marking(odp_tm_t           odp_tm,
  * @return                0 upon success, < 0 upon failure.
  */
 int odp_tm_ecn_marking(odp_tm_t           odp_tm,
-		       odp_packet_color_t color,
-		       odp_bool_t         ecn_ce_enabled);
+               odp_packet_color_t color,
+               odp_bool_t         ecn_ce_enabled);
 
 /** Drop Precedence Marking.
  *
@@ -720,8 +720,8 @@ int odp_tm_ecn_marking(odp_tm_t           odp_tm,
  * @return                  0 upon success, < 0 upon failure.
  */
 int odp_tm_drop_prec_marking(odp_tm_t           odp_tm,
-			     odp_packet_color_t color,
-			     odp_bool_t         drop_prec_enabled);
+                 odp_packet_color_t color,
+                 odp_bool_t         drop_prec_enabled);
 
 /** Shaper profile types and functions */
 
@@ -735,7 +735,7 @@ int odp_tm_drop_prec_marking(odp_tm_t           odp_tm,
  * purpose than the shaper colors.
  */
 typedef enum {
-	ODP_TM_SHAPER_GREEN, ODP_TM_SHAPER_YELLOW, ODP_TM_SHAPER_RED
+    ODP_TM_SHAPER_GREEN, ODP_TM_SHAPER_YELLOW, ODP_TM_SHAPER_RED
 } odp_tm_shaper_color_t;
 
 /** The odp_tm_shaper_params_t record type is used to supply the parameters
@@ -745,41 +745,41 @@ typedef enum {
  * called on variables of this type before any of the fields are filled in.
  */
 typedef struct {
-	/** The committed information rate for this shaper profile.  The units
-	 * for this integer are always in bits per second. */
-	uint64_t commit_bps;
+    /** The committed information rate for this shaper profile.  The units
+     * for this integer are always in bits per second. */
+    uint64_t commit_bps;
 
-	/** The peak information rate for this shaper profile.  The units for
-	 * this integer are always in bits per second. */
-	uint64_t peak_bps;
+    /** The peak information rate for this shaper profile.  The units for
+     * this integer are always in bits per second. */
+    uint64_t peak_bps;
 
-	/** The commit burst tolerance for this shaper profile.  The units for
-	 * this field are always bits.  This value sets an upper limit for the
-	 * size of the commitCnt. */
-	uint32_t commit_burst;
+    /** The commit burst tolerance for this shaper profile.  The units for
+     * this field are always bits.  This value sets an upper limit for the
+     * size of the commitCnt. */
+    uint32_t commit_burst;
 
-	/** The peak burst tolerance for this shaper profile.  The units for
-	 * this field are always bits.  This value sets an upper limit for the
-	 * size of the peakCnt. */
-	uint32_t peak_burst;
+    /** The peak burst tolerance for this shaper profile.  The units for
+     * this field are always bits.  This value sets an upper limit for the
+     * size of the peakCnt. */
+    uint32_t peak_burst;
 
-	/** The shaper_len_adjust is a value between -128 and 127 which is
-	 * directly added to the frame_len of a packet associated with this
-	 * profile.  The frame_len would normally include the outermost
-	 * Ethernet header (DA, SA, ...) through to the outermost Ethernet CRC
-	 * inclusive.  Hence this field - when non-zero - will usually be set
-	 * to a value approximating the "time" (in units of bytes) taken by
-	 * the Ethernet preamble and Inter Frame Gap.  Traditionally this
-	 * would be the value 20 (8 + 12), but in same cases can be as low as
-	 * 9 (4 + 5). */
-	int8_t shaper_len_adjust;
+    /** The shaper_len_adjust is a value between -128 and 127 which is
+     * directly added to the frame_len of a packet associated with this
+     * profile.  The frame_len would normally include the outermost
+     * Ethernet header (DA, SA, ...) through to the outermost Ethernet CRC
+     * inclusive.  Hence this field - when non-zero - will usually be set
+     * to a value approximating the "time" (in units of bytes) taken by
+     * the Ethernet preamble and Inter Frame Gap.  Traditionally this
+     * would be the value 20 (8 + 12), but in same cases can be as low as
+     * 9 (4 + 5). */
+    int8_t shaper_len_adjust;
 
-	/** If dual_rate is TRUE it indicates the desire for the
-	 * implementation to use dual rate shaping for packets associated with
-	 * this profile.  The precise semantics of dual rate shaping are
-	 * implementation specific, but in any case require a non-zero set of
-	 * both commit and peak parameters. */
-	odp_bool_t dual_rate;
+    /** If dual_rate is TRUE it indicates the desire for the
+     * implementation to use dual rate shaping for packets associated with
+     * this profile.  The precise semantics of dual rate shaping are
+     * implementation specific, but in any case require a non-zero set of
+     * both commit and peak parameters. */
+    odp_bool_t dual_rate;
 } odp_tm_shaper_params_t;
 
 /** odp_tm_shaper_params_init() must be called to initialize any
@@ -804,7 +804,7 @@ void odp_tm_shaper_params_init(odp_tm_shaper_params_t *params);
  *                profile object.
  */
 odp_tm_shaper_t odp_tm_shaper_create(const char *name,
-				     odp_tm_shaper_params_t *params);
+                     odp_tm_shaper_params_t *params);
 
 /** Destroy shaper profile object
  *
@@ -830,7 +830,7 @@ int odp_tm_shaper_destroy(odp_tm_shaper_t shaper_profile);
  * @return                     Returns < 0 upon failure or 0 upon success.
  */
 int odp_tm_shaper_params_read(odp_tm_shaper_t shaper_profile,
-			      odp_tm_shaper_params_t *params);
+                  odp_tm_shaper_params_t *params);
 
 /** odp_tm_shaper_params_update() "sets" the current set of values associated
  * with the specified shaper profile object.  In addition, this call has the
@@ -845,7 +845,7 @@ int odp_tm_shaper_params_read(odp_tm_shaper_t shaper_profile,
  * @return                Returns < 0 upon failure or 0 upon success.
  */
 int odp_tm_shaper_params_update(odp_tm_shaper_t shaper_profile,
-				odp_tm_shaper_params_t *params);
+                odp_tm_shaper_params_t *params);
 
 /** odp_tm_shaper_lookup() can be used to find the shaper profile object
  * created with the specified name.
@@ -867,9 +867,9 @@ odp_tm_shaper_t odp_tm_shaper_lookup(const char *name);
  * the scheduler becomes a weighted round robin scheduler.
  */
 typedef enum {
-	ODP_TM_BYTE_BASED_WEIGHTS, /**< Use the packet length in
-				      scheduler algorithm */
-	ODP_TM_FRAME_BASED_WEIGHTS /**< Ignore the packet length */
+    ODP_TM_BYTE_BASED_WEIGHTS, /**< Use the packet length in
+                      scheduler algorithm */
+    ODP_TM_FRAME_BASED_WEIGHTS /**< Ignore the packet length */
 } odp_tm_sched_mode_t;
 
 /** The odp_tm_sched_params_t record type is used to supply the parameters
@@ -879,18 +879,18 @@ typedef enum {
  * called on variables of this type before any of the fields are filled in.
  */
 typedef struct {
-	/** sched_modes indicates whether weighted scheduling should be used
-	 * or not - on a priority basis. */
-	odp_tm_sched_mode_t sched_modes[ODP_TM_MAX_PRIORITIES];
+    /** sched_modes indicates whether weighted scheduling should be used
+     * or not - on a priority basis. */
+    odp_tm_sched_mode_t sched_modes[ODP_TM_MAX_PRIORITIES];
 
-	/** In the case that sched_modes for a given strict priority level
-	 * indicates the use of weighted scheduling, this field supplies the
-	 * weighting factors.  The weights - when defined - are used such that
-	 * the (adjusted) frame lengths are divided by these 8-bit weights
-	 * (i.e. they are divisors and not multipliers).  Consequently a
-	 * weight of 0 (when sched_mode is ODP_TM_BYTE_BASED_WEIGHTS) is
-	 * illegal. */
-	uint8_t sched_weights[ODP_TM_MAX_PRIORITIES];
+    /** In the case that sched_modes for a given strict priority level
+     * indicates the use of weighted scheduling, this field supplies the
+     * weighting factors.  The weights - when defined - are used such that
+     * the (adjusted) frame lengths are divided by these 8-bit weights
+     * (i.e. they are divisors and not multipliers).  Consequently a
+     * weight of 0 (when sched_mode is ODP_TM_BYTE_BASED_WEIGHTS) is
+     * illegal. */
+    uint8_t sched_weights[ODP_TM_MAX_PRIORITIES];
 } odp_tm_sched_params_t;
 
 /** odp_tm_sched_params_init() must be called to initialize any
@@ -914,7 +914,7 @@ void odp_tm_sched_params_init(odp_tm_sched_params_t *params);
  *                object.
  */
 odp_tm_sched_t odp_tm_sched_create(const char *name,
-				   odp_tm_sched_params_t *params);
+                   odp_tm_sched_params_t *params);
 
 /** Destroy scheduler profile object
  *
@@ -940,7 +940,7 @@ int odp_tm_sched_destroy(odp_tm_sched_t sched_profile);
  * @return                    Returns < 0 upon failure or 0 upon success.
  */
 int odp_tm_sched_params_read(odp_tm_sched_t sched_profile,
-			     odp_tm_sched_params_t *params);
+                 odp_tm_sched_params_t *params);
 
 /** odp_tm_sched_params_update() "sets" the current set of values associated
  * with the specified scheduler profile object.  In addition, this call has
@@ -955,7 +955,7 @@ int odp_tm_sched_params_read(odp_tm_sched_t sched_profile,
  * @return                Returns < 0 upon failure or 0 upon success.
  */
 int odp_tm_sched_params_update(odp_tm_sched_t sched_profile,
-			       odp_tm_sched_params_t *params);
+                   odp_tm_sched_params_t *params);
 
 /** odp_tm_sched_lookup() can be used to find the scheduler profile object
  * created with the specified name.
@@ -976,10 +976,10 @@ odp_tm_sched_t odp_tm_sched_lookup(const char *name);
  * called on variables of this type before any of the fields are filled in
  */
 typedef struct {
-	uint64_t max_pkts; /**<  max pkt cnt for this threshold profile */
-	uint64_t max_bytes; /**<  max byte cnt for this threshold profile */
-	odp_bool_t enable_max_pkts; /**<  TRUE if max_pkts is valid */
-	odp_bool_t enable_max_bytes; /**<  TRUE if max_bytes is valid */
+    uint64_t max_pkts; /**<  max pkt cnt for this threshold profile */
+    uint64_t max_bytes; /**<  max byte cnt for this threshold profile */
+    odp_bool_t enable_max_pkts; /**<  TRUE if max_pkts is valid */
+    odp_bool_t enable_max_bytes; /**<  TRUE if max_bytes is valid */
 } odp_tm_threshold_params_t;
 
 /** odp_tm_threshold_params_init() must be called to initialize any
@@ -1004,7 +1004,7 @@ void odp_tm_threshold_params_init(odp_tm_threshold_params_t *params);
  *                profile object.
  */
 odp_tm_threshold_t odp_tm_threshold_create(const char *name,
-					   odp_tm_threshold_params_t *params);
+                       odp_tm_threshold_params_t *params);
 
 /** Destroy a queue threshold profile object
  *
@@ -1030,7 +1030,7 @@ int odp_tm_threshold_destroy(odp_tm_threshold_t threshold_profile);
  * @return                        Returns < 0 upon failure or 0 upon success.
  */
 int odp_tm_thresholds_params_read(odp_tm_threshold_t threshold_profile,
-				  odp_tm_threshold_params_t *params);
+                  odp_tm_threshold_params_t *params);
 
 /** odp_tm_thresholds_params_update() "sets" the current set of values
  * associated with the specified queue thresholds profile object.  In addition,
@@ -1046,7 +1046,7 @@ int odp_tm_thresholds_params_read(odp_tm_threshold_t threshold_profile,
  * @return                   Returns < 0 upon failure or 0 upon success.
  */
 int odp_tm_thresholds_params_update(odp_tm_threshold_t threshold_profile,
-				    odp_tm_threshold_params_t *params);
+                    odp_tm_threshold_params_t *params);
 
 /** odp_tm_thresholds_lookup() can be used to find the queue thresholds
  * profile object created with the specified name.
@@ -1067,55 +1067,55 @@ odp_tm_threshold_t odp_tm_thresholds_lookup(const char *name);
  * on variables of this type before any of the fields are filled in.
  */
 typedef struct {
-	/** When min_threshold is set to zero then single-slope WRED is
-	 * enabled, as described in the description of med_threshold.
-	 * Otherwise dual-slope WRED is enabled whereby the behavior depends
-	 * on which of the following three cases exists:
-	 * <ol> <li> queue
-	 * fullness < min_threshold.  In this case the drop probability is
-	 * zero.
-	 * <li> min_threshold <= queue fullness < med_threshold.  In
-	 * this case the drop probability increases linearly from zero until
-	 * it reaches med_drop_prob at a queue fullness equal to
-	 * med_threshold.
-	 * <li> med_threshold <= queue fullness.  In this case
-	 * the drop probability increases linearly from med_drop_prob when the
-	 * queue fullness equals med_threshold until it reaches 100% with a
-	 * drop probability of max_drop_prob.  </ol> */
-	odp_tm_percent_t min_threshold;
+    /** When min_threshold is set to zero then single-slope WRED is
+     * enabled, as described in the description of med_threshold.
+     * Otherwise dual-slope WRED is enabled whereby the behavior depends
+     * on which of the following three cases exists:
+     * <ol> <li> queue
+     * fullness < min_threshold.  In this case the drop probability is
+     * zero.
+     * <li> min_threshold <= queue fullness < med_threshold.  In
+     * this case the drop probability increases linearly from zero until
+     * it reaches med_drop_prob at a queue fullness equal to
+     * med_threshold.
+     * <li> med_threshold <= queue fullness.  In this case
+     * the drop probability increases linearly from med_drop_prob when the
+     * queue fullness equals med_threshold until it reaches 100% with a
+     * drop probability of max_drop_prob.  </ol> */
+    odp_tm_percent_t min_threshold;
 
-	/** The meaning of med_threshold depends upon whether single-slope or
-	 * dual-slope WRED is being used or not.  When min_threshold is 0 then
-	 * single-slope WRED is enabled in which case the med_threshold value
-	 * represents (as a percentage of max queue fullness) the point at
-	 * which the drop probability starts increasing linearly from 0 until
-	 * it becomes equal to max_drop_prob when the queue fullness reaches
-	 * 100%.  See min_threshold comments for the case of dual-slope WRED. */
-	odp_tm_percent_t med_threshold;
+    /** The meaning of med_threshold depends upon whether single-slope or
+     * dual-slope WRED is being used or not.  When min_threshold is 0 then
+     * single-slope WRED is enabled in which case the med_threshold value
+     * represents (as a percentage of max queue fullness) the point at
+     * which the drop probability starts increasing linearly from 0 until
+     * it becomes equal to max_drop_prob when the queue fullness reaches
+     * 100%.  See min_threshold comments for the case of dual-slope WRED. */
+    odp_tm_percent_t med_threshold;
 
-	/** The med_drop_prob is only used when dual-slope WRED is being used,
-	 * in which case med_drop_prob MUST be < max_drop_prob.  See
-	 * min_threshold comments for more details. */
-	odp_tm_percent_t med_drop_prob;
+    /** The med_drop_prob is only used when dual-slope WRED is being used,
+     * in which case med_drop_prob MUST be < max_drop_prob.  See
+     * min_threshold comments for more details. */
+    odp_tm_percent_t med_drop_prob;
 
-	/** The max_drop_prob equals the drop probability when the queue
-	 * fullness almost equals 100%.  Of course once the queue fullness is
-	 * >= 100% of the max queue fullness, the drop probability
-	 * discontinuously becomes 100%. */
-	odp_tm_percent_t max_drop_prob;
+    /** The max_drop_prob equals the drop probability when the queue
+     * fullness almost equals 100%.  Of course once the queue fullness is
+     * >= 100% of the max queue fullness, the drop probability
+     * discontinuously becomes 100%. */
+    odp_tm_percent_t max_drop_prob;
 
-	/** When enable_wred is false, all tm_queues and tm_nodes that are
-	 * attached to this profile will not take part in a Random Early
-	 * Detection algorithm. */
-	odp_bool_t enable_wred;
+    /** When enable_wred is false, all tm_queues and tm_nodes that are
+     * attached to this profile will not take part in a Random Early
+     * Detection algorithm. */
+    odp_bool_t enable_wred;
 
-	/** When use_byte_fullness is true then WRED will use queue memory
-	 * usage as the fullness criterion, otherwise when use_byte_fullness
-	 * is false, WRED will use the queue length (i.e. the number of
-	 * packets in the queue) as the fullness criterion.  Often will be set
-	 * to true for WRED profiles applied to tm_queues and set to false for
-	 * WRED profiles applied to tm_nodes. */
-	odp_bool_t use_byte_fullness;
+    /** When use_byte_fullness is true then WRED will use queue memory
+     * usage as the fullness criterion, otherwise when use_byte_fullness
+     * is false, WRED will use the queue length (i.e. the number of
+     * packets in the queue) as the fullness criterion.  Often will be set
+     * to true for WRED profiles applied to tm_queues and set to false for
+     * WRED profiles applied to tm_nodes. */
+    odp_bool_t use_byte_fullness;
 } odp_tm_wred_params_t;
 
 /** odp_tm_wred_params_init() must be called to initialize any
@@ -1140,7 +1140,7 @@ void odp_tm_wred_params_init(odp_tm_wred_params_t *params);
  *                object.
  */
 odp_tm_wred_t odp_tm_wred_create(const char *name,
-				 odp_tm_wred_params_t *params);
+                 odp_tm_wred_params_t *params);
 
 /** Destroy WRED profile object
  *
@@ -1166,7 +1166,7 @@ int odp_tm_wred_destroy(odp_tm_wred_t wred_profile);
  * @return                   Returns < 0 upon failure or 0 upon success.
  */
 int odp_tm_wred_params_read(odp_tm_wred_t wred_profile,
-			    odp_tm_wred_params_t *params);
+                odp_tm_wred_params_t *params);
 
 /** odp_tm_wred_params_update() "sets" the current set of values associated
  * with the specified WRED profile object.  In addition, this call has the
@@ -1181,7 +1181,7 @@ int odp_tm_wred_params_read(odp_tm_wred_t wred_profile,
  * @return              Returns < 0 upon failure or 0 upon success.
  */
 int odp_tm_wred_params_update(odp_tm_wred_t wred_profile,
-			      odp_tm_wred_params_t *params);
+                  odp_tm_wred_params_t *params);
 
 /** odp_tm_wred_lookup() can be used to find the WRED profile object created
  * with the specified name.
@@ -1201,37 +1201,37 @@ odp_tm_wred_t odp_tm_wred_lookup(const char *name);
  * on variables of this type before any of the fields are filled in.
  */
 typedef struct {
-	/** The user_context field is an generic pointer that the user can
-	 * associate with a tm_node and then get this same value back using
-	 * the odp_tm_node_context() call. */
-	void *user_context;
+    /** The user_context field is an generic pointer that the user can
+     * associate with a tm_node and then get this same value back using
+     * the odp_tm_node_context() call. */
+    void *user_context;
 
-	/** The max_fanin sets the maximum number of src tm_queues and
-	 * producer tm_nodes that can be simultaneously be connected to this
-	 * tm_node as their destination. */
-	uint32_t max_fanin;
+    /** The max_fanin sets the maximum number of src tm_queues and
+     * producer tm_nodes that can be simultaneously be connected to this
+     * tm_node as their destination. */
+    uint32_t max_fanin;
 
-	/** The shaper profile to be associated with this tm_node.  Can be
-	 * ODP_TM_INVALID and can also be set and changed post-creation via
-	 * odp_tm_node_shaper_config(); */
-	odp_tm_shaper_t shaper_profile;
+    /** The shaper profile to be associated with this tm_node.  Can be
+     * ODP_TM_INVALID and can also be set and changed post-creation via
+     * odp_tm_node_shaper_config(); */
+    odp_tm_shaper_t shaper_profile;
 
-	/** The threshold profile to be used in setting the max queue fullness
-	 * for WRED and/or tail drop?  Can be ODP_TM_INVALID and can also be
-	 * set and changed post-creation via odp_tm_node_threshold_config(). */
-	odp_tm_threshold_t threshold_profile;
+    /** The threshold profile to be used in setting the max queue fullness
+     * for WRED and/or tail drop?  Can be ODP_TM_INVALID and can also be
+     * set and changed post-creation via odp_tm_node_threshold_config(). */
+    odp_tm_threshold_t threshold_profile;
 
-	/** The WRED profile(s) to be associated with this tm_node.  Any or
-	 * all array elements can be ODP_TM_INVALID and can also be set and
-	 * changed post-creation via odp_tm_node_wred_config(). */
-	odp_tm_wred_t wred_profile[ODP_NUM_PACKET_COLORS];
+    /** The WRED profile(s) to be associated with this tm_node.  Any or
+     * all array elements can be ODP_TM_INVALID and can also be set and
+     * changed post-creation via odp_tm_node_wred_config(). */
+    odp_tm_wred_t wred_profile[ODP_NUM_PACKET_COLORS];
 
-	/** The level (or tm_node stage) sets the level for this tm_node It
-	 * must be in range 0..max_levels-1.  Note that the tm_node topology
-	 * is constrained such that only tm_node outputs with numerically
-	 * greater levels may be connected to the fan-in of tm_node's with
-	 * numerically smaller levels. */
-	uint8_t level;
+    /** The level (or tm_node stage) sets the level for this tm_node It
+     * must be in range 0..max_levels-1.  Note that the tm_node topology
+     * is constrained such that only tm_node outputs with numerically
+     * greater levels may be connected to the fan-in of tm_node's with
+     * numerically smaller levels. */
+    uint8_t level;
 } odp_tm_node_params_t;
 
 /** odp_tm_node_params_init() must be called to initialize any
@@ -1260,8 +1260,8 @@ void odp_tm_node_params_init(odp_tm_node_params_t *params);
  *                a valid odp_tm_node_t handle if successful.
  */
 odp_tm_node_t odp_tm_node_create(odp_tm_t              odp_tm,
-				 const char           *name,
-				 odp_tm_node_params_t *params);
+                 const char           *name,
+                 odp_tm_node_params_t *params);
 
 /** Destroy  a tm_node object.
  *
@@ -1285,7 +1285,7 @@ int odp_tm_node_destroy(odp_tm_node_t tm_node);
  * @return                Returns 0 upon success and < 0 upon failure.
  */
 int odp_tm_node_shaper_config(odp_tm_node_t tm_node,
-			      odp_tm_shaper_t shaper_profile);
+                  odp_tm_shaper_t shaper_profile);
 
 /** The odp_tm_node_sched_config() function is used to dynamically set or
  * change the scheduler profile associated with a tm_node.
@@ -1301,8 +1301,8 @@ int odp_tm_node_shaper_config(odp_tm_node_t tm_node,
  * @return                Returns 0 upon success and < 0 upon failure.
  */
 int odp_tm_node_sched_config(odp_tm_node_t tm_node,
-			     odp_tm_node_t tm_fan_in_node,
-			     odp_tm_sched_t sched_profile);
+                 odp_tm_node_t tm_fan_in_node,
+                 odp_tm_sched_t sched_profile);
 
 /** The odp_tm_node_threshold_config() function is used to dynamically set or
  * change the queue threshold profile associated with this tm_node.
@@ -1313,7 +1313,7 @@ int odp_tm_node_sched_config(odp_tm_node_t tm_node,
  * @return                    Returns 0 upon success and < 0 upon failure.
  */
 int odp_tm_node_threshold_config(odp_tm_node_t tm_node,
-				 odp_tm_threshold_t thresholds_profile);
+                 odp_tm_threshold_t thresholds_profile);
 
 /** The odp_tm_node_wred_config() function is used to dynamically set or
  * change the WRED profile associated with this tm_node or tm_node/pkt_color
@@ -1331,8 +1331,8 @@ int odp_tm_node_threshold_config(odp_tm_node_t tm_node,
  * @return              Returns 0 upon success and < 0 upon failure.
  */
 int odp_tm_node_wred_config(odp_tm_node_t tm_node,
-			    odp_packet_color_t pkt_color,
-			    odp_tm_wred_t wred_profile);
+                odp_packet_color_t pkt_color,
+                odp_tm_wred_t wred_profile);
 
 /** odp_tm_node_lookup() can be used to find the tm_node object created with
  * the specified name.
@@ -1375,31 +1375,31 @@ int odp_tm_node_context_set(odp_tm_node_t tm_node, void *user_context);
  * called on variables of this type before any of the fields are filled in.
  */
 typedef struct {
-	/** The user_context field is an generic pointer that the user can
-	 * associate with a tm_queue and then get this same value back using
-	 * the odp_tm_queue_context() call. */
-	void *user_context;
+    /** The user_context field is an generic pointer that the user can
+     * associate with a tm_queue and then get this same value back using
+     * the odp_tm_queue_context() call. */
+    void *user_context;
 
-	/** The shaper profile to be associated with this tm_queue.  Can be
-	 * ODP_TM_INVALID and can also be set and changed post-creation via
-	 * odp_tm_queue_shaper_config(). */
-	odp_tm_shaper_t shaper_profile;
+    /** The shaper profile to be associated with this tm_queue.  Can be
+     * ODP_TM_INVALID and can also be set and changed post-creation via
+     * odp_tm_queue_shaper_config(). */
+    odp_tm_shaper_t shaper_profile;
 
-	/** The threshold profile to be used in setting the max queue fullness
-	 * for WRED and/or tail drop?  Can be ODP_TM_INVALID and can also be
-	 * set and changed post-creation via odp_tm_queue_threshold_config(). */
-	odp_tm_threshold_t threshold_profile;
+    /** The threshold profile to be used in setting the max queue fullness
+     * for WRED and/or tail drop?  Can be ODP_TM_INVALID and can also be
+     * set and changed post-creation via odp_tm_queue_threshold_config(). */
+    odp_tm_threshold_t threshold_profile;
 
-	/** The WRED profile(s) to be associated with this tm_queue.  Any or
-	 * all array elements can be ODP_TM_INVALID and can also be set and
-	 * changed post-creation via odp_tm_queue_wred_config(). */
-	odp_tm_wred_t wred_profile[ODP_NUM_PACKET_COLORS];
+    /** The WRED profile(s) to be associated with this tm_queue.  Any or
+     * all array elements can be ODP_TM_INVALID and can also be set and
+     * changed post-creation via odp_tm_queue_wred_config(). */
+    odp_tm_wred_t wred_profile[ODP_NUM_PACKET_COLORS];
 
-	/** The strict priority level assigned to packets in this tm_queue -
-	 * in other words all packets associated with a given tm_queue MUST
-	 * have the same single strict priority level and this level must be
-	 * in the range 0..max_priority. */
-	uint8_t priority;
+    /** The strict priority level assigned to packets in this tm_queue -
+     * in other words all packets associated with a given tm_queue MUST
+     * have the same single strict priority level and this level must be
+     * in the range 0..max_priority. */
+    uint8_t priority;
 } odp_tm_queue_params_t;
 
 /** odp_tm_queue_params_init() must be called to initialize any
@@ -1426,7 +1426,7 @@ void odp_tm_queue_params_init(odp_tm_queue_params_t *params);
  *                odp_tm_queue_t handle.
  */
 odp_tm_queue_t odp_tm_queue_create(odp_tm_t odp_tm,
-				   odp_tm_queue_params_t *params);
+                   odp_tm_queue_params_t *params);
 
 /** Destroy an tm_queue object. The odp_tm_queue_destroy frees the resources
  * used by a tm_queue_t object.  The tm_queue to be destroyed MUST not be
@@ -1471,7 +1471,7 @@ int odp_tm_queue_context_set(odp_tm_queue_t tm_queue, void *user_context);
  * @return                Returns 0 upon success and < 0 upon failure.
  */
 int odp_tm_queue_shaper_config(odp_tm_queue_t tm_queue,
-			       odp_tm_shaper_t shaper_profile);
+                   odp_tm_shaper_t shaper_profile);
 
 /** The odp_tm_queue_sched_config() function is used to dynamically set or
  * change the scheduler profile associated with a tm_node.  Note that despite
@@ -1489,8 +1489,8 @@ int odp_tm_queue_shaper_config(odp_tm_queue_t tm_queue,
  * @return                Returns 0 upon success and < 0 upon failure.
  */
 int odp_tm_queue_sched_config(odp_tm_node_t tm_node,
-			      odp_tm_queue_t tm_fan_in_queue,
-			      odp_tm_sched_t sched_profile);
+                  odp_tm_queue_t tm_fan_in_queue,
+                  odp_tm_sched_t sched_profile);
 
 /** The odp_tm_queue_threshold_config() function is used to dynamically set or
  * change the queue threshold profile associated with this tm_queue.
@@ -1501,7 +1501,7 @@ int odp_tm_queue_sched_config(odp_tm_node_t tm_node,
  * @return                    Returns 0 upon success and < 0 upon failure.
  */
 int odp_tm_queue_threshold_config(odp_tm_queue_t tm_queue,
-				  odp_tm_threshold_t thresholds_profile);
+                  odp_tm_threshold_t thresholds_profile);
 
 /** odp_tm_queue_wred_config() function is used to dynamically set or change
  * the WRED profile associated with this tm_queue or tm_queue/pkt_color
@@ -1519,8 +1519,8 @@ int odp_tm_queue_threshold_config(odp_tm_queue_t tm_queue,
  * @return              Returns 0 upon success and < 0 upon failure.
  */
 int odp_tm_queue_wred_config(odp_tm_queue_t tm_queue,
-			     odp_packet_color_t pkt_color,
-			     odp_tm_wred_t wred_profile);
+                 odp_packet_color_t pkt_color,
+                 odp_tm_wred_t wred_profile);
 
 /** Topology setting functions */
 
@@ -1618,34 +1618,34 @@ int odp_tm_enq_with_cnt(odp_tm_queue_t tm_queue, odp_packet_t pkt);
  * information about a given tm_node via the odp_tm_node_info() function.
  */
 typedef struct {
-	/** The shaper profile currently associated with this tm_node.  Can be
-	 * ODP_TM_INVALID indicating no shaper profile is associated. */
-	odp_tm_shaper_t shaper_profile;
+    /** The shaper profile currently associated with this tm_node.  Can be
+     * ODP_TM_INVALID indicating no shaper profile is associated. */
+    odp_tm_shaper_t shaper_profile;
 
-	/** The threshold profile currently associated with this tm_node.  Can
-	 * be ODP_TM_INVALID indicating no threshold profile is associated. */
-	odp_tm_threshold_t threshold_profile;
+    /** The threshold profile currently associated with this tm_node.  Can
+     * be ODP_TM_INVALID indicating no threshold profile is associated. */
+    odp_tm_threshold_t threshold_profile;
 
-	/** The WRED profile(s) currently associated with this tm_node.  Any
-	 * or all array elements can be ODP_TM_INVALID indicating no WRED
-	 * profile is associated  with this tm_node/ color combination. */
-	odp_tm_wred_t wred_profile[ODP_NUM_PACKET_COLORS];
+    /** The WRED profile(s) currently associated with this tm_node.  Any
+     * or all array elements can be ODP_TM_INVALID indicating no WRED
+     * profile is associated  with this tm_node/ color combination. */
+    odp_tm_wred_t wred_profile[ODP_NUM_PACKET_COLORS];
 
-	/** Current tm_queue fanin. */
-	uint32_t tm_queue_fanin;
+    /** Current tm_queue fanin. */
+    uint32_t tm_queue_fanin;
 
-	/** Current tm_node fanin. */
-	uint32_t tm_node_fanin;
+    /** Current tm_node fanin. */
+    uint32_t tm_node_fanin;
 
-	/** The next_tm_node is the "next" node in the tree - i.e. the fanout
-	 * of this node.  Can be ODP_TM_ROOT if this tm_node directly connects
-	 * to the egress spigot and can be ODP_TM_INVALID if this tm_node is
-	 * disconnected from the TM system tree, */
-	odp_tm_node_t next_tm_node;
+    /** The next_tm_node is the "next" node in the tree - i.e. the fanout
+     * of this node.  Can be ODP_TM_ROOT if this tm_node directly connects
+     * to the egress spigot and can be ODP_TM_INVALID if this tm_node is
+     * disconnected from the TM system tree, */
+    odp_tm_node_t next_tm_node;
 
-	/** The level of this tm_node.  Note that this value cannot be modified
-	 * after a tm_node has been created, */
-	uint8_t level;
+    /** The level of this tm_node.  Note that this value cannot be modified
+     * after a tm_node has been created, */
+    uint8_t level;
 } odp_tm_node_info_t;
 
 /** Get tm_node Info
@@ -1667,23 +1667,23 @@ int odp_tm_node_info(odp_tm_node_t tm_node, odp_tm_node_info_t *info);
  * of a given tm_node.
  */
 typedef struct {
-	/** The sched profile currently associated with this fanin link.  This
-	 * can be ODP_TM_INVALID indicating no sched profile is associated. */
-	odp_tm_sched_t sched_profile;
+    /** The sched profile currently associated with this fanin link.  This
+     * can be ODP_TM_INVALID indicating no sched profile is associated. */
+    odp_tm_sched_t sched_profile;
 
-	/** The tm_queue indicates the "producer" of this fanin. Note that
-	 * that at most one of tm_queue and tm_node can be valid
-	 * here (i.e. not equal to ODP_TM_INVALID). */
-	odp_tm_queue_t tm_queue;
+    /** The tm_queue indicates the "producer" of this fanin. Note that
+     * that at most one of tm_queue and tm_node can be valid
+     * here (i.e. not equal to ODP_TM_INVALID). */
+    odp_tm_queue_t tm_queue;
 
-	/** The tm_node indicates the "producer" of this fanin. Note that
-	 * that at most one of tm_queue and tm_node can be valid
-	 * here (i.e. not equal to ODP_TM_INVALID). */
-	odp_tm_node_t tm_node;
+    /** The tm_node indicates the "producer" of this fanin. Note that
+     * that at most one of tm_queue and tm_node can be valid
+     * here (i.e. not equal to ODP_TM_INVALID). */
+    odp_tm_node_t tm_node;
 
-	/** The is_last flag is set when the tm_queue/tm_node above is
-	 * currently the last element in the fanin list. */
-	odp_bool_t is_last;
+    /** The is_last flag is set when the tm_queue/tm_node above is
+     * currently the last element in the fanin list. */
+    odp_bool_t is_last;
 } odp_tm_node_fanin_info_t;
 
 /** Get tm_node Fanin Info
@@ -1720,37 +1720,37 @@ typedef struct {
  * @return                 Returns < 0 upon failure, 0 upon success.
  */
 int odp_tm_node_fanin_info(odp_tm_node_t             tm_node,
-			   odp_tm_node_fanin_info_t *info);
+               odp_tm_node_fanin_info_t *info);
 
 /** The odp_tm_queue_info_t record type  is used to return various bits of
  * information about a given tm_queue via the odp_tm_queue_info() function.
  */
 typedef struct {
-	/** The shaper profile currently associated with this tm_queue.  Can be
-	 * ODP_TM_INVALID indicating no shaper profile is currently associated
-	 * with this tm_queue. */
-	odp_tm_shaper_t shaper_profile;
+    /** The shaper profile currently associated with this tm_queue.  Can be
+     * ODP_TM_INVALID indicating no shaper profile is currently associated
+     * with this tm_queue. */
+    odp_tm_shaper_t shaper_profile;
 
-	/** The threshold profile currently associated with this tm_queue.  Can
-	 * be ODP_TM_INVALID indicating no threshold profile is currently
-	 * associated with this tm_queue. */
-	odp_tm_threshold_t threshold_profile;
+    /** The threshold profile currently associated with this tm_queue.  Can
+     * be ODP_TM_INVALID indicating no threshold profile is currently
+     * associated with this tm_queue. */
+    odp_tm_threshold_t threshold_profile;
 
-	/** The WRED profile(s) currently associated with this tm_queue.  Any
-	 * or all array elements can be ODP_TM_INVALID indicating no WRED
-	 * profile is currently associated  with this tm_queue/color
-	 * combination. */
-	odp_tm_wred_t wred_profile[ODP_NUM_PACKET_COLORS];
+    /** The WRED profile(s) currently associated with this tm_queue.  Any
+     * or all array elements can be ODP_TM_INVALID indicating no WRED
+     * profile is currently associated  with this tm_queue/color
+     * combination. */
+    odp_tm_wred_t wred_profile[ODP_NUM_PACKET_COLORS];
 
-	/** The next_tm_node is the "next" node in the tree - i.e. the fanout
-	 * of this tm_queu.  Can be ODP_TM_ROOT if this tm_queue directly
-	 * connects to the egress spigot and can be ODP_TM_INVALID if this
-	 * tm_queue is disconnected from the TM system tree. */
-	odp_tm_node_t next_tm_node;
+    /** The next_tm_node is the "next" node in the tree - i.e. the fanout
+     * of this tm_queu.  Can be ODP_TM_ROOT if this tm_queue directly
+     * connects to the egress spigot and can be ODP_TM_INVALID if this
+     * tm_queue is disconnected from the TM system tree. */
+    odp_tm_node_t next_tm_node;
 
-	/** The active_pkt is the current packet "at the head of the queue"
-	 * that is being processed by this tm_queue. */
-	odp_packet_t active_pkt;
+    /** The active_pkt is the current packet "at the head of the queue"
+     * that is being processed by this tm_queue. */
+    odp_packet_t active_pkt;
 } odp_tm_queue_info_t;
 
 /** Get tm_queue Info
@@ -1777,62 +1777,62 @@ int odp_tm_queue_info(odp_tm_queue_t tm_queue, odp_tm_queue_info_t *info);
  * odp_tm_total_query().
  */
 typedef struct {
-	/** The total_pkt_cnt field is the total number of packets currently
-	 * stored/associated with the requested set of tm_queues.  Note that
-	 * because the packet queues are potentially being manipulated by
-	 * multiple cpu's, the values here are only accurate when the tm
-	 * system is "stopped" (i.e. the egress spigot is stopped and no
-	 * odp_tm_enq calls are taking place).  Implementations are free to
-	 * batch update these counters - up to a dozen or so packets. */
-	uint64_t total_pkt_cnt;
+    /** The total_pkt_cnt field is the total number of packets currently
+     * stored/associated with the requested set of tm_queues.  Note that
+     * because the packet queues are potentially being manipulated by
+     * multiple cpu's, the values here are only accurate when the tm
+     * system is "stopped" (i.e. the egress spigot is stopped and no
+     * odp_tm_enq calls are taking place).  Implementations are free to
+     * batch update these counters - up to a dozen or so packets. */
+    uint64_t total_pkt_cnt;
 
-	/** If the requested set of tm_queues has an odp_tm_threshold_t
-	 * profile associated with it, then this is the max_pkt_cnt set in the
-	 * profile params.  Returning this field is a convenience to the ODP
-	 * programmer, enabling them to quickly see how the total_pkt_cnt
-	 * compares to the maximum packet count threshold.  Note that there is
-	 * no requirement that total_pkt_cnt be <= max_pkt_cnt. */
-	uint64_t max_pkt_cnt;
+    /** If the requested set of tm_queues has an odp_tm_threshold_t
+     * profile associated with it, then this is the max_pkt_cnt set in the
+     * profile params.  Returning this field is a convenience to the ODP
+     * programmer, enabling them to quickly see how the total_pkt_cnt
+     * compares to the maximum packet count threshold.  Note that there is
+     * no requirement that total_pkt_cnt be <= max_pkt_cnt. */
+    uint64_t max_pkt_cnt;
 
-	/** The total_byte_cnt can either be the actual number of bytes used
-	 * or an approximation of the number of bytes used based upon the
-	 * number of fixed sized buffers used multiplied by the buffer size.
-	 * In both cases the total_byte_cnt should correspond to the same set
-	 * of packets that were counted above.  For instance, if the
-	 * total_pkt_cnt is updated in a batch, then the total_byte_cnt should
-	 * also be updated in the same batch.  The approx_byte_cnt field below
-	 * indicates whether the total_byte_cnt is buffer count based or not.
-	 * In the case that the number of bytes used by a packet is rounded up
-	 * to a 2, 4, 8, or 16 byte boundary, it is recommended that
-	 * approx_byte_cnt be false.  It is implementation dependent whether
-	 * the byte count of a packet includes the CRC, but it is recommended
-	 * that it not include headroom, preamble or IPG.  Of course when the
-	 * buffer counting method is used, it is expected that any headroom in
-	 * the first buffer is implicitly included.  Finally in the case of
-	 * variable length pkt based buffering, instead of taking the
-	 * total_pkt_cnt and multiplying it by the maximum ethernet packet
-	 * size, it is recommended that byte_cnt_valid be FALSE - even when
-	 * query_flags includes ODP_TM_QUERY_BYTE_CNT.*/
-	uint64_t total_byte_cnt;
+    /** The total_byte_cnt can either be the actual number of bytes used
+     * or an approximation of the number of bytes used based upon the
+     * number of fixed sized buffers used multiplied by the buffer size.
+     * In both cases the total_byte_cnt should correspond to the same set
+     * of packets that were counted above.  For instance, if the
+     * total_pkt_cnt is updated in a batch, then the total_byte_cnt should
+     * also be updated in the same batch.  The approx_byte_cnt field below
+     * indicates whether the total_byte_cnt is buffer count based or not.
+     * In the case that the number of bytes used by a packet is rounded up
+     * to a 2, 4, 8, or 16 byte boundary, it is recommended that
+     * approx_byte_cnt be false.  It is implementation dependent whether
+     * the byte count of a packet includes the CRC, but it is recommended
+     * that it not include headroom, preamble or IPG.  Of course when the
+     * buffer counting method is used, it is expected that any headroom in
+     * the first buffer is implicitly included.  Finally in the case of
+     * variable length pkt based buffering, instead of taking the
+     * total_pkt_cnt and multiplying it by the maximum ethernet packet
+     * size, it is recommended that byte_cnt_valid be FALSE - even when
+     * query_flags includes ODP_TM_QUERY_BYTE_CNT.*/
+    uint64_t total_byte_cnt;
 
-	/** If the requested set of tm_queues has an odp_tm_threshold_t
-	 * profile associated with it, then this is the max_byte_cnt set in
-	 * the profile params.  Returning this field is a convenience to the
-	 * ODP programmer, enabling them to quickly see how the total_byte_cnt
-	 * compares to the maximum byte count threshold.  Note that there is
-	 * no requirement that total_byte_cnt be <= max_byte_cnt. */
-	uint64_t max_byte_cnt;
+    /** If the requested set of tm_queues has an odp_tm_threshold_t
+     * profile associated with it, then this is the max_byte_cnt set in
+     * the profile params.  Returning this field is a convenience to the
+     * ODP programmer, enabling them to quickly see how the total_byte_cnt
+     * compares to the maximum byte count threshold.  Note that there is
+     * no requirement that total_byte_cnt be <= max_byte_cnt. */
+    uint64_t max_byte_cnt;
 
-	/** The following boolean values indicate which of the counts above
-	 * are valid.  Invalid count values must be 0. */
-	odp_bool_t total_pkt_cnt_valid;  /**< TRUE if total_pkt_cnt is valid */
-	odp_bool_t max_pkt_cnt_valid;    /**< TRUE if max_pkt_cnt is valid */
-	odp_bool_t total_byte_cnt_valid; /**< TRUE if total_byte_cnt is valid */
-	odp_bool_t max_byte_cnt_valid;   /**< TRUE if max_byte_cnt is valid */
+    /** The following boolean values indicate which of the counts above
+     * are valid.  Invalid count values must be 0. */
+    odp_bool_t total_pkt_cnt_valid;  /**< TRUE if total_pkt_cnt is valid */
+    odp_bool_t max_pkt_cnt_valid;    /**< TRUE if max_pkt_cnt is valid */
+    odp_bool_t total_byte_cnt_valid; /**< TRUE if total_byte_cnt is valid */
+    odp_bool_t max_byte_cnt_valid;   /**< TRUE if max_byte_cnt is valid */
 
-	/** The approx_byte_cnt is TRUE if the total_byte_cnt field is valid
-	 * AND if the buffer counting method is used. */
-	odp_bool_t approx_byte_cnt;
+    /** The approx_byte_cnt is TRUE if the total_byte_cnt field is valid
+     * AND if the buffer counting method is used. */
+    odp_bool_t approx_byte_cnt;
 } odp_tm_query_info_t;
 
 /** The odp_tm_queue_query() function can be used to check a single tm_queue's
@@ -1851,8 +1851,8 @@ typedef struct {
  * @return                  Returns 0 upon success, < 0 upon failure.
  */
 int odp_tm_queue_query(odp_tm_queue_t       tm_queue,
-		       uint32_t             query_flags,
-		       odp_tm_query_info_t *info);
+               uint32_t             query_flags,
+               odp_tm_query_info_t *info);
 
 /** The odp_tm_priority_query() function can be used to check the queue
  * utilization of all tm_queue's with the given priority.  The query_flags
@@ -1872,9 +1872,9 @@ int odp_tm_queue_query(odp_tm_queue_t       tm_queue,
  * @return                  Returns 0 upon success, < 0 upon failure.
  */
 int odp_tm_priority_query(odp_tm_t             odp_tm,
-			  uint8_t              priority,
-			  uint32_t             query_flags,
-			  odp_tm_query_info_t *info);
+              uint8_t              priority,
+              uint32_t             query_flags,
+              odp_tm_query_info_t *info);
 
 /** The odp_tm_total_query() function can be used to check the queue
  * utilization of all tm_queue's in a single TM system.  The query_flags
@@ -1892,8 +1892,8 @@ int odp_tm_priority_query(odp_tm_t             odp_tm,
  * @return                  Returns 0 upon success, < 0 upon failure.
  */
 int odp_tm_total_query(odp_tm_t             odp_tm,
-		       uint32_t             query_flags,
-		       odp_tm_query_info_t *info);
+               uint32_t             query_flags,
+               odp_tm_query_info_t *info);
 
 /** The odp_tm_priority_threshold_config() function is only used to associate
  * a maximum packet count and/or a maximum byte count with a strict priority
@@ -1911,8 +1911,8 @@ int odp_tm_total_query(odp_tm_t             odp_tm,
  * @return                    Returns 0 upon success and < 0 upon failure.
  */
 int odp_tm_priority_threshold_config(odp_tm_t           odp_tm,
-				     uint8_t            priority,
-				     odp_tm_threshold_t thresholds_profile);
+                     uint8_t            priority,
+                     odp_tm_threshold_t thresholds_profile);
 
 /** The odp_tm_total_threshold_config() function is only used to associate a
  * maximum packet count and/or a maximum byte count with a TM system - for the
@@ -1927,7 +1927,7 @@ int odp_tm_priority_threshold_config(odp_tm_t           odp_tm,
  * @return                    Returns 0 upon success and < 0 upon failure.
  */
 int odp_tm_total_threshold_config(odp_tm_t odp_tm,
-				  odp_tm_threshold_t thresholds_profile);
+                  odp_tm_threshold_t thresholds_profile);
 
 /** The odp_tm_is_idle function is used to determine if the specified ODP
  * traffic management system still has "work" to do (i.e. has at least one

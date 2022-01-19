@@ -32,30 +32,30 @@ extern "C" {
 #define QUEUE_STATUS_READY        2
 
 struct queue_entry_s {
-	sched_elem_t     sched_elem;
+    sched_elem_t     sched_elem;
 
-	odp_ticketlock_t ODP_ALIGNED_CACHE lock;
-	odp_atomic_u64_t num_timers;
-	int              status;
+    odp_ticketlock_t ODP_ALIGNED_CACHE lock;
+    odp_atomic_u64_t num_timers;
+    int              status;
 
-	queue_enq_fn_t       ODP_ALIGNED_CACHE enqueue;
-	queue_deq_fn_t       dequeue;
-	queue_enq_multi_fn_t enqueue_multi;
-	queue_deq_multi_fn_t dequeue_multi;
-	queue_deq_multi_fn_t orig_dequeue_multi;
+    queue_enq_fn_t       ODP_ALIGNED_CACHE enqueue;
+    queue_deq_fn_t       dequeue;
+    queue_enq_multi_fn_t enqueue_multi;
+    queue_deq_multi_fn_t dequeue_multi;
+    queue_deq_multi_fn_t orig_dequeue_multi;
 
-	uint32_t           index;
-	odp_queue_t        handle;
-	odp_queue_type_t   type;
-	odp_queue_param_t  param;
-	odp_pktin_queue_t  pktin;
-	odp_pktout_queue_t pktout;
-	char               name[ODP_QUEUE_NAME_LEN];
+    uint32_t           index;
+    odp_queue_t        handle;
+    odp_queue_type_t   type;
+    odp_queue_param_t  param;
+    odp_pktin_queue_t  pktin;
+    odp_pktout_queue_t pktout;
+    char               name[ODP_QUEUE_NAME_LEN];
 };
 
 union queue_entry_u {
-	struct queue_entry_s s;
-	uint8_t pad[ROUNDUP_CACHE_LINE(sizeof(struct queue_entry_s))];
+    struct queue_entry_s s;
+    uint8_t pad[ROUNDUP_CACHE_LINE(sizeof(struct queue_entry_s))];
 };
 
 int _odp_queue_deq(sched_elem_t *q, odp_buffer_hdr_t *buf_hdr[], int num);
@@ -69,37 +69,37 @@ queue_entry_t *qentry_from_ext(odp_queue_t handle);
  */
 static inline void *shm_pool_alloc_align(_odp_ishm_pool_t *pool, uint32_t size)
 {
-	void *addr;
+    void *addr;
 
-	addr = _odp_ishm_pool_alloc(pool, ROUNDUP_CACHE_LINE(size));
-	ODP_ASSERT(((uintptr_t)addr & (ODP_CACHE_LINE_SIZE - 1)) == 0);
+    addr = _odp_ishm_pool_alloc(pool, ROUNDUP_CACHE_LINE(size));
+    ODP_ASSERT(((uintptr_t)addr & (ODP_CACHE_LINE_SIZE - 1)) == 0);
 
-	return addr;
+    return addr;
 }
 
 static inline uint32_t queue_to_id(odp_queue_t handle)
 {
-	return qentry_from_ext(handle)->s.index;
+    return qentry_from_ext(handle)->s.index;
 }
 
 static inline queue_entry_t *qentry_from_int(odp_queue_t handle)
 {
-	return (queue_entry_t *)(uintptr_t)handle;
+    return (queue_entry_t *)(uintptr_t)handle;
 }
 
 static inline odp_queue_t qentry_to_int(queue_entry_t *qentry)
 {
-	return (odp_queue_t)qentry;
+    return (odp_queue_t)qentry;
 }
 
 static inline odp_queue_t queue_get_handle(queue_entry_t *queue)
 {
-	return queue->s.handle;
+    return queue->s.handle;
 }
 
 static inline reorder_window_t *queue_get_rwin(queue_entry_t *queue)
 {
-	return queue->s.sched_elem.rwin;
+    return queue->s.sched_elem.rwin;
 }
 
 #ifdef __cplusplus

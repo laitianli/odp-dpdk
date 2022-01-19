@@ -21,73 +21,73 @@
 
 odp_event_subtype_t odp_event_subtype(odp_event_t event)
 {
-	if (_odp_buffer_event_type(odp_buffer_from_event(event)) !=
-			ODP_EVENT_PACKET)
-		return ODP_EVENT_NO_SUBTYPE;
+    if (_odp_buffer_event_type(odp_buffer_from_event(event)) !=
+            ODP_EVENT_PACKET)
+        return ODP_EVENT_NO_SUBTYPE;
 
-	return odp_packet_subtype(odp_packet_from_event(event));
+    return odp_packet_subtype(odp_packet_from_event(event));
 }
 
 odp_event_type_t odp_event_types(odp_event_t event,
-				 odp_event_subtype_t *subtype)
+                 odp_event_subtype_t *subtype)
 {
-	odp_buffer_t buf = odp_buffer_from_event(event);
-	odp_event_type_t event_type = _odp_buffer_event_type(buf);
+    odp_buffer_t buf = odp_buffer_from_event(event);
+    odp_event_type_t event_type = _odp_buffer_event_type(buf);
 
-	*subtype = event_type == ODP_EVENT_PACKET ?
-			odp_packet_subtype(odp_packet_from_event(event)) :
-			ODP_EVENT_NO_SUBTYPE;
+    *subtype = event_type == ODP_EVENT_PACKET ?
+            odp_packet_subtype(odp_packet_from_event(event)) :
+            ODP_EVENT_NO_SUBTYPE;
 
-	return event_type;
+    return event_type;
 }
 
 uint32_t odp_event_flow_id(odp_event_t event)
 {
-	return event_flow_id(event);
+    return event_flow_id(event);
 }
 
 void odp_event_flow_id_set(odp_event_t event, uint32_t flow_id)
 {
-	event_flow_id_set(event, flow_id);
+    event_flow_id_set(event, flow_id);
 }
 
 void odp_event_free(odp_event_t event)
 {
-	switch (odp_event_type(event)) {
-	case ODP_EVENT_BUFFER:
-		odp_buffer_free(odp_buffer_from_event(event));
-		break;
-	case ODP_EVENT_PACKET:
-		odp_packet_free(odp_packet_from_event(event));
-		break;
-	case ODP_EVENT_TIMEOUT:
-		odp_timeout_free(odp_timeout_from_event(event));
-		break;
-	case ODP_EVENT_CRYPTO_COMPL:
-		odp_crypto_compl_free(odp_crypto_compl_from_event(event));
-		break;
-	case ODP_EVENT_IPSEC_STATUS:
-		_odp_ipsec_status_free(_odp_ipsec_status_from_event(event));
-		break;
-	default:
-		ODP_ABORT("Invalid event type: %d\n", odp_event_type(event));
-	}
+    switch (odp_event_type(event)) {
+    case ODP_EVENT_BUFFER:
+        odp_buffer_free(odp_buffer_from_event(event));
+        break;
+    case ODP_EVENT_PACKET:
+        odp_packet_free(odp_packet_from_event(event));
+        break;
+    case ODP_EVENT_TIMEOUT:
+        odp_timeout_free(odp_timeout_from_event(event));
+        break;
+    case ODP_EVENT_CRYPTO_COMPL:
+        odp_crypto_compl_free(odp_crypto_compl_from_event(event));
+        break;
+    case ODP_EVENT_IPSEC_STATUS:
+        _odp_ipsec_status_free(_odp_ipsec_status_from_event(event));
+        break;
+    default:
+        ODP_ABORT("Invalid event type: %d\n", odp_event_type(event));
+    }
 }
 
 void odp_event_free_multi(const odp_event_t event[], int num)
 {
-	int i;
+    int i;
 
-	for (i = 0; i < num; i++)
-		odp_event_free(event[i]);
+    for (i = 0; i < num; i++)
+        odp_event_free(event[i]);
 }
 
 void odp_event_free_sp(const odp_event_t event[], int num)
 {
-	odp_event_free_multi(event, num);
+    odp_event_free_multi(event, num);
 }
 
 uint64_t odp_event_to_u64(odp_event_t hdl)
 {
-	return _odp_pri(hdl);
+    return _odp_pri(hdl);
 }

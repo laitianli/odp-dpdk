@@ -101,25 +101,25 @@ typedef void (*odp_abort_func_t)(void) ODP_NORETURN;
  * Application memory model
  */
 typedef enum {
-	/** Thread memory model: by default all memory is shareable between
-	 *  threads.
-	 *
-	 *  Within a single ODP instance all ODP handles and pointers to ODP
-	 *  allocated data may be shared amongst threads independent of data
-	 *  allocation time (e.g. before or after thread creation). */
-	ODP_MEM_MODEL_THREAD = 0,
+    /** Thread memory model: by default all memory is shareable between
+     *  threads.
+     *
+     *  Within a single ODP instance all ODP handles and pointers to ODP
+     *  allocated data may be shared amongst threads independent of data
+     *  allocation time (e.g. before or after thread creation). */
+    ODP_MEM_MODEL_THREAD = 0,
 
-	/** Process memory model: by default all memory is not shareable between
-	 *  processes.
-	 *
-	 *  Within a single ODP instance all ODP handles and pointers to ODP
-	 *  allocated data (excluding non-single VA SHM blocks) may be shared
-	 *  amongst processes independent of data allocation time (e.g. before
-	 *  or after fork).
-	 *
-	 * @see ODP_SHM_SINGLE_VA
-	 */
-	ODP_MEM_MODEL_PROCESS
+    /** Process memory model: by default all memory is not shareable between
+     *  processes.
+     *
+     *  Within a single ODP instance all ODP handles and pointers to ODP
+     *  allocated data (excluding non-single VA SHM blocks) may be shared
+     *  amongst processes independent of data allocation time (e.g. before
+     *  or after fork).
+     *
+     * @see ODP_SHM_SINGLE_VA
+     */
+    ODP_MEM_MODEL_PROCESS
 
 } odp_mem_model_t;
 
@@ -137,72 +137,72 @@ typedef enum {
  * values. Unused parameters are left to default values.
  */
 typedef struct odp_init_t {
-	/** Maximum number of worker threads the user will run concurrently.
-	    Valid range is from 0 to platform specific maximum. Set both
-	    num_worker and num_control to zero for default number of threads. */
-	int num_worker;
+    /** Maximum number of worker threads the user will run concurrently.
+        Valid range is from 0 to platform specific maximum. Set both
+        num_worker and num_control to zero for default number of threads. */
+    int num_worker;
 
-	/** Maximum number of control threads the user will run concurrently.
-	    Valid range is from 0 to platform specific maximum. Set both
-	    num_worker and num_control to zero for default number of threads. */
-	int num_control;
+    /** Maximum number of control threads the user will run concurrently.
+        Valid range is from 0 to platform specific maximum. Set both
+        num_worker and num_control to zero for default number of threads. */
+    int num_control;
 
-	/** Pointer to bit mask mapping CPUs available to this ODP instance
-	    for running worker threads.
-	    Initialize to a NULL pointer to use default CPU mapping.
-	    When the mask is defined, odp_cpumask_default_worker()
-	    uses it instead of returning a default mask.
-	    Applications code should not access this cpumask directly.
-	    Valid range of CPUs and optimal CPU selection
-	    are platform specific, but generally it is recommended that:
-		* worker CPUs are dedicated to run only ODP worker threads
-		  (one thread per CPU)
-		* worker and control masks do not overlap
-		* different ODP instances do not specify overlapping
-		  worker masks
-	 */
-	const odp_cpumask_t *worker_cpus;
+    /** Pointer to bit mask mapping CPUs available to this ODP instance
+        for running worker threads.
+        Initialize to a NULL pointer to use default CPU mapping.
+        When the mask is defined, odp_cpumask_default_worker()
+        uses it instead of returning a default mask.
+        Applications code should not access this cpumask directly.
+        Valid range of CPUs and optimal CPU selection
+        are platform specific, but generally it is recommended that:
+        * worker CPUs are dedicated to run only ODP worker threads
+          (one thread per CPU)
+        * worker and control masks do not overlap
+        * different ODP instances do not specify overlapping
+          worker masks
+     */
+    const odp_cpumask_t *worker_cpus;
 
-	/** Pointer to bit mask mapping CPUs available to this ODP instance
-	    for running control threads.
-	    Initialize to a NULL pointer to use default CPU mapping.
-	    When the mask is defined, odp_cpumask_default_control()
-	    uses it instead of returning a default mask.
-	    Applications code should not access this cpumask directly.
-	    Valid range of CPUs and optimal CPU selection
-	    are platform specific, but generally it is recommended that
-	    worker and control masks do not overlap.
-	 */
-	const odp_cpumask_t *control_cpus;
+    /** Pointer to bit mask mapping CPUs available to this ODP instance
+        for running control threads.
+        Initialize to a NULL pointer to use default CPU mapping.
+        When the mask is defined, odp_cpumask_default_control()
+        uses it instead of returning a default mask.
+        Applications code should not access this cpumask directly.
+        Valid range of CPUs and optimal CPU selection
+        are platform specific, but generally it is recommended that
+        worker and control masks do not overlap.
+     */
+    const odp_cpumask_t *control_cpus;
 
-	/** Replacement for the default log fn */
-	odp_log_func_t log_fn;
+    /** Replacement for the default log fn */
+    odp_log_func_t log_fn;
 
-	/** Replacement for the default abort fn */
-	odp_abort_func_t abort_fn;
+    /** Replacement for the default abort fn */
+    odp_abort_func_t abort_fn;
 
-	/** Unused features. These are hints to the ODP implementation that
-	 * the application will not use any APIs associated with these
-	 * features. Implementations may use this information to provide
-	 * optimized behavior. Results are undefined if applications assert
-	 * that a feature will not be used and it is used anyway.
-	 */
-	odp_feature_t not_used;
+    /** Unused features. These are hints to the ODP implementation that
+     * the application will not use any APIs associated with these
+     * features. Implementations may use this information to provide
+     * optimized behavior. Results are undefined if applications assert
+     * that a feature will not be used and it is used anyway.
+     */
+    odp_feature_t not_used;
 
-	/** Application memory model. The main application thread has to call
-	 *  odp_init_global() and odp_init_local() before creating threads that
-	 *  share ODP data. The default value is ODP_MEM_MODEL_THREAD.
-	 */
-	odp_mem_model_t mem_model;
+    /** Application memory model. The main application thread has to call
+     *  odp_init_global() and odp_init_local() before creating threads that
+     *  share ODP data. The default value is ODP_MEM_MODEL_THREAD.
+     */
+    odp_mem_model_t mem_model;
 
-	/** Shared memory parameters */
-	struct {
-		/** Maximum memory usage in bytes. This is the maximum
-		 *  amount of shared memory that application will reserve
-		 *  concurrently. Use 0 when not set. Default value is 0.
-		 */
-		uint64_t max_memory;
-	} shm;
+    /** Shared memory parameters */
+    struct {
+        /** Maximum memory usage in bytes. This is the maximum
+         *  amount of shared memory that application will reserve
+         *  concurrently. Use 0 when not set. Default value is 0.
+         */
+        uint64_t max_memory;
+    } shm;
 
 } odp_init_t;
 
@@ -267,8 +267,8 @@ void odp_init_param_init(odp_init_t *param);
  * @see odp_init_local(), odp_term_global(), odp_init_param_init()
  */
 int odp_init_global(odp_instance_t *instance,
-		    const odp_init_t *params,
-		    const odp_platform_init_t *platform_params);
+            const odp_init_t *params,
+            const odp_platform_init_t *platform_params);
 
 /**
  * Thread local ODP initialization

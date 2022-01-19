@@ -51,25 +51,25 @@ extern "C" {
  * Ethernet MAC address
  */
 typedef struct ODP_PACKED {
-	uint8_t addr[_ODP_ETHADDR_LEN]; /**< @private Address */
+    uint8_t addr[_ODP_ETHADDR_LEN]; /**< @private Address */
 } _odp_ethaddr_t;
 
 /** @internal Compile time assert */
 ODP_STATIC_ASSERT(sizeof(_odp_ethaddr_t) == _ODP_ETHADDR_LEN,
-		  "_ODP_ETHADDR_T__SIZE_ERROR");
+          "_ODP_ETHADDR_T__SIZE_ERROR");
 
 /**
  * Ethernet header
  */
 typedef struct ODP_PACKED {
-	_odp_ethaddr_t dst; /**< Destination address */
-	_odp_ethaddr_t src; /**< Source address */
-	odp_u16be_t type;   /**< EtherType */
+    _odp_ethaddr_t dst; /**< Destination address */
+    _odp_ethaddr_t src; /**< Source address */
+    odp_u16be_t type;   /**< EtherType */
 } _odp_ethhdr_t;
 
 /** @internal Compile time assert */
 ODP_STATIC_ASSERT(sizeof(_odp_ethhdr_t) == _ODP_ETHHDR_LEN,
-		  "_ODP_ETHHDR_T__SIZE_ERROR");
+          "_ODP_ETHHDR_T__SIZE_ERROR");
 
 /**
  * IEEE 802.1Q VLAN header
@@ -81,13 +81,13 @@ ODP_STATIC_ASSERT(sizeof(_odp_ethhdr_t) == _ODP_ETHHDR_LEN,
  * _odp_ethhdr_t type field.
  */
 typedef struct ODP_PACKED {
-	odp_u16be_t tci;   /**< Priority / CFI / VLAN ID */
-	odp_u16be_t type;  /**< Inner EtherType */
+    odp_u16be_t tci;   /**< Priority / CFI / VLAN ID */
+    odp_u16be_t type;  /**< Inner EtherType */
 } _odp_vlanhdr_t;
 
 /** @internal Compile time assert */
 ODP_STATIC_ASSERT(sizeof(_odp_vlanhdr_t) == _ODP_VLANHDR_LEN,
-		  "_ODP_VLANHDR_T__SIZE_ERROR");
+          "_ODP_VLANHDR_T__SIZE_ERROR");
 
 /* Ethernet header Ether Type ('type') values, a selected few */
 #define _ODP_ETHTYPE_IPV4       0x0800 /**< Internet Protocol version 4 */

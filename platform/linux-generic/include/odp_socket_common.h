@@ -18,13 +18,13 @@ extern "C" {
 static inline void
 ethaddr_copy(unsigned char mac_dst[], unsigned char mac_src[])
 {
-	memcpy(mac_dst, mac_src, ETH_ALEN);
+    memcpy(mac_dst, mac_src, ETH_ALEN);
 }
 
 static inline int
 ethaddrs_equal(unsigned char mac_a[], unsigned char mac_b[])
 {
-	return !memcmp(mac_a, mac_b, ETH_ALEN);
+    return !memcmp(mac_a, mac_b, ETH_ALEN);
 }
 
 /**

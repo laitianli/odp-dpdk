@@ -57,10 +57,10 @@
  * change can be transferred between threads.
  */
 typedef struct ODP_ALIGNED(sizeof(uint64_t)) hc {
-	/* First missing context */
-	uint32_t head;
-	/* Change indicator */
-	uint32_t chgi;
+    /* First missing context */
+    uint32_t head;
+    /* Change indicator */
+    uint32_t chgi;
 } hc_t;
 
 /* Number of reorder contects in the reorder window.
@@ -72,15 +72,15 @@ ODP_STATIC_ASSERT(CHECK_IS_POWER2(RWIN_SIZE), "RWIN_SIZE is not a power of 2");
 typedef struct reorder_context reorder_context_t;
 
 typedef struct reorder_window {
-	/* head and change indicator */
-	hc_t hc;
-	uint32_t winmask;
-	uint32_t tail;
-	uint32_t turn;
-	uint32_t olock[CONFIG_QUEUE_MAX_ORD_LOCKS];
-	uint32_t lock_count;
-	/* Reorder contexts in this window */
-	reorder_context_t *ring[RWIN_SIZE];
+    /* head and change indicator */
+    hc_t hc;
+    uint32_t winmask;
+    uint32_t tail;
+    uint32_t turn;
+    uint32_t olock[CONFIG_QUEUE_MAX_ORD_LOCKS];
+    uint32_t lock_count;
+    /* Reorder contexts in this window */
+    reorder_context_t *ring[RWIN_SIZE];
 } reorder_window_t;
 
 /* Number of events that can be stored in a reorder context.
@@ -90,34 +90,34 @@ typedef struct reorder_window {
 #define RC_EVT_SIZE 18
 
 struct ODP_ALIGNED_CACHE reorder_context {
-	/* Reorder window to which this context belongs */
-	reorder_window_t *rwin;
-	/* Pointer to TS->rvec_free */
-	bitset_t *rvec_free;
-	/* Our slot number in the reorder window */
-	uint32_t sn;
-	uint8_t olock_flags;
-	/* Our index in thread_state rvec array */
-	uint8_t idx;
-	/* Use to link reorder contexts together */
-	uint8_t next_idx;
-	/* Current reorder context to save events in */
-	uint8_t cur_idx;
-	/* Number of events stored in this reorder context */
-	uint8_t numevts;
-	/* Events stored in this context */
-	odp_buffer_hdr_t *events[RC_EVT_SIZE];
-	queue_entry_t *destq[RC_EVT_SIZE];
+    /* Reorder window to which this context belongs */
+    reorder_window_t *rwin;
+    /* Pointer to TS->rvec_free */
+    bitset_t *rvec_free;
+    /* Our slot number in the reorder window */
+    uint32_t sn;
+    uint8_t olock_flags;
+    /* Our index in thread_state rvec array */
+    uint8_t idx;
+    /* Use to link reorder contexts together */
+    uint8_t next_idx;
+    /* Current reorder context to save events in */
+    uint8_t cur_idx;
+    /* Number of events stored in this reorder context */
+    uint8_t numevts;
+    /* Events stored in this context */
+    odp_buffer_hdr_t *events[RC_EVT_SIZE];
+    queue_entry_t *destq[RC_EVT_SIZE];
 };
 
 reorder_window_t *rwin_alloc(_odp_ishm_pool_t *pool,
-			     unsigned lock_count);
+                 unsigned lock_count);
 int rwin_free(_odp_ishm_pool_t *pool, reorder_window_t *rwin);
 bool rwin_reserve(reorder_window_t *rwin, uint32_t *sn);
 bool rwin_reserve_sc(reorder_window_t *rwin, uint32_t *sn);
 void rwin_unreserve_sc(reorder_window_t *rwin, uint32_t sn);
 void rctx_init(reorder_context_t *rctx, uint16_t idx,
-	       reorder_window_t *rwin, uint32_t sn);
+           reorder_window_t *rwin, uint32_t sn);
 void rctx_release(reorder_context_t *rctx);
 int rctx_save(queue_entry_t *queue, odp_buffer_hdr_t *buf_hdr[], int num);
 

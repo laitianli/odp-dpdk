@@ -35,27 +35,27 @@ extern "C" {
  * Runtime assertion-macro - aborts if 'cond' is false.
  */
 #define ODP_ASSERT(cond) \
-	do { if ((ODP_DEBUG == 1) && (!(cond))) { \
-		ODP_ERR("%s\n", #cond); \
-		odp_global_ro.abort_fn(); } \
-	} while (0)
+    do { if ((ODP_DEBUG == 1) && (!(cond))) { \
+        ODP_ERR("%s\n", #cond); \
+        odp_global_ro.abort_fn(); } \
+    } while (0)
 
 /**
  * This macro is used to indicate when a given function is not implemented
  */
 #define ODP_UNIMPLEMENTED() \
-		odp_global_ro.log_fn(ODP_LOG_UNIMPLEMENTED, \
-			"%s:%d:The function %s() is not implemented\n", \
-			__FILE__, __LINE__, __func__)
+        odp_global_ro.log_fn(ODP_LOG_UNIMPLEMENTED, \
+            "%s:%d:The function %s() is not implemented\n", \
+            __FILE__, __LINE__, __func__)
 /**
  * Log debug message if ODP_DEBUG_PRINT flag is set.
  */
 #if 0 
 #define ODP_DBG(fmt, ...) \
-	do { \
-		if (ODP_DEBUG_PRINT == 1) \
-			ODP_LOG(ODP_LOG_DBG, fmt, ##__VA_ARGS__);\
-	} while (0)
+    do { \
+        if (ODP_DEBUG_PRINT == 1) \
+            ODP_LOG(ODP_LOG_DBG, fmt, ##__VA_ARGS__);\
+    } while (0)
 #else
 #define ODP_DBG(fmt, ...) \
     ODP_LOG(ODP_LOG_DBG, fmt, ##__VA_ARGS__)
@@ -64,17 +64,17 @@ extern "C" {
  * Log error message.
  */
 #define ODP_ERR(fmt, ...) \
-		ODP_LOG(ODP_LOG_ERR, fmt, ##__VA_ARGS__)
+        ODP_LOG(ODP_LOG_ERR, fmt, ##__VA_ARGS__)
 
 /**
  * Log abort message and then stop execution (by default call abort()).
  * This function should not return.
  */
 #define ODP_ABORT(fmt, ...) \
-	do { \
-		ODP_LOG(ODP_LOG_ABORT, fmt, ##__VA_ARGS__); \
-		odp_global_ro.abort_fn(); \
-	} while (0)
+    do { \
+        ODP_LOG(ODP_LOG_ABORT, fmt, ##__VA_ARGS__); \
+        odp_global_ro.abort_fn(); \
+    } while (0)
 
 /**
  * ODP LOG macro.
@@ -89,17 +89,17 @@ extern "C" {
 do { \
     if (level > odp_global_ro.log_level)    \
         break;  \
-	if (level==ODP_LOG_ERR || level==ODP_LOG_ABORT) { \
-		odp_global_ro.log_fn(level, "\033[31m %s:%d:%s():" fmt"\033[0m", __FILE__, \
-			__LINE__, __func__, ##__VA_ARGS__); \
-	} \
-	else {	\
-		odp_global_ro.log_fn(level, "%s:%d:%s():" fmt, __FILE__, \
-			__LINE__, __func__, ##__VA_ARGS__);  \
-	} \
+    if (level==ODP_LOG_ERR || level==ODP_LOG_ABORT) { \
+        odp_global_ro.log_fn(level, "\033[31m %s:%d:%s():" fmt"\033[0m", __FILE__, \
+            __LINE__, __func__, ##__VA_ARGS__); \
+    } \
+    else {    \
+        odp_global_ro.log_fn(level, "%s:%d:%s():" fmt, __FILE__, \
+            __LINE__, __func__, ##__VA_ARGS__);  \
+    } \
 }while(0)
 
-#endif	
+#endif    
 
 /**
  * Log print message when the application calls one of the ODP APIs

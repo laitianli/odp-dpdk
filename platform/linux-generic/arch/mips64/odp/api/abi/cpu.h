@@ -19,10 +19,10 @@ extern "C" {
 
 static inline void odp_cpu_pause(void)
 {
-	__asm__ __volatile__ ("nop");
-	__asm__ __volatile__ ("nop");
-	__asm__ __volatile__ ("nop");
-	__asm__ __volatile__ ("nop");
+    __asm__ __volatile__ ("nop");
+    __asm__ __volatile__ ("nop");
+    __asm__ __volatile__ ("nop");
+    __asm__ __volatile__ ("nop");
 }
 
 #ifdef __cplusplus

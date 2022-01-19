@@ -15,12 +15,12 @@
 
 static inline void sevl(void)
 {
-	/* empty */
+    /* empty */
 }
 
 static inline int wfe(void)
 {
-	return 1;
+    return 1;
 }
 
 #define monitor128(addr, mo) __atomic_load_n((addr), (mo))
@@ -30,7 +30,7 @@ static inline int wfe(void)
 
 static inline void doze(void)
 {
-	odp_cpu_pause();
+    odp_cpu_pause();
 }
 
 #endif

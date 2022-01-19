@@ -31,14 +31,14 @@ typedef _odp_abi_pktio_t *odp_pktio_t;
 
 /** @internal */
 typedef struct odp_pktin_queue_t {
-	odp_pktio_t pktio; /**< @internal pktio handle */
-	int index;         /**< @internal pktio queue index */
+    odp_pktio_t pktio; /**< @internal pktio handle */
+    int index;         /**< @internal pktio queue index */
 } odp_pktin_queue_t;
 
 /** @internal */
 typedef struct odp_pktout_queue_t {
-	odp_pktio_t pktio; /**< @internal pktio handle */
-	int index;         /**< @internal pktio queue index */
+    odp_pktio_t pktio; /**< @internal pktio handle */
+    int index;         /**< @internal pktio queue index */
 } odp_pktout_queue_t;
 
 #define ODP_PKTIO_INVALID ((odp_pktio_t)0)

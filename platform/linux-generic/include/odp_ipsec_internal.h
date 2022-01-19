@@ -1,7 +1,7 @@
 /* Copyright (c) 2017-2018, Linaro Limited
  * All rights reserved.
  *
- * SPDX-License-Identifier:	BSD-3-Clause
+ * SPDX-License-Identifier:    BSD-3-Clause
  */
 
 /**
@@ -33,7 +33,7 @@ extern "C" {
 typedef ODP_HANDLE_T(ipsec_status_t);
 
 #define ODP_IPSEC_STATUS_INVALID \
-	_odp_cast_scalar(ipsec_status_t, 0xffffffff)
+    _odp_cast_scalar(ipsec_status_t, 0xffffffff)
 
 typedef struct ipsec_sa_s ipsec_sa_t;
 
@@ -74,145 +74,145 @@ void _odp_ipsec_status_free(ipsec_status_t status);
  * @retval <0 on failure
  */
 int _odp_ipsec_status_send(odp_queue_t queue,
-			   odp_ipsec_status_id_t id,
-			   odp_ipsec_sa_t sa,
-			   int result,
-			   odp_ipsec_warn_t warn);
+               odp_ipsec_status_id_t id,
+               odp_ipsec_sa_t sa,
+               int result,
+               odp_ipsec_warn_t warn);
 
-#define IPSEC_MAX_IV_LEN	32   /**< Maximum IV length in bytes */
+#define IPSEC_MAX_IV_LEN    32   /**< Maximum IV length in bytes */
 
-#define IPSEC_MAX_SALT_LEN	4    /**< Maximum salt length in bytes */
+#define IPSEC_MAX_SALT_LEN    4    /**< Maximum salt length in bytes */
 
 /* 32 is minimum required by the standard. We do not support more */
-#define IPSEC_ANTIREPLAY_WS	32
+#define IPSEC_ANTIREPLAY_WS    32
 
 /**
  * Maximum number of available SAs
  */
-#define ODP_CONFIG_IPSEC_SAS	8
+#define ODP_CONFIG_IPSEC_SAS    8
 
 struct ipsec_sa_s {
-	odp_atomic_u32_t ODP_ALIGNED_CACHE state;
+    odp_atomic_u32_t ODP_ALIGNED_CACHE state;
 
-	/*
-	 * State that gets updated very frequently. Grouped separately
-	 * to avoid false cache line sharing with other data.
-	 */
-	struct ODP_ALIGNED_CACHE {
-		/* Statistics for soft/hard expiration */
-		odp_atomic_u64_t bytes;
-		odp_atomic_u64_t packets;
+    /*
+     * State that gets updated very frequently. Grouped separately
+     * to avoid false cache line sharing with other data.
+     */
+    struct ODP_ALIGNED_CACHE {
+        /* Statistics for soft/hard expiration */
+        odp_atomic_u64_t bytes;
+        odp_atomic_u64_t packets;
 
-		union {
-			struct {
-				odp_atomic_u64_t antireplay;
-			} in;
+        union {
+            struct {
+                odp_atomic_u64_t antireplay;
+            } in;
 
-			struct {
-				/*
-				 * 64-bit sequence number that is also used as
-				 * CTR/GCM IV
-				 */
-				odp_atomic_u64_t seq;
-			} out;
-		};
-	} hot;
+            struct {
+                /*
+                 * 64-bit sequence number that is also used as
+                 * CTR/GCM IV
+                 */
+                odp_atomic_u64_t seq;
+            } out;
+        };
+    } hot;
 
-	uint32_t	ipsec_sa_idx;
-	odp_ipsec_sa_t	ipsec_sa_hdl;
+    uint32_t    ipsec_sa_idx;
+    odp_ipsec_sa_t    ipsec_sa_hdl;
 
-	odp_ipsec_protocol_t proto;
-	uint32_t	spi;
+    odp_ipsec_protocol_t proto;
+    uint32_t    spi;
 
-	odp_ipsec_mode_t mode;
+    odp_ipsec_mode_t mode;
 
-	/* Limits */
-	uint64_t soft_limit_bytes;
-	uint64_t soft_limit_packets;
-	uint64_t hard_limit_bytes;
-	uint64_t hard_limit_packets;
+    /* Limits */
+    uint64_t soft_limit_bytes;
+    uint64_t soft_limit_packets;
+    uint64_t hard_limit_bytes;
+    uint64_t hard_limit_packets;
 
-	odp_crypto_session_t session;
-	void		*context;
-	odp_queue_t	queue;
+    odp_crypto_session_t session;
+    void        *context;
+    odp_queue_t    queue;
 
-	uint32_t	icv_len;
-	uint32_t	esp_iv_len;
-	uint32_t	esp_block_len;
+    uint32_t    icv_len;
+    uint32_t    esp_iv_len;
+    uint32_t    esp_block_len;
 
-	uint8_t		salt[IPSEC_MAX_SALT_LEN];
-	uint32_t	salt_length;
-	odp_ipsec_lookup_mode_t lookup_mode;
+    uint8_t        salt[IPSEC_MAX_SALT_LEN];
+    uint32_t    salt_length;
+    odp_ipsec_lookup_mode_t lookup_mode;
 
-	union {
-		unsigned flags;
-		struct {
-			unsigned	dec_ttl : 1;
-			unsigned	copy_dscp : 1;
-			unsigned	copy_df : 1;
-			unsigned	copy_flabel : 1;
-			unsigned	aes_ctr_iv : 1;
-			unsigned	udp_encap : 1;
+    union {
+        unsigned flags;
+        struct {
+            unsigned    dec_ttl : 1;
+            unsigned    copy_dscp : 1;
+            unsigned    copy_df : 1;
+            unsigned    copy_flabel : 1;
+            unsigned    aes_ctr_iv : 1;
+            unsigned    udp_encap : 1;
 
-			/* Only for outbound */
-			unsigned	use_counter_iv : 1;
-			unsigned	tun_ipv4 : 1;
+            /* Only for outbound */
+            unsigned    use_counter_iv : 1;
+            unsigned    tun_ipv4 : 1;
 
-			/* Only for inbound */
-			unsigned	antireplay : 1;
-		};
-	};
+            /* Only for inbound */
+            unsigned    antireplay : 1;
+        };
+    };
 
-	union {
-		struct {
-			odp_ipsec_ip_version_t lookup_ver;
-			union {
-				odp_u32be_t	lookup_dst_ipv4;
-				uint8_t lookup_dst_ipv6[_ODP_IPV6ADDR_LEN];
-			};
-		} in;
+    union {
+        struct {
+            odp_ipsec_ip_version_t lookup_ver;
+            union {
+                odp_u32be_t    lookup_dst_ipv4;
+                uint8_t lookup_dst_ipv6[_ODP_IPV6ADDR_LEN];
+            };
+        } in;
 
-		struct {
-			odp_ipsec_frag_mode_t frag_mode;
-			uint32_t mtu;
+        struct {
+            odp_ipsec_frag_mode_t frag_mode;
+            uint32_t mtu;
 
-			union {
-			struct {
-				odp_ipsec_ipv4_param_t param;
-				odp_u32be_t	src_ip;
-				odp_u32be_t	dst_ip;
-			} tun_ipv4;
-			struct {
-				odp_ipsec_ipv6_param_t param;
-				uint8_t		src_ip[_ODP_IPV6ADDR_LEN];
-				uint8_t		dst_ip[_ODP_IPV6ADDR_LEN];
-			} tun_ipv6;
-			};
-		} out;
-	};
+            union {
+            struct {
+                odp_ipsec_ipv4_param_t param;
+                odp_u32be_t    src_ip;
+                odp_u32be_t    dst_ip;
+            } tun_ipv4;
+            struct {
+                odp_ipsec_ipv6_param_t param;
+                uint8_t        src_ip[_ODP_IPV6ADDR_LEN];
+                uint8_t        dst_ip[_ODP_IPV6ADDR_LEN];
+            } tun_ipv6;
+            };
+        } out;
+    };
 };
 
 /**
  * IPSEC Security Association (SA) lookup parameters
  */
 typedef struct odp_ipsec_sa_lookup_s {
-	/** IPSEC protocol: ESP or AH */
-	odp_ipsec_protocol_t proto;
+    /** IPSEC protocol: ESP or AH */
+    odp_ipsec_protocol_t proto;
 
-	/** SPI value */
-	uint32_t spi;
+    /** SPI value */
+    uint32_t spi;
 
-	/** IP protocol version */
-	odp_ipsec_ip_version_t ver;
+    /** IP protocol version */
+    odp_ipsec_ip_version_t ver;
 
-	/** IP destination address (NETWORK ENDIAN) */
-	void    *dst_addr;
+    /** IP destination address (NETWORK ENDIAN) */
+    void    *dst_addr;
 } ipsec_sa_lookup_t;
 
 /** IPSEC AAD */
 typedef struct ODP_PACKED {
-	odp_u32be_t spi;     /**< Security Parameter Index */
-	odp_u32be_t seq_no;  /**< Sequence Number */
+    odp_u32be_t spi;     /**< Security Parameter Index */
+    odp_u32be_t seq_no;  /**< Sequence Number */
 } ipsec_aad_t;
 
 /* Return IV length required for the cipher for IPsec use */
@@ -247,7 +247,7 @@ ipsec_sa_t *_odp_ipsec_sa_lookup(const ipsec_sa_lookup_t *lookup);
  * @retval <0 if hard limits were breached
  */
 int _odp_ipsec_sa_stats_precheck(ipsec_sa_t *ipsec_sa,
-				 odp_ipsec_op_status_t *status);
+                 odp_ipsec_op_status_t *status);
 
 /**
  * Update SA usage statistics, filling respective status for the packet.
@@ -255,21 +255,21 @@ int _odp_ipsec_sa_stats_precheck(ipsec_sa_t *ipsec_sa,
  * @retval <0 if hard limits were breached
  */
 int _odp_ipsec_sa_stats_update(ipsec_sa_t *ipsec_sa, uint32_t len,
-			       odp_ipsec_op_status_t *status);
+                   odp_ipsec_op_status_t *status);
 
 /* Run pre-check on sequence number of the packet.
  *
  * @retval <0 if the packet falls out of window
  */
 int _odp_ipsec_sa_replay_precheck(ipsec_sa_t *ipsec_sa, uint32_t seq,
-				  odp_ipsec_op_status_t *status);
+                  odp_ipsec_op_status_t *status);
 
 /* Run check on sequence number of the packet and update window if necessary.
  *
  * @retval <0 if the packet falls out of window
  */
 int _odp_ipsec_sa_replay_update(ipsec_sa_t *ipsec_sa, uint32_t seq,
-				odp_ipsec_op_status_t *status);
+                odp_ipsec_op_status_t *status);
 
 /**
   * Allocate an IPv4 ID for an outgoing packet.

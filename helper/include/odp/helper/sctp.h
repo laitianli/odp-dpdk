@@ -28,15 +28,15 @@ extern "C" {
 
 /** SCTP header */
 typedef struct ODP_PACKED {
-	odp_u16be_t src_port; /**< Source port */
-	odp_u16be_t dst_port; /**< Destination port */
-	odp_u32be_t tag;      /**< Verification tag */
-	odp_u32be_t chksum;   /**< SCTP header and data checksum */
+    odp_u16be_t src_port; /**< Source port */
+    odp_u16be_t dst_port; /**< Destination port */
+    odp_u32be_t tag;      /**< Verification tag */
+    odp_u32be_t chksum;   /**< SCTP header and data checksum */
 } odph_sctphdr_t;
 
 /** @internal Compile time assert */
 ODP_STATIC_ASSERT(sizeof(odph_sctphdr_t) == ODPH_SCTPHDR_LEN,
-		  "ODPH_SCTPHDR_T__SIZE_ERROR");
+          "ODPH_SCTPHDR_T__SIZE_ERROR");
 
 /**
  * @}

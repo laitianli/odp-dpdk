@@ -40,14 +40,14 @@
 
 /** Get rid of path in filename - only for unix-type paths using '/' */
 #define NO_PATH(file_name) (strrchr((file_name), '/') ? \
-			    strrchr((file_name), '/') + 1 : (file_name))
+                strrchr((file_name), '/') + 1 : (file_name))
 
-#define TEST_SEQ_MAGIC		0x92749451
-#define TEST_SEQ_MAGIC_2	0x81638340
+#define TEST_SEQ_MAGIC        0x92749451
+#define TEST_SEQ_MAGIC_2    0x81638340
 
-#define TEST_ALLOC_MAGIC	0x1234adcd
+#define TEST_ALLOC_MAGIC    0x1234adcd
 
-#define TEST_IPC_PKTIO_NAME	"ipc:ipktio"
+#define TEST_IPC_PKTIO_NAME    "ipc:ipktio"
 #define TEST_IPC_PKTIO_PID_NAME "ipc:%d:ipktio"
 
 /** Can be any name, same or not the same. */
@@ -55,13 +55,13 @@
 
 /** magic number and sequence at start of packet payload */
 typedef struct ODP_PACKED {
-	odp_u32be_t magic;
-	odp_u32be_t seq;
+    odp_u32be_t magic;
+    odp_u32be_t seq;
 } pkt_head_t;
 
 /** magic number at end of packet payload */
 typedef struct ODP_PACKED {
-	odp_u32be_t magic;
+    odp_u32be_t magic;
 } pkt_tail_t;
 
 /** Application argument */
@@ -91,10 +91,10 @@ odp_pktio_t create_pktio(odp_pool_t pool, int master_pid);
 
 /** Spin and send all packet from table
  *
- * @param pktio		pktio device
- * @param pkt_tbl	packets table
- * @param num		number of packets
+ * @param pktio        pktio device
+ * @param pkt_tbl    packets table
+ * @param num        number of packets
  */
 int ipc_odp_packet_send_or_free(odp_pktio_t pktio,
-				odp_packet_t pkt_tbl[],
-				int num);
+                odp_packet_t pkt_tbl[],
+                int num);

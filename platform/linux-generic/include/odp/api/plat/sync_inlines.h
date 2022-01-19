@@ -20,28 +20,28 @@ extern "C" {
 /** @cond _ODP_HIDE_FROM_DOXYGEN_ */
 
 #ifndef _ODP_NO_INLINE
-	/* Inline functions by default */
-	#define _ODP_INLINE static inline
-	#define odp_mb_release __odp_mb_release
-	#define odp_mb_acquire __odp_mb_acquire
-	#define odp_mb_full __odp_mb_full
+    /* Inline functions by default */
+    #define _ODP_INLINE static inline
+    #define odp_mb_release __odp_mb_release
+    #define odp_mb_acquire __odp_mb_acquire
+    #define odp_mb_full __odp_mb_full
 #else
-	#define _ODP_INLINE
+    #define _ODP_INLINE
 #endif
 
 _ODP_INLINE void odp_mb_release(void)
 {
-	__atomic_thread_fence(__ATOMIC_RELEASE);
+    __atomic_thread_fence(__ATOMIC_RELEASE);
 }
 
 _ODP_INLINE void odp_mb_acquire(void)
 {
-	__atomic_thread_fence(__ATOMIC_ACQUIRE);
+    __atomic_thread_fence(__ATOMIC_ACQUIRE);
 }
 
 _ODP_INLINE void odp_mb_full(void)
 {
-	__atomic_thread_fence(__ATOMIC_SEQ_CST);
+    __atomic_thread_fence(__ATOMIC_SEQ_CST);
 }
 
 /** @endcond */

@@ -34,12 +34,12 @@ extern "C" {
 #include <stddef.h>
 
 typedef union buffer_index_t {
-	uint32_t u32;
+    uint32_t u32;
 
-	struct {
-		uint32_t pool   :8;
-		uint32_t buffer :24;
-	};
+    struct {
+        uint32_t pool   :8;
+        uint32_t buffer :24;
+    };
 } buffer_index_t;
 
 /* Check that pool index fit into bit field */
@@ -53,38 +53,38 @@ ODP_STATIC_ASSERT(CONFIG_POOL_MAX_NUM <= (0xFFFFFF + 1), "TOO_LARGE_POOL");
 
 /* Common buffer header */
 struct ODP_ALIGNED_CACHE odp_buffer_hdr_t {
-	/* Initial buffer data pointer */
-	uint8_t  *base_data;
+    /* Initial buffer data pointer */
+    uint8_t  *base_data;
 
-	/* Pool pointer */
-	void     *pool_ptr;
+    /* Pool pointer */
+    void     *pool_ptr;
 
-	/* --- Mostly read only data --- */
-	const void *user_ptr;
+    /* --- Mostly read only data --- */
+    const void *user_ptr;
 
-	/* Initial buffer tail pointer */
-	uint8_t  *buf_end;
+    /* Initial buffer tail pointer */
+    uint8_t  *buf_end;
 
-	/* User area pointer */
-	void    *uarea_addr;
+    /* User area pointer */
+    void    *uarea_addr;
 
-	/* Combined pool and buffer index */
-	buffer_index_t index;
+    /* Combined pool and buffer index */
+    buffer_index_t index;
 
-	/* Reference count */
-	odp_atomic_u32_t ref_cnt;
+    /* Reference count */
+    odp_atomic_u32_t ref_cnt;
 
-	/* Pool type */
-	int8_t    type;
+    /* Pool type */
+    int8_t    type;
 
-	/* Event type. Maybe different than pool type (crypto compl event) */
-	int8_t    event_type;
+    /* Event type. Maybe different than pool type (crypto compl event) */
+    int8_t    event_type;
 
-	/* Event flow id */
-	uint8_t   flow_id;
+    /* Event flow id */
+    uint8_t   flow_id;
 
-	/* Data or next header */
-	uint8_t data[0];
+    /* Data or next header */
+    uint8_t data[0];
 };
 
 odp_event_type_t _odp_buffer_event_type(odp_buffer_t buf);
@@ -93,21 +93,21 @@ int odp_buffer_snprint(char *str, uint32_t n, odp_buffer_t buf);
 
 static inline odp_buffer_t buf_from_buf_hdr(odp_buffer_hdr_t *hdr)
 {
-	return (odp_buffer_t)hdr;
+    return (odp_buffer_t)hdr;
 }
 
 static inline uint32_t event_flow_id(odp_event_t ev)
 {
-	odp_buffer_hdr_t *buf_hdr = (odp_buffer_hdr_t *)(uintptr_t)ev;
+    odp_buffer_hdr_t *buf_hdr = (odp_buffer_hdr_t *)(uintptr_t)ev;
 
-	return buf_hdr->flow_id;
+    return buf_hdr->flow_id;
 }
 
 static inline void event_flow_id_set(odp_event_t ev, uint32_t flow_id)
 {
-	odp_buffer_hdr_t *buf_hdr = (odp_buffer_hdr_t *)(uintptr_t)ev;
+    odp_buffer_hdr_t *buf_hdr = (odp_buffer_hdr_t *)(uintptr_t)ev;
 
-	buf_hdr->flow_id = flow_id;
+    buf_hdr->flow_id = flow_id;
 }
 
 #ifdef __cplusplus

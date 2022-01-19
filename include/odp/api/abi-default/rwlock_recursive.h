@@ -23,10 +23,10 @@ extern "C" {
 
 /** @internal */
 typedef struct odp_rwlock_recursive_s {
-	odp_rwlock_t lock;                     /**< the lock */
-	int wr_owner;                          /**< write owner thread */
-	uint32_t wr_cnt;                       /**< write recursion count */
-	uint8_t  rd_cnt[ODP_THREAD_COUNT_MAX]; /**< read recursion count */
+    odp_rwlock_t lock;                     /**< the lock */
+    int wr_owner;                          /**< write owner thread */
+    uint32_t wr_cnt;                       /**< write recursion count */
+    uint8_t  rd_cnt[ODP_THREAD_COUNT_MAX]; /**< read recursion count */
 } odp_rwlock_recursive_t;
 
 #ifdef __cplusplus

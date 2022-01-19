@@ -18,8 +18,8 @@ extern "C" {
 #include <odp_packet_io_stats_common.h>
 
 int sock_stats_fd(pktio_entry_t *pktio_entry,
-		  odp_pktio_stats_t *stats,
-		  int fd);
+          odp_pktio_stats_t *stats,
+          int fd);
 int sock_stats_reset_fd(pktio_entry_t *pktio_entry, int fd);
 
 pktio_stats_type_t sock_stats_type_fd(pktio_entry_t *pktio_entry, int fd);

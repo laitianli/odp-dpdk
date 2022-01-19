@@ -22,9 +22,9 @@ extern "C" {
 
 /** @internal */
 typedef struct odp_spinlock_recursive_s {
-	odp_spinlock_t lock; /**< the lock */
-	int owner;           /**< thread owning the lock */
-	uint32_t cnt;        /**< recursion count */
+    odp_spinlock_t lock; /**< the lock */
+    int owner;           /**< thread owning the lock */
+    uint32_t cnt;        /**< recursion count */
 } odp_spinlock_recursive_t;
 
 #ifdef __cplusplus

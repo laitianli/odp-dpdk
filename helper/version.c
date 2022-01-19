@@ -16,5 +16,5 @@ VERSION_TO_STR(ODPH_VERSION_MINOR)
 
 const char *odph_version_str(void)
 {
-	return VERSION_STR;
+    return VERSION_STR;
 }

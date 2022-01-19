@@ -127,7 +127,7 @@ odp_event_subtype_t odp_event_subtype(odp_event_t event);
  * @return Event type
  */
 odp_event_type_t odp_event_types(odp_event_t event,
-				 odp_event_subtype_t *subtype);
+                 odp_event_subtype_t *subtype);
 
 /**
  * Event type of multiple events
@@ -143,7 +143,7 @@ odp_event_type_t odp_event_types(odp_event_t event,
  *         (includes event[0])
  */
 int odp_event_type_multi(const odp_event_t event[], int num,
-			 odp_event_type_t *type);
+             odp_event_type_t *type);
 
 /**
  * Filter and convert packet events
@@ -163,8 +163,8 @@ int odp_event_type_multi(const odp_event_t event[], int num,
  * @return Number of packets outputted (0 ... num)
  */
 int odp_event_filter_packet(const odp_event_t event[],
-			    odp_packet_t packet[],
-			    odp_event_t remain[], int num);
+                odp_packet_t packet[],
+                odp_event_t remain[], int num);
 
 /**
  * Get printable value for an odp_event_t
@@ -227,9 +227,9 @@ void odp_event_free_sp(const odp_event_t event[], int num);
  * initial flow id calculation. For all other events initial flow id is zero
  * An application can change event flow id using odp_event_flow_id_set().
  *
- * @param	event	Event handle
+ * @param    event    Event handle
  *
- * @return		Flow id of the event
+ * @return        Flow id of the event
  *
  */
 uint32_t odp_event_flow_id(odp_event_t event);
@@ -245,7 +245,7 @@ uint32_t odp_event_flow_id(odp_event_t event);
  * The value of flow id must be less than the number of flows configured in the
  * scheduler.
  *
- * @param      event		Event handle
+ * @param      event        Event handle
  * @param      flow_id          Flow event id to be set.
  */
 void odp_event_flow_id_set(odp_event_t event, uint32_t flow_id);

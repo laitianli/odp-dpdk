@@ -109,7 +109,7 @@ odp_event_t odp_schedule(odp_queue_t *from, uint64_t wait);
  * @return Number of events outputted (0 ... num)
  */
 int odp_schedule_multi(odp_queue_t *from, uint64_t wait, odp_event_t events[],
-		       int num);
+               int num);
 
 /**
  * Schedule, wait for events
@@ -138,7 +138,7 @@ int odp_schedule_multi_wait(odp_queue_t *from, odp_event_t events[], int num);
  * @return Number of events outputted (0 ... num)
  */
 int odp_schedule_multi_no_wait(odp_queue_t *from, odp_event_t events[],
-			       int num);
+                   int num);
 
 /**
  * Pause scheduling
@@ -327,7 +327,7 @@ int odp_schedule_capability(odp_schedule_capability_t *capa);
  * @see ODP_SCHED_GROUP_ALL, ODP_SCHED_GROUP_WORKER
  */
 odp_schedule_group_t odp_schedule_group_create(const char *name,
-					       const odp_thrmask_t *mask);
+                           const odp_thrmask_t *mask);
 
 /**
  * Schedule group destroy
@@ -365,7 +365,7 @@ odp_schedule_group_t odp_schedule_group_lookup(const char *name);
  * @retval <0 on failure
  */
 int odp_schedule_group_join(odp_schedule_group_t group,
-			    const odp_thrmask_t *mask);
+                const odp_thrmask_t *mask);
 
 /**
  * Leave a schedule group
@@ -384,7 +384,7 @@ int odp_schedule_group_join(odp_schedule_group_t group,
  * prestaged may still be presented to the masked threads.
  */
 int odp_schedule_group_leave(odp_schedule_group_t group,
-			     const odp_thrmask_t *mask);
+                 const odp_thrmask_t *mask);
 
 /**
  * Get a schedule group's thrmask
@@ -396,14 +396,14 @@ int odp_schedule_group_leave(odp_schedule_group_t group,
  * @retval <0 Invalid group specified
  */
 int odp_schedule_group_thrmask(odp_schedule_group_t group,
-			       odp_thrmask_t *thrmask);
+                   odp_thrmask_t *thrmask);
 
 /**
  * Schedule group information
  */
 typedef struct odp_schedule_group_info_t {
-	const char    *name;   /**< Schedule group name */
-	odp_thrmask_t thrmask; /**< Thread mask of the schedule group */
+    const char    *name;   /**< Schedule group name */
+    odp_thrmask_t thrmask; /**< Thread mask of the schedule group */
 } odp_schedule_group_info_t;
 
 /**
@@ -422,7 +422,7 @@ typedef struct odp_schedule_group_info_t {
  * @retval <0 On failure
  */
 int odp_schedule_group_info(odp_schedule_group_t group,
-			    odp_schedule_group_info_t *info);
+                odp_schedule_group_info_t *info);
 
 /**
  * Acquire ordered context lock
@@ -479,11 +479,11 @@ void odp_schedule_order_unlock(uint32_t lock_index);
  * odp_schedule_order_lock(lock_index). The same constraints apply with this
  * call as with those two.
  *
- * @param unlock_index	Index of the acquired ordered lock in the current
- *			context to be released.
- * @param lock_index	Index of the ordered lock in the current context to be
- *			acquired. Must be in the range
- *			0...odp_queue_lock_count() - 1.
+ * @param unlock_index    Index of the acquired ordered lock in the current
+ *            context to be released.
+ * @param lock_index    Index of the ordered lock in the current context to be
+ *            acquired. Must be in the range
+ *            0...odp_queue_lock_count() - 1.
  *
  * @see odp_schedule_order_lock(), odp_schedule_order_unlock()
  *
@@ -500,9 +500,9 @@ void odp_schedule_order_unlock_lock(uint32_t unlock_index, uint32_t lock_index);
  * calls, before using another lock.
  * The same constraints apply as with odp_schedule_order_lock()
  *
- * @param lock_index	Index of the ordered lock in the current context to
- *			start acquire operation.
- *			Must be in the range 0..odp_queue_lock_count() - 1.
+ * @param lock_index    Index of the ordered lock in the current context to
+ *            start acquire operation.
+ *            Must be in the range 0..odp_queue_lock_count() - 1.
  *
  */
 void odp_schedule_order_lock_start(uint32_t lock_index);
@@ -512,9 +512,9 @@ void odp_schedule_order_lock_start(uint32_t lock_index);
  * Lock index must match with the previous start call. Ordered lock acquisition
  * will be completed during this call.
  *
- * @param lock_index	Index of the ordered lock in the current context to
- *			complete acquire operation.
- *			Must be in the range 0..odp_queue_lock_count() - 1.
+ * @param lock_index    Index of the ordered lock in the current context to
+ *            complete acquire operation.
+ *            Must be in the range 0..odp_queue_lock_count() - 1.
  */
 void odp_schedule_order_lock_wait(uint32_t lock_index);
 

@@ -24,17 +24,17 @@ void sys_info_print_arch(void);
 
 static inline int _odp_dummy_cpuinfo(system_info_t *sysinfo)
 {
-	int i;
+    int i;
 
-	ODP_DBG("Warning: use dummy values for freq and model string\n");
-	for (i = 0; i < CONFIG_NUM_CPU; i++) {
-		ODP_PRINT("WARN: cpu[%i] uses dummy max frequency %u MHz\n",
-			  i, DUMMY_MAX_MHZ);
-		sysinfo->cpu_hz_max[i] = DUMMY_MAX_MHZ * 1000000;
-		strcpy(sysinfo->model_str[i], "UNKNOWN");
-	}
+    ODP_DBG("Warning: use dummy values for freq and model string\n");
+    for (i = 0; i < CONFIG_NUM_CPU; i++) {
+        ODP_PRINT("WARN: cpu[%i] uses dummy max frequency %u MHz\n",
+              i, DUMMY_MAX_MHZ);
+        sysinfo->cpu_hz_max[i] = DUMMY_MAX_MHZ * 1000000;
+        strcpy(sysinfo->model_str[i], "UNKNOWN");
+    }
 
-	return 0;
+    return 0;
 }
 
 #ifdef __cplusplus

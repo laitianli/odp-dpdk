@@ -21,61 +21,61 @@ extern "C" {
 /**
  * Max number of flows
  */
-#define FWD_MAX_FLOW_COUNT	(1 << 22)
+#define FWD_MAX_FLOW_COUNT    (1 << 22)
 
 /**
  * Default hash entries in a bucket
  */
-#define FWD_DEF_BUCKET_ENTRIES	4
+#define FWD_DEF_BUCKET_ENTRIES    4
 
 /**
  * IP address range (subnet)
  */
 typedef struct ip_addr_range_s {
-	uint32_t  addr;     /**< IP address, host endianness */
-	uint32_t  depth;    /**< subnet bit width */
+    uint32_t  addr;     /**< IP address, host endianness */
+    uint32_t  depth;    /**< subnet bit width */
 } ip_addr_range_t;
 
 /**
  * TCP/UDP flow
  */
 typedef struct ODP_ALIGNED_CACHE ipv4_tuple5_s {
-	union {
-		struct {
-			int32_t src_ip;
-			int32_t dst_ip;
-			int16_t src_port;
-			int16_t dst_port;
-			int8_t  proto;
-			int8_t  pad1;
-			int16_t pad2;
-		};
-		struct {
-			int64_t hi64;
-			int64_t lo64;
-		};
-	};
+    union {
+        struct {
+            int32_t src_ip;
+            int32_t dst_ip;
+            int16_t src_port;
+            int16_t dst_port;
+            int8_t  proto;
+            int8_t  pad1;
+            int16_t pad2;
+        };
+        struct {
+            int64_t hi64;
+            int64_t lo64;
+        };
+    };
 } ipv4_tuple5_t;
 
 /**
  * Forwarding data base entry
  */
 typedef struct fwd_db_entry_s {
-	struct fwd_db_entry_s *next;          /**< Next entry on list */
-	char                    oif[OIF_LEN]; /**< Output interface name */
-	int			oif_id;	      /**< Output interface idx */
-	odph_ethaddr_t		src_mac;      /**< Output source MAC */
-	odph_ethaddr_t		dst_mac;      /**< Output destination MAC */
-	ip_addr_range_t		subnet;       /**< Subnet for this router */
+    struct fwd_db_entry_s *next;          /**< Next entry on list */
+    char                    oif[OIF_LEN]; /**< Output interface name */
+    int            oif_id;          /**< Output interface idx */
+    odph_ethaddr_t        src_mac;      /**< Output source MAC */
+    odph_ethaddr_t        dst_mac;      /**< Output destination MAC */
+    ip_addr_range_t        subnet;       /**< Subnet for this router */
 } fwd_db_entry_t;
 
 /**
  * Forwarding data base
  */
 typedef struct fwd_db_s {
-	uint32_t          index;          /**< Next available entry */
-	fwd_db_entry_t   *list;           /**< List of active routes */
-	fwd_db_entry_t    array[MAX_DB];  /**< Entry storage */
+    uint32_t          index;          /**< Next available entry */
+    fwd_db_entry_t   *list;           /**< List of active routes */
+    fwd_db_entry_t    array[MAX_DB];  /**< Entry storage */
 } fwd_db_t;
 
 /** Global pointer to fwd db */

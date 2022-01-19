@@ -25,8 +25,8 @@ extern "C" {
 
 /** @internal */
 typedef struct odp_ticketlock_s {
-	odp_atomic_u32_t  next_ticket; /**< Next ticket */
-	odp_atomic_u32_t  cur_ticket;  /**< Current ticket */
+    odp_atomic_u32_t  next_ticket; /**< Next ticket */
+    odp_atomic_u32_t  cur_ticket;  /**< Current ticket */
 } odp_ticketlock_t;
 
 /* Include inlined versions of API functions */

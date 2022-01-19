@@ -20,22 +20,22 @@ extern "C" {
  * Forwarding data base entry
  */
 typedef struct fwd_db_entry_s {
-	struct fwd_db_entry_s *next;          /**< Next entry on list */
-	char                   oif[OIF_LEN];  /**< Output interface name */
-	odp_pktio_t            pktio;         /**< Output PktI/O interface */
-	odp_pktout_queue_t     pktout;        /**< Output transmit queue */
-	uint8_t   src_mac[ODPH_ETHADDR_LEN];  /**< Output source MAC */
-	uint8_t   dst_mac[ODPH_ETHADDR_LEN];  /**< Output destination MAC */
-	ip_addr_range_t        subnet;        /**< Subnet for this router */
+    struct fwd_db_entry_s *next;          /**< Next entry on list */
+    char                   oif[OIF_LEN];  /**< Output interface name */
+    odp_pktio_t            pktio;         /**< Output PktI/O interface */
+    odp_pktout_queue_t     pktout;        /**< Output transmit queue */
+    uint8_t   src_mac[ODPH_ETHADDR_LEN];  /**< Output source MAC */
+    uint8_t   dst_mac[ODPH_ETHADDR_LEN];  /**< Output destination MAC */
+    ip_addr_range_t        subnet;        /**< Subnet for this router */
 } fwd_db_entry_t;
 
 /**
  * Forwarding data base global structure
  */
 typedef struct fwd_db_s {
-	uint32_t          index;          /**< Next available entry */
-	fwd_db_entry_t   *list;           /**< List of active routes */
-	fwd_db_entry_t    array[MAX_DB];  /**< Entry storage */
+    uint32_t          index;          /**< Next available entry */
+    fwd_db_entry_t   *list;           /**< List of active routes */
+    fwd_db_entry_t    array[MAX_DB];  /**< Entry storage */
 } fwd_db_t;
 
 /** Global pointer to fwd db */
@@ -68,7 +68,7 @@ int create_fwd_db_entry(char *input, char **if_names, int if_count);
  * @param mac    MAC address of this interface
  */
 void resolve_fwd_db(char *intf, odp_pktio_t pktio, odp_pktout_queue_t pktout,
-		    uint8_t *mac);
+            uint8_t *mac);
 
 /**
  * Display one fowarding database entry

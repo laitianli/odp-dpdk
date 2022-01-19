@@ -20,17 +20,17 @@ typedef uint64_t _odp_timer_wheel_t;
 #define _ODP_INT_TIMER_WHEEL_INVALID  0
 
 _odp_timer_wheel_t _odp_timer_wheel_create(uint32_t max_concurrent_timers,
-					   void    *tm_system);
+                       void    *tm_system);
 
 void _odp_timer_wheel_start(_odp_timer_wheel_t timer_wheel,
-			    uint64_t           current_time);
+                uint64_t           current_time);
 
 /* _odp_int_timer_wheel_curr_time_update should be called before the first
  * call to _odp_int_timer_wheel_insert, _odp_int_timer_wheel_next, etc..
  * It returns > 0 if there are timers expired.
  */
 uint32_t _odp_timer_wheel_curr_time_update(_odp_timer_wheel_t timer_wheel,
-					   uint64_t           current_time);
+                       uint64_t           current_time);
 
 /* Maximum wakeup_time is 100 seconds in the future (though a wakeup time
  * greater than a dozen seconds or so is of questionable value), and in
@@ -41,8 +41,8 @@ uint32_t _odp_timer_wheel_curr_time_update(_odp_timer_wheel_t timer_wheel,
  * non-zero and have its bottom two bits being 0!
  */
 int _odp_timer_wheel_insert(_odp_timer_wheel_t timer_wheel,
-			    uint64_t           wakeup_time,
-			    uint64_t           user_context);
+                uint64_t           wakeup_time,
+                uint64_t           user_context);
 
 /* Returns the exact same user_ptr value as was passed to
  * _odp_int_timer_wheel_insert().

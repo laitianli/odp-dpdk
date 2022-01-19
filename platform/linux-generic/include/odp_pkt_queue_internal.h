@@ -39,17 +39,17 @@ typedef uint32_t _odp_int_pkt_queue_t;
 
 /* max_num_queues must be <= 16 * 1024 * 1024. */
 _odp_int_queue_pool_t _odp_queue_pool_create(uint32_t max_num_queues,
-					     uint32_t max_queued_pkts);
+                         uint32_t max_queued_pkts);
 
 _odp_int_pkt_queue_t _odp_pkt_queue_create(_odp_int_queue_pool_t queue_pool);
 
 int _odp_pkt_queue_append(_odp_int_queue_pool_t queue_pool,
-			  _odp_int_pkt_queue_t  pkt_queue,
-			  odp_packet_t          pkt);
+              _odp_int_pkt_queue_t  pkt_queue,
+              odp_packet_t          pkt);
 
 int _odp_pkt_queue_remove(_odp_int_queue_pool_t queue_pool,
-			  _odp_int_pkt_queue_t  pkt_queue,
-			  odp_packet_t         *pkt);
+              _odp_int_pkt_queue_t  pkt_queue,
+              odp_packet_t         *pkt);
 
 void _odp_pkt_queue_stats_print(_odp_int_queue_pool_t queue_pool);
 

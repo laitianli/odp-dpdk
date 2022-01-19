@@ -1,7 +1,7 @@
 /* Copyright (c) 2015-2018, Linaro Limited
  * All rights reserved.
  *
- * SPDX-License-Identifier:	BSD-3-Clause
+ * SPDX-License-Identifier:    BSD-3-Clause
  */
 
 #include <odp/api/errno.h>
@@ -12,23 +12,23 @@
 
 int odp_errno(void)
 {
-	return rte_errno;
+    return rte_errno;
 }
 
 void odp_errno_zero(void)
 {
-	rte_errno = 0;
+    rte_errno = 0;
 }
 
 void odp_errno_print(const char *str)
 {
-	if (str != NULL)
-		printf("%s ", str);
+    if (str != NULL)
+        printf("%s ", str);
 
-	ODP_PRINT("%s\n", strerror(rte_errno));
+    ODP_PRINT("%s\n", strerror(rte_errno));
 }
 
 const char *odp_errno_str(int errnum)
 {
-	return strerror(errnum);
+    return strerror(errnum);
 }

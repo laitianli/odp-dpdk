@@ -1,7 +1,7 @@
 /* Copyright (c) 2017-2018, Linaro Limited
  * All rights reserved.
  *
- * SPDX-License-Identifier:	 BSD-3-Clause
+ * SPDX-License-Identifier:     BSD-3-Clause
  */
 
 #ifndef ODP_FRAGREASS_PP_REASSEMBLE_H_
@@ -13,7 +13,7 @@
 #include "odp_ipfragreass_helpers.h"
 
 ODP_STATIC_ASSERT((__SIZEOF_POINTER__ == 4 || __SIZEOF_POINTER__ == 8),
-		  "ODPREASS_PTR__SIZE_ERROR");
+          "ODPREASS_PTR__SIZE_ERROR");
 
 /**
  * The time in nanoseconds after reception of the earliest fragment that a
@@ -53,9 +53,9 @@ ODP_STATIC_ASSERT((__SIZEOF_POINTER__ == 4 || __SIZEOF_POINTER__ == 8),
  */
 struct flts {
 #if __SIZEOF_POINTER__ == 4
-	uint8_t t:4;
+    uint8_t t:4;
 #elif __SIZEOF_POINTER__ == 8
-	uint32_t t;
+    uint32_t t;
 #endif
 };
 
@@ -63,9 +63,9 @@ struct flts {
  * Metadata for reassembly, to be stored alongside each fragment
  */
 struct packet {
-	odp_packet_t handle; /**< The ODP packet handle for this fragment  */
-	struct packet *prev; /**< Pointer to the fragment "before" this one */
-	struct flts arrival; /**< Arrival timestamp for this fragment */
+    odp_packet_t handle; /**< The ODP packet handle for this fragment  */
+    struct packet *prev; /**< Pointer to the fragment "before" this one */
+    struct flts arrival; /**< Arrival timestamp for this fragment */
 };
 
 /**
@@ -76,56 +76,56 @@ struct packet {
  * assumed to be packed with no padding.
  */
 union fraglist {
-	struct {
-		/**
-		 * The timestamp of the earliest arriving fragment in this
-		 * fraglist
-		 */
+    struct {
+        /**
+         * The timestamp of the earliest arriving fragment in this
+         * fraglist
+         */
 #if __SIZEOF_POINTER__ == 4
-		uint32_t earliest:4;
+        uint32_t earliest:4;
 #elif __SIZEOF_POINTER__ == 8
-		uint32_t earliest;
+        uint32_t earliest;
 #endif
 
-		/**
-		 * The sum of the payloads of the fragments in this list
-		 *
-		 * That is, the size of reassembling all the fragments in this
-		 * list into one big packet (minus the header).
-		 */
-		uint32_t part_len:14;
+        /**
+         * The sum of the payloads of the fragments in this list
+         *
+         * That is, the size of reassembling all the fragments in this
+         * list into one big packet (minus the header).
+         */
+        uint32_t part_len:14;
 
-		/**
-		 * The smallest reassembled payload length upper bound from
-		 * all fragments in this list
-		 *
-		 * This is the threshold over which, given the right
-		 * circumstances, "part_len" might indicate that we are able
-		 * to reassemble a packet.
-		 */
-		uint32_t whole_len:14;
+        /**
+         * The smallest reassembled payload length upper bound from
+         * all fragments in this list
+         *
+         * This is the threshold over which, given the right
+         * circumstances, "part_len" might indicate that we are able
+         * to reassemble a packet.
+         */
+        uint32_t whole_len:14;
 
-		/**
-		 * The tail of a "reverse" linked list of fragments
-		 *
-		 * Each fragment element has a "prev" pointer to the element
-		 * before it in the list. When used in a multi-threaded
-		 * environment, new elements should be inserted atomically by
-		 * modifying this tail pointer.
-		 */
-		struct packet *tail;
-	};
+        /**
+         * The tail of a "reverse" linked list of fragments
+         *
+         * Each fragment element has a "prev" pointer to the element
+         * before it in the list. When used in a multi-threaded
+         * environment, new elements should be inserted atomically by
+         * modifying this tail pointer.
+         */
+        struct packet *tail;
+    };
 
 #if __SIZEOF_POINTER__ == 4
-	struct {
-		uint32_t half[2];
-	};
-	uint64_t raw;
+    struct {
+        uint32_t half[2];
+    };
+    uint64_t raw;
 #elif __SIZEOF_POINTER__ == 8
-	struct {
-		uint64_t half[2];
-	};
-	__int128 raw;
+    struct {
+        uint64_t half[2];
+    };
+    __int128 raw;
 #endif
 };
 
@@ -136,10 +136,10 @@ union fraglist {
  */
 static inline void init_fraglist(union fraglist *fl)
 {
-	fl->earliest  = EARLIEST_MAX;
-	fl->part_len  = 0;
-	fl->whole_len = IP_OCTET_MAX;
-	fl->tail      = NULL;
+    fl->earliest  = EARLIEST_MAX;
+    fl->part_len  = 0;
+    fl->whole_len = IP_OCTET_MAX;
+    fl->tail      = NULL;
 }
 
 /**
@@ -151,7 +151,7 @@ static inline void init_fraglist(union fraglist *fl)
  */
 static inline struct packet *prev_packet(struct packet packet)
 {
-	return packet.prev;
+    return packet.prev;
 }
 
 /**
@@ -164,7 +164,7 @@ static inline struct packet *prev_packet(struct packet packet)
  */
 static inline struct packet **prev_packet_ptr(struct packet *packet)
 {
-	return &packet->prev;
+    return &packet->prev;
 }
 
 /**
@@ -175,7 +175,7 @@ static inline struct packet **prev_packet_ptr(struct packet *packet)
  */
 static inline void set_prev_packet(struct packet *packet, struct packet *prev)
 {
-	packet->prev = prev;
+    packet->prev = prev;
 }
 
 /**
@@ -185,27 +185,27 @@ static inline void set_prev_packet(struct packet *packet, struct packet *prev)
  * entries), attempting reassembly and writing any successfully reassembled
  * packets out to the "out" queue.
  *
- * @param fraglists	The hash map structure to add the fragments to
- * @param num_fraglists	The number of entries in the hash map
- * @param fragments	Pointer to the fragments to add
- * @param num_fragments	The number of fragments to add
- * @param out		The queue to which reassembled packets should be written
+ * @param fraglists    The hash map structure to add the fragments to
+ * @param num_fraglists    The number of entries in the hash map
+ * @param fragments    Pointer to the fragments to add
+ * @param num_fragments    The number of fragments to add
+ * @param out        The queue to which reassembled packets should be written
  *
  * @return The number of packets successfully reassembled and written to "out"
  */
 int reassemble_ipv4_packets(union fraglist *fraglists, int num_fraglists,
-			    struct packet *fragments, int num_fragments,
-			    odp_queue_t out);
+                struct packet *fragments, int num_fragments,
+                odp_queue_t out);
 
 /**
  * Clean up any stale flows within a fraglist hash map
  *
- * @param fraglists	The hash map structure to clean flows from
- * @param num_fraglists	The number of entries in the hash map
- * @param out		The queue to which reassembled packets should be written
- * @param destroy_all	Whether all encountered flows should be cleaned up
+ * @param fraglists    The hash map structure to clean flows from
+ * @param num_fraglists    The number of entries in the hash map
+ * @param out        The queue to which reassembled packets should be written
+ * @param destroy_all    Whether all encountered flows should be cleaned up
  */
 void garbage_collect_fraglists(union fraglist *fraglists, int num_fraglists,
-			       odp_queue_t out, odp_bool_t destroy_all);
+                   odp_queue_t out, odp_bool_t destroy_all);
 
 #endif

@@ -19,35 +19,35 @@ extern "C" {
  * Stream database entry structure
  */
 typedef struct stream_db_entry_s {
-	struct stream_db_entry_s *next; /**< Next entry on list */
-	int              id;            /**< Stream ID */
-	uint32_t         src_ip;        /**< Source IPv4 address */
-	uint32_t         dst_ip;        /**< Destination IPv4 address */
-	int              count;         /**< Packet count */
-	uint32_t         length;        /**< Packet payload length */
-	uint32_t         created;       /**< Number successfully created */
-	uint32_t         verified;      /**< Number successfully verified */
-	struct {
-		const char *intf;	/**< Input interface name */
-		odp_pktio_t pktio;	/**< Input PktI/O interface */
-		uint32_t ah_seq;        /**< AH sequence number if present */
-		uint32_t esp_seq;       /**< ESP sequence number if present */
-		ipsec_cache_entry_t *entry;  /**< IPsec to apply on input */
-	} input;
-	struct {
-		const char *intf;	/**< Output interface name */
-		odp_pktio_t pktio;	/**< Output PktI/O interface */
-		ipsec_cache_entry_t *entry;  /**t IPsec to verify on output */
-	} output;
+    struct stream_db_entry_s *next; /**< Next entry on list */
+    int              id;            /**< Stream ID */
+    uint32_t         src_ip;        /**< Source IPv4 address */
+    uint32_t         dst_ip;        /**< Destination IPv4 address */
+    int              count;         /**< Packet count */
+    uint32_t         length;        /**< Packet payload length */
+    uint32_t         created;       /**< Number successfully created */
+    uint32_t         verified;      /**< Number successfully verified */
+    struct {
+        const char *intf;    /**< Input interface name */
+        odp_pktio_t pktio;    /**< Input PktI/O interface */
+        uint32_t ah_seq;        /**< AH sequence number if present */
+        uint32_t esp_seq;       /**< ESP sequence number if present */
+        ipsec_cache_entry_t *entry;  /**< IPsec to apply on input */
+    } input;
+    struct {
+        const char *intf;    /**< Output interface name */
+        odp_pktio_t pktio;    /**< Output PktI/O interface */
+        ipsec_cache_entry_t *entry;  /**t IPsec to verify on output */
+    } output;
 } stream_db_entry_t;
 
 /**
  * Stream database
  */
 typedef struct stream_db_s {
-	uint32_t           index;          /**< Index of next available entry */
-	stream_db_entry_t *list;           /**< List of active entries */
-	stream_db_entry_t  array[MAX_DB];  /**< Entry storage */
+    uint32_t           index;          /**< Index of next available entry */
+    stream_db_entry_t *list;           /**< List of active entries */
+    stream_db_entry_t  array[MAX_DB];  /**< Entry storage */
 } stream_db_t;
 
 extern stream_db_t *stream_db;
@@ -89,8 +89,8 @@ void resolve_stream_db(void);
  * @return packet else ODP_PACKET_INVALID
  */
 odp_packet_t create_ipv4_packet(stream_db_entry_t *stream,
-				uint8_t *dmac,
-				odp_pool_t pkt_pool);
+                uint8_t *dmac,
+                odp_pool_t pkt_pool);
 
 /**
  * Verify an IPv4 packet received on a loop output queue
@@ -101,7 +101,7 @@ odp_packet_t create_ipv4_packet(stream_db_entry_t *stream,
  * @return TRUE if packet verifies else FALSE
  */
 odp_bool_t verify_ipv4_packet(stream_db_entry_t *stream,
-			      odp_packet_t pkt);
+                  odp_packet_t pkt);
 
 /**
  * Create input packets based on the stream DB

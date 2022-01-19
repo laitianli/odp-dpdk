@@ -12,9 +12,9 @@ extern "C" {
 #endif
 
 typedef enum {
-	STATS_SYSFS = 0,
-	STATS_ETHTOOL,
-	STATS_UNSUPPORTED
+    STATS_SYSFS = 0,
+    STATS_ETHTOOL,
+    STATS_UNSUPPORTED
 } pktio_stats_type_t;
 
 #ifdef __cplusplus

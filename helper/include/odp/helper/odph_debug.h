@@ -35,21 +35,21 @@ extern "C" {
  * ODPH_DEBUG=1 and 'cond' is false.
  */
 #define ODPH_ASSERT(cond) \
-	do { \
-		if ((ODPH_DEBUG == 1) && (!(cond))) { \
-			fprintf(stderr, "%s:%d:%s(): %s\n", __FILE__, __LINE__,\
-				__func__, #cond); \
-			abort(); \
-		} \
-	} while (0)
+    do { \
+        if ((ODPH_DEBUG == 1) && (!(cond))) { \
+            fprintf(stderr, "%s:%d:%s(): %s\n", __FILE__, __LINE__,\
+                __func__, #cond); \
+            abort(); \
+        } \
+    } while (0)
 
 /**
  * log level.
  */
 typedef enum odph_log_level {
-	ODPH_LOG_DBG,
-	ODPH_LOG_ERR,
-	ODPH_LOG_ABORT
+    ODPH_LOG_DBG,
+    ODPH_LOG_ERR,
+    ODPH_LOG_ABORT
 } odph_log_level_e;
 
 /**
@@ -57,45 +57,45 @@ typedef enum odph_log_level {
  */
 #define ODPH_LOG(level, fmt, ...) \
 do { \
-	switch (level) { \
-	case ODPH_LOG_ERR: \
-		fprintf(stderr, "%s:%d:%s():" fmt, __FILE__, \
-		__LINE__, __func__, ##__VA_ARGS__); \
-		break; \
-	case ODPH_LOG_DBG: \
-		if (ODPH_DEBUG_PRINT == 1) \
-			fprintf(stderr, "%s:%d:%s():" fmt, __FILE__, \
-			__LINE__, __func__, ##__VA_ARGS__); \
-		break; \
-	case ODPH_LOG_ABORT: \
-		fprintf(stderr, "%s:%d:%s(): " fmt, __FILE__, \
-		__LINE__, __func__, ##__VA_ARGS__); \
-		abort(); \
-		break; \
-	default: \
-		fprintf(stderr, "Unknown LOG level"); \
-		break;\
-	} \
+    switch (level) { \
+    case ODPH_LOG_ERR: \
+        fprintf(stderr, "%s:%d:%s():" fmt, __FILE__, \
+        __LINE__, __func__, ##__VA_ARGS__); \
+        break; \
+    case ODPH_LOG_DBG: \
+        if (ODPH_DEBUG_PRINT == 1) \
+            fprintf(stderr, "%s:%d:%s():" fmt, __FILE__, \
+            __LINE__, __func__, ##__VA_ARGS__); \
+        break; \
+    case ODPH_LOG_ABORT: \
+        fprintf(stderr, "%s:%d:%s(): " fmt, __FILE__, \
+        __LINE__, __func__, ##__VA_ARGS__); \
+        abort(); \
+        break; \
+    default: \
+        fprintf(stderr, "Unknown LOG level"); \
+        break;\
+    } \
 } while (0)
 
 /**
  * Debug printing macro, which prints output when DEBUG flag is set.
  */
 #define ODPH_DBG(fmt, ...) \
-		ODPH_LOG(ODPH_LOG_DBG, fmt, ##__VA_ARGS__)
+        ODPH_LOG(ODPH_LOG_DBG, fmt, ##__VA_ARGS__)
 
 /**
  * Print output to stderr (file, line and function).
  */
 #define ODPH_ERR(fmt, ...) \
-		ODPH_LOG(ODPH_LOG_ERR, fmt, ##__VA_ARGS__)
+        ODPH_LOG(ODPH_LOG_ERR, fmt, ##__VA_ARGS__)
 
 /**
  * Print output to stderr (file, line and function),
  * then abort.
  */
 #define ODPH_ABORT(fmt, ...) \
-		ODPH_LOG(ODPH_LOG_ABORT, fmt, ##__VA_ARGS__)
+        ODPH_LOG(ODPH_LOG_ABORT, fmt, ##__VA_ARGS__)
 
 /**
  * @}

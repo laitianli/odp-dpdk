@@ -24,15 +24,15 @@
  * Internal Timeout header
  */
 typedef struct {
-	/* common buffer header */
-	odp_buffer_hdr_t buf_hdr;
+    /* common buffer header */
+    odp_buffer_hdr_t buf_hdr;
 
-	/* Requested expiration time */
-	uint64_t expiration;
-	/* User ptr inherited from parent timer */
-	void *user_ptr;
-	/* Parent timer */
-	odp_timer_t timer;
+    /* Requested expiration time */
+    uint64_t expiration;
+    /* User ptr inherited from parent timer */
+    void *user_ptr;
+    /* Parent timer */
+    odp_timer_t timer;
 } odp_timeout_hdr_t;
 
 /* A larger decrement value should be used after receiving events compared to
@@ -42,8 +42,8 @@ void _timer_run_inline(int dec);
 /* Static inline wrapper to minimize modification of schedulers. */
 static inline void timer_run(int dec)
 {
-	if (odp_global_rw->inline_timers)
-		_timer_run_inline(dec);
+    if (odp_global_rw->inline_timers)
+        _timer_run_inline(dec);
 }
 
 #endif

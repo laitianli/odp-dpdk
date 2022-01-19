@@ -13,25 +13,25 @@
 #include <stdbool.h>
 
 typedef struct cls_packet_info {
-	odp_pool_t pool;
-	bool	vlan;
-	bool	vlan_qinq;
-	odp_atomic_u32_t *seq;
-	bool	udp;
-	bool	ipv6;
-	uint32_t len;
+    odp_pool_t pool;
+    bool    vlan;
+    bool    vlan_qinq;
+    odp_atomic_u32_t *seq;
+    bool    udp;
+    bool    ipv6;
+    uint32_t len;
 } cls_packet_info_t;
 
 typedef union odp_cls_testcase {
-	struct  {
-		uint32_t default_cos:1;
-		uint32_t error_cos:1;
-		uint32_t pmr_chain:1;
-		uint32_t l2_priority:1;
-		uint32_t pmr_cos:1;
-		uint32_t pmr_composite_cos:1;
-	};
-	uint32_t all_bits;
+    struct  {
+        uint32_t default_cos:1;
+        uint32_t error_cos:1;
+        uint32_t pmr_chain:1;
+        uint32_t l2_priority:1;
+        uint32_t pmr_cos:1;
+        uint32_t pmr_composite_cos:1;
+    };
+    uint32_t all_bits;
 } odp_cls_testcase_u;
 
 extern odp_testinfo_t classification_suite[];
@@ -48,9 +48,9 @@ odp_packet_t create_packet(cls_packet_info_t pkt_info);
 int cls_pkt_set_seq(odp_packet_t pkt);
 uint32_t cls_pkt_get_seq(odp_packet_t pkt);
 odp_pktio_t create_pktio(odp_queue_type_t q_type, odp_pool_t pool,
-			 odp_bool_t cls_enable);
+             odp_bool_t cls_enable);
 void configure_default_cos(odp_pktio_t pktio, odp_cos_t *cos,
-			   odp_queue_t *queue, odp_pool_t *pool);
+               odp_queue_t *queue, odp_pool_t *pool);
 int parse_ipv4_string(const char *ipaddress, uint32_t *addr, uint32_t *mask);
 void enqueue_pktio_interface(odp_packet_t pkt, odp_pktio_t pktio);
 odp_packet_t receive_packet(odp_queue_t *queue, uint64_t ns);

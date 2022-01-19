@@ -8,7 +8,7 @@
 
 int cpuinfo_parser(FILE *file ODP_UNUSED, system_info_t *sysinfo)
 {
-	return _odp_dummy_cpuinfo(sysinfo);
+    return _odp_dummy_cpuinfo(sysinfo);
 }
 
 void sys_info_print_arch(void)
@@ -17,5 +17,5 @@ void sys_info_print_arch(void)
 
 uint64_t odp_cpu_arch_hz_current(int id ODP_UNUSED)
 {
-	return 0;
+    return 0;
 }

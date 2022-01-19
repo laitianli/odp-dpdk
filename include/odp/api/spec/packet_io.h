@@ -75,28 +75,28 @@ extern "C" {
  * Packet input mode
  */
 typedef enum odp_pktin_mode_t {
-	/** Direct packet input from the interface */
-	ODP_PKTIN_MODE_DIRECT = 0,
-	/** Packet input through scheduler and scheduled event queues */
-	ODP_PKTIN_MODE_SCHED,
-	/** Packet input through plain event queues */
-	ODP_PKTIN_MODE_QUEUE,
-	/** Application will never receive from this interface */
-	ODP_PKTIN_MODE_DISABLED
+    /** Direct packet input from the interface */
+    ODP_PKTIN_MODE_DIRECT = 0,
+    /** Packet input through scheduler and scheduled event queues */
+    ODP_PKTIN_MODE_SCHED,
+    /** Packet input through plain event queues */
+    ODP_PKTIN_MODE_QUEUE,
+    /** Application will never receive from this interface */
+    ODP_PKTIN_MODE_DISABLED
 } odp_pktin_mode_t;
 
 /**
  * Packet output mode
  */
 typedef enum odp_pktout_mode_t {
-	/** Direct packet output on the interface */
-	ODP_PKTOUT_MODE_DIRECT = 0,
-	/** Packet output through event queues */
-	ODP_PKTOUT_MODE_QUEUE,
-	/** Packet output through traffic manager API */
-	ODP_PKTOUT_MODE_TM,
-	/** Application will never send to this interface */
-	ODP_PKTOUT_MODE_DISABLED
+    /** Direct packet output on the interface */
+    ODP_PKTOUT_MODE_DIRECT = 0,
+    /** Packet output through event queues */
+    ODP_PKTOUT_MODE_QUEUE,
+    /** Packet output through traffic manager API */
+    ODP_PKTOUT_MODE_TM,
+    /** Application will never send to this interface */
+    ODP_PKTOUT_MODE_DISABLED
 } odp_pktout_mode_t;
 
 /**
@@ -106,44 +106,44 @@ typedef enum odp_pktout_mode_t {
  * packet input hash calculation.
  */
 typedef union odp_pktin_hash_proto_t {
-	/** Protocol header fields for hashing */
-	struct {
-		/** IPv4 addresses and UDP port numbers */
-		uint32_t ipv4_udp : 1;
-		/** IPv4 addresses and TCP port numbers */
-		uint32_t ipv4_tcp : 1;
-		/** IPv4 addresses */
-		uint32_t ipv4     : 1;
-		/** IPv6 addresses and UDP port numbers */
-		uint32_t ipv6_udp : 1;
-		/** IPv6 addresses and TCP port numbers */
-		uint32_t ipv6_tcp : 1;
-		/** IPv6 addresses */
-		uint32_t ipv6     : 1;
-	} proto;
+    /** Protocol header fields for hashing */
+    struct {
+        /** IPv4 addresses and UDP port numbers */
+        uint32_t ipv4_udp : 1;
+        /** IPv4 addresses and TCP port numbers */
+        uint32_t ipv4_tcp : 1;
+        /** IPv4 addresses */
+        uint32_t ipv4     : 1;
+        /** IPv6 addresses and UDP port numbers */
+        uint32_t ipv6_udp : 1;
+        /** IPv6 addresses and TCP port numbers */
+        uint32_t ipv6_tcp : 1;
+        /** IPv6 addresses */
+        uint32_t ipv6     : 1;
+    } proto;
 
-	/** All bits of the bit field structure */
-	uint32_t all_bits;
+    /** All bits of the bit field structure */
+    uint32_t all_bits;
 } odp_pktin_hash_proto_t;
 
 /**
  * Packet IO operation mode
  */
 typedef enum odp_pktio_op_mode_t {
-	/** Multithread safe operation
-	  *
-	  * Direct packet IO operation (recv or send) is multithread safe. Any
-	  * number of application threads may perform the operation
-	  * concurrently. */
-	ODP_PKTIO_OP_MT = 0,
+    /** Multithread safe operation
+      *
+      * Direct packet IO operation (recv or send) is multithread safe. Any
+      * number of application threads may perform the operation
+      * concurrently. */
+    ODP_PKTIO_OP_MT = 0,
 
-	/** Not multithread safe operation
-	  *
-	  * Direct packet IO operation (recv or send) may not be multithread
-	  * safe. Application ensures synchronization between threads so that
-	  * simultaneously only single thread attempts the operation on
-	  * the same (pktin or pktout) queue. */
-	ODP_PKTIO_OP_MT_UNSAFE
+    /** Not multithread safe operation
+      *
+      * Direct packet IO operation (recv or send) may not be multithread
+      * safe. Application ensures synchronization between threads so that
+      * simultaneously only single thread attempts the operation on
+      * the same (pktin or pktout) queue. */
+    ODP_PKTIO_OP_MT_UNSAFE
 
 } odp_pktio_op_mode_t;
 
@@ -151,80 +151,80 @@ typedef enum odp_pktio_op_mode_t {
  * Packet input queue parameters override
  */
 typedef struct odp_pktin_queue_param_ovr_t {
-	/** Override for schedule group in odp_schedule_param_t
-	  *
-	  * This parameter is considered only when queue type is
-	  * ODP_QUEUE_TYPE_SCHED. */
-	odp_schedule_group_t group;
+    /** Override for schedule group in odp_schedule_param_t
+      *
+      * This parameter is considered only when queue type is
+      * ODP_QUEUE_TYPE_SCHED. */
+    odp_schedule_group_t group;
 } odp_pktin_queue_param_ovr_t;
 
 /**
  * Packet input queue parameters
  */
 typedef struct odp_pktin_queue_param_t {
-	/** Operation mode
-	  *
-	  * The default value is ODP_PKTIO_OP_MT. Application may enable
-	  * performance optimization by defining ODP_PKTIO_OP_MT_UNSAFE when
-	  * applicable. */
-	odp_pktio_op_mode_t op_mode;
+    /** Operation mode
+      *
+      * The default value is ODP_PKTIO_OP_MT. Application may enable
+      * performance optimization by defining ODP_PKTIO_OP_MT_UNSAFE when
+      * applicable. */
+    odp_pktio_op_mode_t op_mode;
 
-	/** Enable classifier
-	  *
-	  * * 0: Classifier is disabled (default)
-	  * * 1: Classifier is enabled. Use classifier to direct incoming
-	  *      packets into pktin event queues. Classifier can be enabled
-	  *      only in ODP_PKTIN_MODE_SCHED and ODP_PKTIN_MODE_QUEUE modes.
-	  *      Both classifier and hashing cannot be enabled simultaneously
-	  *      ('hash_enable' must be 0). */
-	odp_bool_t classifier_enable;
+    /** Enable classifier
+      *
+      * * 0: Classifier is disabled (default)
+      * * 1: Classifier is enabled. Use classifier to direct incoming
+      *      packets into pktin event queues. Classifier can be enabled
+      *      only in ODP_PKTIN_MODE_SCHED and ODP_PKTIN_MODE_QUEUE modes.
+      *      Both classifier and hashing cannot be enabled simultaneously
+      *      ('hash_enable' must be 0). */
+    odp_bool_t classifier_enable;
 
-	/** Enable flow hashing
-	  *
-	  * * 0: Do not hash flows (default)
-	  * * 1: Enable flow hashing. Use flow hashing to spread incoming
-	  *      packets into input queues. Hashing can be enabled in all
-	  *      modes. Both classifier and hashing cannot be enabled
-	  *      simultaneously ('classifier_enable' must be 0). */
-	odp_bool_t hash_enable;
+    /** Enable flow hashing
+      *
+      * * 0: Do not hash flows (default)
+      * * 1: Enable flow hashing. Use flow hashing to spread incoming
+      *      packets into input queues. Hashing can be enabled in all
+      *      modes. Both classifier and hashing cannot be enabled
+      *      simultaneously ('classifier_enable' must be 0). */
+    odp_bool_t hash_enable;
 
-	/** Protocol field selection for hashing
-	  *
-	  * Multiple protocols can be selected. Ignored when 'hash_enable' is
-	  * zero. The default value is all bits zero. */
-	odp_pktin_hash_proto_t hash_proto;
+    /** Protocol field selection for hashing
+      *
+      * Multiple protocols can be selected. Ignored when 'hash_enable' is
+      * zero. The default value is all bits zero. */
+    odp_pktin_hash_proto_t hash_proto;
 
-	/** Number of input queues to be created
-	  *
-	  * When classifier is enabled in odp_pktin_queue_config() this
-	  * value is ignored, otherwise at least one queue is required.
-	  * More than one input queues require flow hashing configured.
-	  * The maximum value is defined by pktio capability 'max_input_queues'.
-	  * Queue type is defined by the input mode. The default value is 1. */
-	unsigned int num_queues;
+    /** Number of input queues to be created
+      *
+      * When classifier is enabled in odp_pktin_queue_config() this
+      * value is ignored, otherwise at least one queue is required.
+      * More than one input queues require flow hashing configured.
+      * The maximum value is defined by pktio capability 'max_input_queues'.
+      * Queue type is defined by the input mode. The default value is 1. */
+    unsigned int num_queues;
 
-	/** Queue parameters
-	  *
-	  * These are used for input queue creation in ODP_PKTIN_MODE_QUEUE
-	  * or ODP_PKTIN_MODE_SCHED modes. Scheduler parameters are considered
-	  * only in ODP_PKTIN_MODE_SCHED mode. Default values are defined in
-	  * odp_queue_param_t documentation.
-	  * When classifier is enabled in odp_pktin_queue_config() this
-	  * value is ignored. */
-	odp_queue_param_t queue_param;
+    /** Queue parameters
+      *
+      * These are used for input queue creation in ODP_PKTIN_MODE_QUEUE
+      * or ODP_PKTIN_MODE_SCHED modes. Scheduler parameters are considered
+      * only in ODP_PKTIN_MODE_SCHED mode. Default values are defined in
+      * odp_queue_param_t documentation.
+      * When classifier is enabled in odp_pktin_queue_config() this
+      * value is ignored. */
+    odp_queue_param_t queue_param;
 
-	/** Queue parameters override
-	  *
-	  * When the override array is defined, the same parameter value
-	  * in 'queue_param' is ignored and these per queue parameter
-	  * values are used instead. Array elements are used in order
-	  * (i.e. the first queue gets parameters from the first array
-	  * element, etc).
-	  * Must point to an array of num_queues elements or NULL to
-	  * disable queue parameters override. The default value is
-	  * NULL.
-	  */
-	odp_pktin_queue_param_ovr_t *queue_param_ovr;
+    /** Queue parameters override
+      *
+      * When the override array is defined, the same parameter value
+      * in 'queue_param' is ignored and these per queue parameter
+      * values are used instead. Array elements are used in order
+      * (i.e. the first queue gets parameters from the first array
+      * element, etc).
+      * Must point to an array of num_queues elements or NULL to
+      * disable queue parameters override. The default value is
+      * NULL.
+      */
+    odp_pktin_queue_param_ovr_t *queue_param_ovr;
 } odp_pktin_queue_param_t;
 
 /**
@@ -234,16 +234,16 @@ typedef struct odp_pktin_queue_param_t {
  * ODP_PKTOUT_MODE_QUEUE modes.
  */
 typedef struct odp_pktout_queue_param_t {
-	/** Operation mode
-	  *
-	  * The default value is ODP_PKTIO_OP_MT. Application may enable
-	  * performance optimization by defining ODP_PKTIO_OP_MT_UNSAFE when
-	  * applicable. */
-	odp_pktio_op_mode_t op_mode;
+    /** Operation mode
+      *
+      * The default value is ODP_PKTIO_OP_MT. Application may enable
+      * performance optimization by defining ODP_PKTIO_OP_MT_UNSAFE when
+      * applicable. */
+    odp_pktio_op_mode_t op_mode;
 
-	/** Number of output queues to be created. The value must be between
-	  * 1 and interface capability. The default value is 1. */
-	unsigned int num_queues;
+    /** Number of output queues to be created. The value must be between
+      * 1 and interface capability. The default value is 1. */
+    unsigned int num_queues;
 
 } odp_pktout_queue_param_t;
 
@@ -254,15 +254,15 @@ typedef struct odp_pktout_queue_param_t {
  * initialize the structure with default values.
  */
 typedef struct odp_pktio_param_t {
-	/** Packet input mode
-	  *
-	  * The default value is ODP_PKTIN_MODE_DIRECT. */
-	odp_pktin_mode_t in_mode;
+    /** Packet input mode
+      *
+      * The default value is ODP_PKTIN_MODE_DIRECT. */
+    odp_pktin_mode_t in_mode;
 
-	/** Packet output mode
-	  *
-	  * The default value is ODP_PKTOUT_MODE_DIRECT. */
-	odp_pktout_mode_t out_mode;
+    /** Packet output mode
+      *
+      * The default value is ODP_PKTOUT_MODE_DIRECT. */
+    odp_pktout_mode_t out_mode;
 
 } odp_pktio_param_t;
 
@@ -297,49 +297,49 @@ typedef struct odp_pktio_param_t {
  * and odp_packet_l4_chksum_status().
  */
 typedef union odp_pktin_config_opt_t {
-	/** Option flags */
-	struct {
-		/** Timestamp all packets on packet input */
-		uint64_t ts_all        : 1;
+    /** Option flags */
+    struct {
+        /** Timestamp all packets on packet input */
+        uint64_t ts_all        : 1;
 
-		/** Timestamp (at least) IEEE1588 / PTP packets
-		  * on packet input */
-		uint64_t ts_ptp        : 1;
+        /** Timestamp (at least) IEEE1588 / PTP packets
+          * on packet input */
+        uint64_t ts_ptp        : 1;
 
-		/** Check IPv4 header checksum on packet input */
-		uint64_t ipv4_chksum   : 1;
+        /** Check IPv4 header checksum on packet input */
+        uint64_t ipv4_chksum   : 1;
 
-		/** Check UDP checksum on packet input */
-		uint64_t udp_chksum    : 1;
+        /** Check UDP checksum on packet input */
+        uint64_t udp_chksum    : 1;
 
-		/** Check TCP checksum on packet input */
-		uint64_t tcp_chksum    : 1;
+        /** Check TCP checksum on packet input */
+        uint64_t tcp_chksum    : 1;
 
-		/** Check SCTP checksum on packet input */
-		uint64_t sctp_chksum   : 1;
+        /** Check SCTP checksum on packet input */
+        uint64_t sctp_chksum   : 1;
 
-		/** Drop packets with an IPv4 error on packet input */
-		uint64_t drop_ipv4_err : 1;
+        /** Drop packets with an IPv4 error on packet input */
+        uint64_t drop_ipv4_err : 1;
 
-		/** Drop packets with an IPv6 error on packet input */
-		uint64_t drop_ipv6_err : 1;
+        /** Drop packets with an IPv6 error on packet input */
+        uint64_t drop_ipv6_err : 1;
 
-		/** Drop packets with a UDP error on packet input */
-		uint64_t drop_udp_err  : 1;
+        /** Drop packets with a UDP error on packet input */
+        uint64_t drop_udp_err  : 1;
 
-		/** Drop packets with a TCP error on packet input */
-		uint64_t drop_tcp_err  : 1;
+        /** Drop packets with a TCP error on packet input */
+        uint64_t drop_tcp_err  : 1;
 
-		/** Drop packets with a SCTP error on packet input */
-		uint64_t drop_sctp_err : 1;
+        /** Drop packets with a SCTP error on packet input */
+        uint64_t drop_sctp_err : 1;
 
-	} bit;
+    } bit;
 
-	/** All bits of the bit field structure
-	  *
-	  * This field can be used to set/clear all flags, or bitwise
-	  * operations over the entire structure. */
-	uint64_t all_bits;
+    /** All bits of the bit field structure
+      *
+      * This field can be used to set/clear all flags, or bitwise
+      * operations over the entire structure. */
+    uint64_t all_bits;
 } odp_pktin_config_opt_t;
 
 /**
@@ -385,39 +385,39 @@ typedef union odp_pktin_config_opt_t {
  * insertion.
  */
 typedef union odp_pktout_config_opt_t {
-	/** Option flags for packet output */
-	struct {
-		/** Enable IPv4 header checksum insertion. */
-		uint64_t ipv4_chksum_ena : 1;
+    /** Option flags for packet output */
+    struct {
+        /** Enable IPv4 header checksum insertion. */
+        uint64_t ipv4_chksum_ena : 1;
 
-		/** Enable UDP checksum insertion */
-		uint64_t udp_chksum_ena  : 1;
+        /** Enable UDP checksum insertion */
+        uint64_t udp_chksum_ena  : 1;
 
-		/** Enable TCP checksum insertion */
-		uint64_t tcp_chksum_ena  : 1;
+        /** Enable TCP checksum insertion */
+        uint64_t tcp_chksum_ena  : 1;
 
-		/** Enable SCTP checksum insertion */
-		uint64_t sctp_chksum_ena : 1;
+        /** Enable SCTP checksum insertion */
+        uint64_t sctp_chksum_ena : 1;
 
-		/** Insert IPv4 header checksum by default */
-		uint64_t ipv4_chksum     : 1;
+        /** Insert IPv4 header checksum by default */
+        uint64_t ipv4_chksum     : 1;
 
-		/** Insert UDP checksum on packet by default */
-		uint64_t udp_chksum      : 1;
+        /** Insert UDP checksum on packet by default */
+        uint64_t udp_chksum      : 1;
 
-		/** Insert TCP checksum on packet by default */
-		uint64_t tcp_chksum      : 1;
+        /** Insert TCP checksum on packet by default */
+        uint64_t tcp_chksum      : 1;
 
-		/** Insert SCTP checksum on packet by default */
-		uint64_t sctp_chksum     : 1;
+        /** Insert SCTP checksum on packet by default */
+        uint64_t sctp_chksum     : 1;
 
-	} bit;
+    } bit;
 
-	/** All bits of the bit field structure
-	  *
-	  * This field can be used to set/clear all flags, or bitwise
-	  * operations over the entire structure. */
-	uint64_t all_bits;
+    /** All bits of the bit field structure
+      *
+      * This field can be used to set/clear all flags, or bitwise
+      * operations over the entire structure. */
+    uint64_t all_bits;
 } odp_pktout_config_opt_t;
 
 /**
@@ -451,16 +451,16 @@ typedef odp_proto_layer_t odp_pktio_parser_layer_t;
  * Parser configuration
  */
 typedef struct odp_pktio_parser_config_t {
-	/** Protocol parsing level in packet input
-	  *
-	  * Application requires that protocol headers in a packet are checked
-	  * up to this layer during packet input. Use ODP_PROTO_LAYER_ALL for
-	  * all layers. Packet metadata for this and all preceding layers are
-	  * set. In addition, offset (and pointer) to the next layer is set.
-	  * Other layer/protocol specific metadata have undefined values.
-	  *
-	  * The default value is ODP_PROTO_LAYER_ALL. */
-	odp_proto_layer_t layer;
+    /** Protocol parsing level in packet input
+      *
+      * Application requires that protocol headers in a packet are checked
+      * up to this layer during packet input. Use ODP_PROTO_LAYER_ALL for
+      * all layers. Packet metadata for this and all preceding layers are
+      * set. In addition, offset (and pointer) to the next layer is set.
+      * Other layer/protocol specific metadata have undefined values.
+      *
+      * The default value is ODP_PROTO_LAYER_ALL. */
+    odp_proto_layer_t layer;
 
 } odp_pktio_parser_config_t;
 
@@ -472,58 +472,58 @@ typedef struct odp_pktio_parser_config_t {
  * Use odp_pktio_config_init() to initialize the structure with default values.
  */
 typedef struct odp_pktio_config_t {
-	/** Packet input configuration options bit field
-	 *
-	 *  Default value for all bits is zero. */
-	odp_pktin_config_opt_t pktin;
+    /** Packet input configuration options bit field
+     *
+     *  Default value for all bits is zero. */
+    odp_pktin_config_opt_t pktin;
 
-	/** Packet output configuration options bit field
-	 *
-	 *  Default value for all bits is zero. */
-	odp_pktout_config_opt_t pktout;
+    /** Packet output configuration options bit field
+     *
+     *  Default value for all bits is zero. */
+    odp_pktout_config_opt_t pktout;
 
-	/** Packet input parser configuration */
-	odp_pktio_parser_config_t parser;
+    /** Packet input parser configuration */
+    odp_pktio_parser_config_t parser;
 
-	/** Interface loopback mode
-	 *
-	 * In this mode the packets sent out through the interface is
-	 * looped back to input of the same interface. Supporting loopback mode
-	 * is an optional feature per interface and should be queried in the
-	 * interface capability before enabling the same. */
-	odp_bool_t enable_loop;
+    /** Interface loopback mode
+     *
+     * In this mode the packets sent out through the interface is
+     * looped back to input of the same interface. Supporting loopback mode
+     * is an optional feature per interface and should be queried in the
+     * interface capability before enabling the same. */
+    odp_bool_t enable_loop;
 
-	/** Inbound IPSEC inlined with packet input
-	 *
-	 *  Enable/disable inline inbound IPSEC operation. When enabled packet
-	 *  input directs all IPSEC packets automatically to IPSEC inbound
-	 *  processing. IPSEC configuration is done through the IPSEC API.
-	 *  Packets that are not (recognized as) IPSEC are processed
-	 *  according to the packet input configuration.
-	 *
-	 *  0: Disable inbound IPSEC inline operation (default)
-	 *  1: Enable inbound IPSEC inline operation
-	 *
-	 *  @see odp_ipsec_config(), odp_ipsec_sa_create()
-	 */
-	odp_bool_t inbound_ipsec;
+    /** Inbound IPSEC inlined with packet input
+     *
+     *  Enable/disable inline inbound IPSEC operation. When enabled packet
+     *  input directs all IPSEC packets automatically to IPSEC inbound
+     *  processing. IPSEC configuration is done through the IPSEC API.
+     *  Packets that are not (recognized as) IPSEC are processed
+     *  according to the packet input configuration.
+     *
+     *  0: Disable inbound IPSEC inline operation (default)
+     *  1: Enable inbound IPSEC inline operation
+     *
+     *  @see odp_ipsec_config(), odp_ipsec_sa_create()
+     */
+    odp_bool_t inbound_ipsec;
 
-	/** Outbound IPSEC inlined with packet output
-	 *
-	 *  Enable/disable inline outbound IPSEC operation. When enabled IPSEC
-	 *  outbound processing can send outgoing IPSEC packets directly
-	 *  to the pktio interface for output. IPSEC configuration is done
-	 *  through the IPSEC API.
-	 *
-	 *  Outbound IPSEC inline operation cannot be combined with traffic
-	 *  manager (ODP_PKTOUT_MODE_TM).
-	 *
-	 *  0: Disable outbound IPSEC inline operation (default)
-	 *  1: Enable outbound IPSEC inline operation
-	 *
-	 *  @see odp_ipsec_config(), odp_ipsec_sa_create()
-	 */
-	odp_bool_t outbound_ipsec;
+    /** Outbound IPSEC inlined with packet output
+     *
+     *  Enable/disable inline outbound IPSEC operation. When enabled IPSEC
+     *  outbound processing can send outgoing IPSEC packets directly
+     *  to the pktio interface for output. IPSEC configuration is done
+     *  through the IPSEC API.
+     *
+     *  Outbound IPSEC inline operation cannot be combined with traffic
+     *  manager (ODP_PKTOUT_MODE_TM).
+     *
+     *  0: Disable outbound IPSEC inline operation (default)
+     *  1: Enable outbound IPSEC inline operation
+     *
+     *  @see odp_ipsec_config(), odp_ipsec_sa_create()
+     */
+    odp_bool_t outbound_ipsec;
 
 } odp_pktio_config_t;
 
@@ -533,40 +533,40 @@ typedef struct odp_pktio_config_t {
  * Supported packet IO interface set operations listed in a bit field structure.
  */
 typedef union odp_pktio_set_op_t {
-	/** Operation flags */
-	struct {
-		/** Promiscuous mode */
-		uint32_t promisc_mode : 1;
-		/** MAC address  */
-		uint32_t mac_addr : 1;
-	} op;
-	/** All bits of the bit field structure.
-	  * This field can be used to set/clear all flags, or bitwise
-	  * operations over the entire structure. */
-	uint32_t all_bits;
+    /** Operation flags */
+    struct {
+        /** Promiscuous mode */
+        uint32_t promisc_mode : 1;
+        /** MAC address  */
+        uint32_t mac_addr : 1;
+    } op;
+    /** All bits of the bit field structure.
+      * This field can be used to set/clear all flags, or bitwise
+      * operations over the entire structure. */
+    uint32_t all_bits;
 } odp_pktio_set_op_t;
 
 /**
  * Packet IO capabilities
  */
 typedef struct odp_pktio_capability_t {
-	/** Maximum number of input queues */
-	unsigned int max_input_queues;
+    /** Maximum number of input queues */
+    unsigned int max_input_queues;
 
-	/** Maximum number of output queues */
-	unsigned int max_output_queues;
+    /** Maximum number of output queues */
+    unsigned int max_output_queues;
 
-	/** Supported pktio configuration options */
-	odp_pktio_config_t config;
+    /** Supported pktio configuration options */
+    odp_pktio_config_t config;
 
-	/** Supported set operations
-	 *
-	 * A bit set to one indicates a supported operation. All other bits are
-	 * set to zero. */
-	odp_pktio_set_op_t set_op;
+    /** Supported set operations
+     *
+     * A bit set to one indicates a supported operation. All other bits are
+     * set to zero. */
+    odp_pktio_set_op_t set_op;
 
-	/** @deprecated Use enable_loop inside odp_pktin_config_t */
-	odp_bool_t ODP_DEPRECATE(loop_supported);
+    /** @deprecated Use enable_loop inside odp_pktin_config_t */
+    odp_bool_t ODP_DEPRECATE(loop_supported);
 } odp_pktio_capability_t;
 
 /**
@@ -614,20 +614,20 @@ typedef struct odp_pktio_capability_t {
  * @retval ODP_PKTIO_INVALID on failure
  *
  * @note The device name "loop" is a reserved name for a loopback device used
- *	 for testing purposes.
+ *     for testing purposes.
  *
  * @note Packets arriving via this interface assigned to a CoS by the
- *	 classifier are received into the pool associated with that CoS. This
- *	 will occur either because this pktio is assigned a default CoS via
- *	 the odp_pktio_default_cos_set() routine, or because a matching PMR
- *	 assigned the packet to a specific CoS. The default pool specified
- *	 here is applicable only for those packets that are not assigned to a
- *	 more specific CoS.
+ *     classifier are received into the pool associated with that CoS. This
+ *     will occur either because this pktio is assigned a default CoS via
+ *     the odp_pktio_default_cos_set() routine, or because a matching PMR
+ *     assigned the packet to a specific CoS. The default pool specified
+ *     here is applicable only for those packets that are not assigned to a
+ *     more specific CoS.
  *
  * @see odp_pktio_start(), odp_pktio_stop(), odp_pktio_close()
  */
 odp_pktio_t odp_pktio_open(const char *name, odp_pool_t pool,
-			   const odp_pktio_param_t *param);
+               const odp_pktio_param_t *param);
 
 /**
  * Query packet IO interface capabilities
@@ -695,7 +695,7 @@ int odp_pktio_config(odp_pktio_t pktio, const odp_pktio_config_t *config);
  * @see odp_pktio_capability(), odp_pktin_queue(), odp_pktin_event_queue()
  */
 int odp_pktin_queue_config(odp_pktio_t pktio,
-			   const odp_pktin_queue_param_t *param);
+               const odp_pktin_queue_param_t *param);
 
 /**
  * Configure packet output queues
@@ -721,7 +721,7 @@ int odp_pktin_queue_config(odp_pktio_t pktio,
  * @see odp_pktio_capability(), odp_pktout_queue(), odp_pktout_event_queue()
  */
 int odp_pktout_queue_config(odp_pktio_t pktio,
-			    const odp_pktout_queue_param_t *param);
+                const odp_pktout_queue_param_t *param);
 
 /**
  * Event queues for packet input
@@ -910,7 +910,7 @@ int odp_pktin_recv(odp_pktin_queue_t queue, odp_packet_t packets[], int num);
  * @retval <0 on failure
  */
 int odp_pktin_recv_tmo(odp_pktin_queue_t queue, odp_packet_t packets[],
-		       int num, uint64_t wait);
+               int num, uint64_t wait);
 
 /**
  * Receive packets directly from multiple interface input queues with timeout
@@ -948,8 +948,8 @@ int odp_pktin_recv_tmo(odp_pktin_queue_t queue, odp_packet_t packets[],
  * @retval <0 on failure
  */
 int odp_pktin_recv_mq_tmo(const odp_pktin_queue_t queues[], unsigned int num_q,
-			  unsigned int *from, odp_packet_t packets[], int num,
-			  uint64_t wait);
+              unsigned int *from, odp_packet_t packets[], int num,
+              uint64_t wait);
 
 /**
  * Packet input wait time
@@ -987,7 +987,7 @@ uint64_t odp_pktin_wait_time(uint64_t nsec);
  * @retval <0 on failure
  */
 int odp_pktout_send(odp_pktout_queue_t queue, const odp_packet_t packets[],
-		    int num);
+            int num);
 
 /**
  * MTU value of a packet IO interface
@@ -1058,8 +1058,8 @@ uint32_t odp_pktout_maxlen(odp_pktio_t pktio);
 /**
  * Get the default MAC address of a packet IO interface.
  *
- * @param	pktio     Packet IO handle
- * @param[out]	mac_addr  Output buffer (use ODP_PKTIO_MACADDR_MAXSIZE)
+ * @param    pktio     Packet IO handle
+ * @param[out]    mac_addr  Output buffer (use ODP_PKTIO_MACADDR_MAXSIZE)
  * @param       size      Size of output buffer
  *
  * @return Number of bytes written (actual size of MAC address)
@@ -1073,15 +1073,15 @@ int odp_pktio_mac_addr(odp_pktio_t pktio, void *mac_addr, int size);
  * Support of this operation on a packet IO interface is reported
  * through ‘mac_addr’ set operation capability.
  *
- * @param	pktio     Packet IO handle
- * @param	mac_addr  MAC address to be set as default address
- * @param	size      Size of the MAC address
+ * @param    pktio     Packet IO handle
+ * @param    mac_addr  MAC address to be set as default address
+ * @param    size      Size of the MAC address
  *
  * @return 0 on success
  * @retval <0 on failure
  */
 int odp_pktio_mac_addr_set(odp_pktio_t pktio, const void *mac_addr,
-			   int size);
+               int size);
 
 /**
  * Setup per-port default class-of-service.
@@ -1133,8 +1133,8 @@ int odp_pktio_skip_set(odp_pktio_t pktio, uint32_t offset);
  *                  for use as headroom. Must not exceed the implementation
  *                  defined ODP_PACKET_MAX_HEADROOM.
  *
- * @retval			0 on success
- * @retval			<0 on failure
+ * @retval            0 on success
+ * @retval            <0 on failure
  *
  * @note Optional.
  */
@@ -1204,7 +1204,7 @@ void odp_pktio_config_init(odp_pktio_config_t *config);
  *
  * Print implementation-defined pktio debug information to the console.
  *
- * @param pktio	                Packet IO handle
+ * @param pktio                    Packet IO handle
  */
 void odp_pktio_print(odp_pktio_t pktio);
 
@@ -1223,17 +1223,17 @@ int odp_pktio_link_status(odp_pktio_t pktio);
  * Packet IO information
  */
 typedef struct odp_pktio_info_t {
-	/** Packet IO device name */
-	const char       *name;
+    /** Packet IO device name */
+    const char       *name;
 
-	/** Packet IO driver name (implementation specific) */
-	const char       *drv_name;
+    /** Packet IO driver name (implementation specific) */
+    const char       *drv_name;
 
-	/** Packet pool */
-	odp_pool_t        pool;
+    /** Packet pool */
+    odp_pool_t        pool;
 
-	/** Packet IO parameters */
-	odp_pktio_param_t param;
+    /** Packet IO parameters */
+    odp_pktio_param_t param;
 
 } odp_pktio_info_t;
 

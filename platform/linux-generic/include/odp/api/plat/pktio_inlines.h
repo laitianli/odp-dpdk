@@ -14,17 +14,17 @@ extern "C" {
 /** @cond _ODP_HIDE_FROM_DOXYGEN_ */
 
 #ifndef _ODP_NO_INLINE
-	/* Inline functions by default */
-	#define _ODP_INLINE static inline
-	#define odp_pktio_index __odp_pktio_index
+    /* Inline functions by default */
+    #define _ODP_INLINE static inline
+    #define odp_pktio_index __odp_pktio_index
 #else
-	#undef _ODP_INLINE
-	#define _ODP_INLINE
+    #undef _ODP_INLINE
+    #define _ODP_INLINE
 #endif
 
 _ODP_INLINE int odp_pktio_index(odp_pktio_t pktio)
 {
-	return (int)(uintptr_t)pktio - 1;
+    return (int)(uintptr_t)pktio - 1;
 }
 
 /** @endcond */

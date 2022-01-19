@@ -37,9 +37,9 @@ extern "C" {
  * @return NULL Create failed
  */
 odph_table_t odph_linear_table_create(const char *name,
-				      uint32_t capacity,
-				      uint32_t ODP_IGNORED,
-				      uint32_t value_size);
+                      uint32_t capacity,
+                      uint32_t ODP_IGNORED,
+                      uint32_t value_size);
 
 /**
  * Lookup a linear table
@@ -86,7 +86,7 @@ int odph_linear_put_value(odph_table_t table, void *key, void *value);
  * @retval < 0 Failure
  */
 int odph_linear_get_value(odph_table_t table, void *key, void *buffer,
-			  uint32_t buffer_size);
+              uint32_t buffer_size);
 
 extern odph_table_ops_t odph_linear_table_ops; /**< @internal */
 

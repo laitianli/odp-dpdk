@@ -17,8 +17,8 @@
 #define TEST_SUCCESS 'S'
 
 typedef struct {
-	uint32_t foo;
-	uint32_t bar;
+    uint32_t foo;
+    uint32_t bar;
 } test_shared_linux_data_t;
 
 #endif

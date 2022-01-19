@@ -36,7 +36,7 @@ extern "C" {
 #if defined(__cplusplus)
 #if !__has_feature(cxx_static_assert) && !defined(static_assert)
 /** @internal */
-#define	static_assert(e, s) _odp_static_assert(e, s)
+#define    static_assert(e, s) _odp_static_assert(e, s)
 #endif
 #elif !__has_feature(c_static_assert) && !defined(_Static_assert)
 /** @internal */
@@ -44,12 +44,12 @@ extern "C" {
 #endif
 
 #elif defined(__GNUC__)
-#if __GNUC__ < 4 || (__GNUC__ == 4 && (__GNUC_MINOR__ < 6)) ||	\
-	(__GNUC__ < 6 && defined(__cplusplus))
+#if __GNUC__ < 4 || (__GNUC__ == 4 && (__GNUC_MINOR__ < 6)) ||    \
+    (__GNUC__ < 6 && defined(__cplusplus))
 #if defined(__cplusplus)
 #if !defined(static_assert)
 /** @intenral */
-#define	static_assert(e, s) _odp_static_assert(e, s)
+#define    static_assert(e, s) _odp_static_assert(e, s)
 #endif
 #elif !defined(_Static_assert)
 /** @internal */

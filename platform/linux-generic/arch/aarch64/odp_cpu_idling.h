@@ -21,19 +21,19 @@
 
 static inline void sevl(void)
 {
-	__asm__ volatile("sevl" : : : );
+    __asm__ volatile("sevl" : : : );
 }
 
 static inline int wfe(void)
 {
-	__asm__ volatile("wfe" : : : "memory");
-	return 1;
+    __asm__ volatile("wfe" : : : "memory");
+    return 1;
 }
 
 static inline void doze(void)
 {
-	/* When using WFE do not stall the pipeline using other means */
-	odp_cpu_pause();
+    /* When using WFE do not stall the pipeline using other means */
+    odp_cpu_pause();
 }
 
 #define monitor128(addr, mo) lld((addr), (mo))

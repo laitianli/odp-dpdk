@@ -42,11 +42,11 @@
 
 static inline void _odp_dmb(void)
 {
-	__asm__ volatile("dmb" : : : "memory");
+    __asm__ volatile("dmb" : : : "memory");
 }
 
 #define _odp_release_barrier(ro) \
-	__atomic_thread_fence(__ATOMIC_RELEASE)
+    __atomic_thread_fence(__ATOMIC_RELEASE)
 
 #include "odp_llsc.h"
 #include "odp_atomic.h"
