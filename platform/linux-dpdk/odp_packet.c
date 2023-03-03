@@ -56,7 +56,11 @@ const _odp_packet_inline_offset_t _odp_packet_inline ODP_ALIGNED_CACHE = {
 	.udata            = sizeof(odp_packet_hdr_t),
 	.rss              = offsetof(odp_packet_hdr_t, buf_hdr.mb.hash.rss),
 	.ol_flags         = offsetof(odp_packet_hdr_t, buf_hdr.mb.ol_flags),
+#ifdef _DPDK_NEW_VERSION_
+	.rss_flag         = RTE_MBUF_F_RX_RSS_HASH
+#else
 	.rss_flag         = PKT_RX_RSS_HASH
+#endif
 };
 
 #include <odp/visibility_end.h>

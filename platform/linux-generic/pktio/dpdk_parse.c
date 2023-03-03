@@ -25,9 +25,13 @@
 #if defined(__PPC64__) && defined(vector)
 	#undef vector
 #endif
-
+#ifdef _DPDK_NEW_VERSION_
+#define IP4_CSUM_RESULT(ol_flags) (ol_flags & RTE_MBUF_F_RX_IP_CKSUM_MASK)
+#define L4_CSUM_RESULT(ol_flags) (ol_flags & RTE_MBUF_F_RX_L4_CKSUM_MASK)
+#else
 #define IP4_CSUM_RESULT(ol_flags) (ol_flags & PKT_RX_IP_CKSUM_MASK)
 #define L4_CSUM_RESULT(ol_flags) (ol_flags & PKT_RX_L4_CKSUM_MASK)
+#endif
 
 /** Parser helper function for Ethernet packets */
 static inline uint16_t dpdk_parse_eth(packet_parser_t *prs,
@@ -161,7 +165,15 @@ static inline uint8_t dpdk_parse_ipv4(packet_parser_t *prs,
 
 	if (do_csum) {
 		uint64_t packet_csum_result = IP4_CSUM_RESULT(mbuf_ol);
-
+#ifdef _DPDK_NEW_VERSION_
+		if (packet_csum_result == RTE_MBUF_F_RX_IP_CKSUM_GOOD) {
+			prs->input_flags.l3_chksum_done = 1;
+		} else if (packet_csum_result != RTE_MBUF_F_RX_IP_CKSUM_UNKNOWN) {
+			prs->input_flags.l3_chksum_done = 1;
+			prs->flags.ip_err = 1;
+			prs->flags.l3_chksum_err = 1;
+		}
+#else
 		if (packet_csum_result == PKT_RX_IP_CKSUM_GOOD) {
 			prs->input_flags.l3_chksum_done = 1;
 		} else if (packet_csum_result != PKT_RX_IP_CKSUM_UNKNOWN) {
@@ -169,6 +181,7 @@ static inline uint8_t dpdk_parse_ipv4(packet_parser_t *prs,
 			prs->flags.ip_err = 1;
 			prs->flags.l3_chksum_err = 1;
 		}
+#endif
 	}
 
 	if (odp_unlikely(ihl > _ODP_IPV4HDR_IHL_MIN))
@@ -288,7 +301,15 @@ static inline void dpdk_parse_tcp(packet_parser_t *prs,
 
 	if (do_csum) {
 		uint64_t packet_csum_result = L4_CSUM_RESULT(mbuf_ol);
-
+#ifdef _DPDK_NEW_VERSION_
+		if (packet_csum_result == RTE_MBUF_F_RX_L4_CKSUM_GOOD) {
+			prs->input_flags.l4_chksum_done = 1;
+		} else if (packet_csum_result != RTE_MBUF_F_RX_L4_CKSUM_UNKNOWN) {
+			prs->input_flags.l4_chksum_done = 1;
+			prs->flags.tcp_err = 1;
+			prs->flags.l4_chksum_err = 1;
+		}
+#else
 		if (packet_csum_result == PKT_RX_L4_CKSUM_GOOD) {
 			prs->input_flags.l4_chksum_done = 1;
 		} else if (packet_csum_result != PKT_RX_L4_CKSUM_UNKNOWN) {
@@ -296,6 +317,7 @@ static inline void dpdk_parse_tcp(packet_parser_t *prs,
 			prs->flags.tcp_err = 1;
 			prs->flags.l4_chksum_err = 1;
 		}
+#endif
 	}
 
 	*parseptr += len;
@@ -318,7 +340,19 @@ static inline void dpdk_parse_udp(packet_parser_t *prs,
 
 	if (do_csum) {
 		uint64_t packet_csum_result = L4_CSUM_RESULT(mbuf_ol);
-
+#ifdef _DPDK_NEW_VERSION_
+		if (packet_csum_result == RTE_MBUF_F_RX_L4_CKSUM_GOOD) {
+			prs->input_flags.l4_chksum_done = 1;
+		} else if (packet_csum_result != RTE_MBUF_F_RX_L4_CKSUM_UNKNOWN) {
+			if (prs->input_flags.ipv4 && !udp->chksum) {
+				prs->input_flags.l4_chksum_done = 1;
+			} else {
+				prs->input_flags.l4_chksum_done = 1;
+				prs->flags.udp_err = 1;
+				prs->flags.l4_chksum_err = 1;
+			}
+		}
+#else
 		if (packet_csum_result == PKT_RX_L4_CKSUM_GOOD) {
 			prs->input_flags.l4_chksum_done = 1;
 		} else if (packet_csum_result != PKT_RX_L4_CKSUM_UNKNOWN) {
@@ -330,6 +364,7 @@ static inline void dpdk_parse_udp(packet_parser_t *prs,
 				prs->flags.l4_chksum_err = 1;
 			}
 		}
+#endif
 	}
 
 	if (odp_unlikely(ipsec_port == udp->dst_port && udplen > 4)) {

@@ -265,7 +265,9 @@ static int dpdk_setup_eth_dev(pktio_entry_t *pktio_entry)
 	int ret;
 	pkt_dpdk_t *pkt_dpdk = pkt_priv(pktio_entry);
 	struct rte_eth_conf eth_conf;
+#ifndef _DPDK_NEW_VERSION_
 	pool_t *pool = pool_entry_from_hdl(pktio_entry->s.pool);
+#endif
 	uint64_t rx_offloads = 0;
 	uint64_t tx_offloads = 0;
 
@@ -304,14 +306,15 @@ static int dpdk_setup_eth_dev(pktio_entry_t *pktio_entry)
 
 	if (tx_offloads)
 		pktio_entry->s.enabled.chksum_insert = 1;
-
+	
+#ifndef _DPDK_NEW_VERSION_
 	/* RX packet len same size as pool segment minus headroom and double
 	 * VLAN tag
 	 */
 	eth_conf.rxmode.max_rx_pkt_len =
 		rte_pktmbuf_data_room_size(pool->rte_mempool) -
 		2 * 4 - RTE_PKTMBUF_HEADROOM;
-
+#endif
 	ret = rte_eth_dev_configure(pkt_dpdk->port_id,
 				    pktio_entry->s.num_in_queue,
 				    pktio_entry->s.num_out_queue, &eth_conf);
@@ -1116,15 +1119,23 @@ static inline void pkt_set_ol_tx(odp_pktout_config_opt_t *pktout_cfg,
 		return;
 
 	mbuf->l2_len = pkt_p->l3_offset - pkt_p->l2_offset;
-
+#ifdef _DPDK_NEW_VERSION_
+	if (l3_proto_v4)
+		mbuf->ol_flags = RTE_MBUF_F_TX_IPV4;
+	else
+		mbuf->ol_flags = RTE_MBUF_F_TX_IPV6;
+#else
 	if (l3_proto_v4)
 		mbuf->ol_flags = PKT_TX_IPV4;
 	else
 		mbuf->ol_flags = PKT_TX_IPV6;
-
+#endif
 	if (ipv4_chksum_pkt) {
+#ifdef _DPDK_NEW_VERSION_
+		mbuf->ol_flags |=  RTE_MBUF_F_TX_IP_CKSUM;
+#else
 		mbuf->ol_flags |=  PKT_TX_IP_CKSUM;
-
+#endif
 		((struct rte_ipv4_hdr *)l3_hdr)->hdr_checksum = 0;
 		mbuf->l3_len = _ODP_IPV4HDR_IHL(*(uint8_t *)l3_hdr) * 4;
 	}
@@ -1137,12 +1148,19 @@ static inline void pkt_set_ol_tx(odp_pktout_config_opt_t *pktout_cfg,
 	l4_hdr = (void *)(mbuf_data + pkt_p->l4_offset);
 
 	if (udp_chksum_pkt) {
+#ifdef _DPDK_NEW_VERSION_
+		mbuf->ol_flags |= RTE_MBUF_F_TX_UDP_CKSUM;
+#else
 		mbuf->ol_flags |= PKT_TX_UDP_CKSUM;
-
+#endif
 		((struct rte_udp_hdr *)l4_hdr)->dgram_cksum =
 			phdr_csum(l3_proto_v4, l3_hdr, mbuf->ol_flags);
 	} else if (tcp_chksum_pkt) {
+#ifdef _DPDK_NEW_VERSION_
+		mbuf->ol_flags |= RTE_MBUF_F_TX_TCP_CKSUM;
+#else
 		mbuf->ol_flags |= PKT_TX_TCP_CKSUM;
+#endif
 
 		((struct rte_tcp_hdr *)l4_hdr)->cksum =
 			phdr_csum(l3_proto_v4, l3_hdr, mbuf->ol_flags);
