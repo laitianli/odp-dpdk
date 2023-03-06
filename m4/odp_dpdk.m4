@@ -230,8 +230,9 @@ if test "x$use_pkg_config" = "xyes"; then
         # This ensures that DPDK constructors are included properly.
         #DPDK_LIBS_LIBODP=$(echo "$DPDK_LIBS" | sed -e 's/ /,/g' | sed 's/-Wl,//g'| sed -e 's/,,/,/g')
         DPDK_LIBS_LIBODP=$(echo "$DPDK_LIBS" | sed 's/-Wl,//g' | sed 's/ --/,--/g')
+        DPDK_LIBS_LIBODP=$(echo "$DPDK_LIBS_LIBODP" | sed 's/-lrte.*//g')
         DPDK_LIBS_LIBODP=$(echo "$DPDK_LIBS_LIBODP" | sed 's/-pthread/-lpthread/g')
-        DPDK_LIBS_LIBODP="-Wl,$DPDK_LIBS_LIBODP"
+        DPDK_LIBS_LIBODP="-Wl,$DPDK_LIBS_LIBODP -lm -ldl -lnuma -lpcap"
         DPDK_LIBS_LT="$DPDK_LIBS_LIBODP"
     fi
     DPDK_LIBS=$DPDK_LIBS_LIBODP
