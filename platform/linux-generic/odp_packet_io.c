@@ -378,7 +378,7 @@ static const char *driver_name(odp_pktio_t hdl)
 
 	entry = get_pktio_entry(hdl);
 	if (entry == NULL) {
-		ODP_ERR("pktio entry %" PRIuPTR " does not exist\n", (uintptr_t)hdl);
+		//ODP_ERR("pktio entry %" PRIuPTR " does not exist\n", (uintptr_t)hdl);
 		return "bad handle";
 	}
 
@@ -1871,7 +1871,7 @@ int odp_pktio_stats(odp_pktio_t pktio,
 
 	entry = get_pktio_entry(pktio);
 	if (entry == NULL) {
-		ODP_DBG("pktio entry %" PRIuPTR " does not exist\n", (uintptr_t)pktio);
+		//ODP_DBG("pktio entry %" PRIuPTR " does not exist\n", (uintptr_t)pktio);
 		return -1;
 	}
 

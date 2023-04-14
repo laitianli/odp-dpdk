@@ -491,7 +491,7 @@ static int dpdk_init_capability(pktio_entry_t *pktio_entry,
 			ret);
 		return -1;
 	}
-
+#if 0
 	/* Check if setting MTU is supported */
 	ret = rte_eth_dev_set_mtu(pkt_dpdk->port_id, pkt_dpdk->mtu - _ODP_ETHHDR_LEN);
 	if (ret == 0) {
@@ -505,7 +505,9 @@ static int dpdk_init_capability(pktio_entry_t *pktio_entry,
 		ODP_ERR("Failed to set interface MTU: %d\n", ret);
 		return -1;
 	}
-
+#else
+	printf("[Note][%s:%d]=del rte_eth_dev_set_mtu\n", __func__, __LINE__);
+#endif
 	ptype_cnt = rte_eth_dev_get_supported_ptypes(pkt_dpdk->port_id,
 						     ptype_mask, NULL, 0);
 	if (ptype_cnt > 0) {
@@ -633,6 +635,7 @@ static int setup_pkt_dpdk(odp_pktio_t pktio ODP_UNUSED,
 	}
 
 	if (!rte_eth_dev_is_valid_port(pkt_dpdk->port_id)) {
+
 		ODP_ERR("Port id=%" PRIu16 " not attached\n", pkt_dpdk->port_id);
 		return -1;
 	}
@@ -1392,7 +1395,17 @@ static int link_status_pkt_dpdk(pktio_entry_t *pktio_entry)
 	struct rte_eth_link link;
 
 	rte_eth_link_get(pkt_priv(pktio_entry)->port_id, &link);
-
+	if (link.link_status) {
+		if (link.link_speed) {
+			printf("\033[32m NIC Port %d Link Up, Speed %u Mbps - %s. \033[0m\n",
+				pkt_priv(pktio_entry)->port_id, link.link_speed,
+				((link.link_duplex == ETH_LINK_FULL_DUPLEX) ? ("full-duplex") : ("half-duplex")));
+		}else {
+			printf("\033[32m NIC Port %d Link Up [ %s ]. \033[0m\n",
+				pkt_priv(pktio_entry)->port_id,
+				((link.link_duplex == ETH_LINK_FULL_DUPLEX) ? ("full-duplex") : ("half-duplex")));
+		}
+	}
 	if (link.link_status)
 		return ODP_PKTIO_LINK_STATUS_UP;
 	return ODP_PKTIO_LINK_STATUS_DOWN;

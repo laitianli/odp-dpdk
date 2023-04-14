@@ -24,7 +24,7 @@
 #include <rte_config.h>
 #include <rte_eal.h>
 #include <rte_string_fns.h>
-
+#include <rte_pdump.h>
 enum init_stage {
 	NO_INIT = 0,    /* No init stages completed */
 	LIBCONFIG_INIT,
@@ -206,7 +206,7 @@ static int _odp_init_dpdk(const char *cmdline)
 		ODP_DBG("Passed: %d Consumed %d\n", dpdk_argc, i + 1);
 	}
 	ODP_DBG("rte_eal_init OK\n");
-
+	rte_pdump_init();
 	/* Reset to 0 to force getopt() internal initialization routine */
 	optind = 0;
 
@@ -546,13 +546,13 @@ int odp_init_global(odp_instance_t *instance,
 		goto init_failed;
 	}
 	stage = TIMER_INIT;
-
+#if 0
 	if (_odp_crypto_init_global()) {
 		ODP_ERR("ODP crypto init failed.\n");
 		goto init_failed;
 	}
 	stage = CRYPTO_INIT;
-
+#endif
 	if (_odp_comp_init_global()) {
 		ODP_ERR("ODP comp init failed.\n");
 		goto init_failed;
