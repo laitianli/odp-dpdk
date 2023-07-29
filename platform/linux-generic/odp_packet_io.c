@@ -1832,7 +1832,7 @@ int odp_pktio_stats(odp_pktio_t pktio,
 
 	entry = get_pktio_entry(pktio);
 	if (entry == NULL) {
-		_ODP_DBG("pktio entry %" PRIuPTR " does not exist\n", (uintptr_t)pktio);
+		//_ODP_DBG("pktio entry %" PRIuPTR " does not exist\n", (uintptr_t)pktio);
 		return -1;
 	}
 

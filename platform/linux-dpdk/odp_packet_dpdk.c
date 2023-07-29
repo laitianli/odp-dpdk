@@ -698,6 +698,61 @@ static int dpdk_init_capability(pktio_entry_t *pktio_entry,
 
 	return 0;
 }
+				
+// export FP_DPDK_PORD_LIST="0/1,1/0,2/2"
+static unsigned short get_dpdk_port_by_fp_index(const char* index)
+{
+	#define MAX_COUNT 11
+	struct index_dpdk_port {
+		unsigned short index;
+		unsigned short port;
+	} index_port[MAX_COUNT]  = {0};
+	char *env = NULL;
+	char tmp_buf[128] = {0};
+	int size = 0, i;
+	if (!index) {
+		printf("[Error] argument index is null!");
+		return 0xFF;
+	}
+	env = getenv("FP_DPDK_PORD_LIST");
+	if (!env) {
+		printf("[Info] environment FP_DPDK_PORD_LIST don't set, so dpdk port use fp index.\n");
+		return atoi(index);
+	}
+
+	strncpy(tmp_buf, env, strlen(env));
+	char* p = tmp_buf;
+	char* ch1 = NULL; //","
+	char* ch2 = NULL; //"/"
+	size = 0;
+	while (p && (ch1 = strchr(p, ','))) {
+		*ch1 = '\0';
+		ch2 = strchr(p, '/');
+		if (ch2) {
+			*ch2 = '\0';
+			index_port[size].index = atoi(p);
+			index_port[size].port = atoi(ch2 + 1);
+			size++;
+			if (size >= MAX_COUNT)
+				goto find;
+		}
+		p = ch1 + 1;
+	}
+	ch2 = strchr(p, '/');
+	if (ch2) {
+		*ch2 = '\0';
+		index_port[size].index = atoi(p);
+		index_port[size].port = atoi(ch2 + 1);
+		size++;
+	}
+find:
+	for (i = 0; i < size; i++) {
+		if (atoi(index) == index_port[i].index)
+			return index_port[i].port;
+	}
+	printf("[Info] environment FP_DPDK_PORD_LIST has set, but value does contain fp index: %s, so dpdk port use fp 0.\n", index);
+	return 0;
+}
 
 static int setup_pkt_dpdk(odp_pktio_t pktio ODP_UNUSED,
 			  pktio_entry_t *pktio_entry,
@@ -712,7 +767,8 @@ static int setup_pkt_dpdk(odp_pktio_t pktio ODP_UNUSED,
 	if (!rte_eth_dev_get_port_by_name(netdev, &port_id))
 		pkt_dpdk->port_id = port_id;
 	else if (_dpdk_netdev_is_valid(netdev))
-		pkt_dpdk->port_id = atoi(netdev);
+		//pkt_dpdk->port_id = atoi(netdev);
+		pkt_dpdk->port_id = get_dpdk_port_by_fp_index(netdev);
 	else {
 		_ODP_ERR("Invalid interface name!: %s\n", netdev);
 		return -1;

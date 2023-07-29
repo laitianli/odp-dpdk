@@ -634,13 +634,13 @@ int odp_init_global(odp_instance_t *instance,
 		goto init_failed;
 	}
 	stage = TIMER_INIT;
-
+#if 0
 	if (_odp_crypto_init_global()) {
 		_ODP_ERR("ODP crypto init failed.\n");
 		goto init_failed;
 	}
 	stage = CRYPTO_INIT;
-
+#endif
 	if (_odp_comp_init_global()) {
 		_ODP_ERR("ODP comp init failed.\n");
 		goto init_failed;
